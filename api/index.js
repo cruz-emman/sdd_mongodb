@@ -1,0 +1,34 @@
+import express from 'express'
+import cors from 'cors'
+import mongoose from 'mongoose'
+import userRouter from './routers/user.js'
+import adminRouter from './routers/admin.js'
+import questionsRouter from './routers/question.js'
+import choicesRouter from './routers/choices.js'
+import authRouter from './routers/auth.js'
+const PORT = process.env.PORT || 3000;
+
+const app = express()
+
+app.use(cors())
+app.use(express.json())
+
+const connectDB = async () =>{
+    try {
+        await mongoose.connect('mongodb+srv://admin:admin@cluster0.hijtikb.mongodb.net/SDD?retryWrites=true&w=majority')
+        console.log("Database Connection established")
+    } catch (error) {
+        console.error('Error connecting to the database:', err.message);
+    }
+}
+
+app.use('/api/users', userRouter)
+app.use('/api/admins', adminRouter)
+app.use('/api/questions', questionsRouter)
+app.use('/api/choices', choicesRouter)
+app.use('/api/auth', authRouter)
+
+app.listen(PORT, () =>{
+    connectDB()
+    console.log(`Server Listening to port http://localhost:${PORT}`)
+})
