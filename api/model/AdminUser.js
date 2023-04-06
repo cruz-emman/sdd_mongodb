@@ -20,11 +20,6 @@ const AdminUserSchema = new Schema({
         type: String,
         default: 'ChangeMe!23'
     },
-    type: {
-        type: String,
-        enum: ['faculty', 'employee', 'users'],
-        required: [true, 'Please select a category type']    
-    },
     email: {
         type: String, 
         required: [true, 'Please enter your email address'],
@@ -33,7 +28,25 @@ const AdminUserSchema = new Schema({
     }, 
     affiliation:{
         type: String,
-        enum: ['ppsc_employee','npc_employee','njmpti_employee','nfti_employee','nfsti_employee','ppsa_employee','ppsc_faculty','npc_faculty','njmpti_faculty','nfti_faculty','nfsti_faculty','ppsa_faculty','ppsc_students','npc_students','njmpti_students','nfti_students','nfsti_students','ppsa_students']
+        enum: 
+        ['ppsc_employees',
+        'npc_employees',
+        'njmpti_employees',
+        'nfti_employees',
+        'nfsti_employees',
+        'ppsa_employees',
+        'ppsc_faculty',
+        'npc_faculty',
+        'njmpti_faculty',
+        'nfti_faculty',
+        'nfsti_faculty',
+        'ppsa_faculty',
+        'ppsc_students',
+        'npc_students',
+        'njmpti_students',
+        'nfti_students',
+        'nfsti_students',
+        'ppsa_students']
     }
 })
 

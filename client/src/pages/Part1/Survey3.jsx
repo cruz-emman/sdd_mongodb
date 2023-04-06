@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Navbar } from '../../components';
 import CurrentQuestion from '../../components/CurrentQuestion';
-import TableComponentPart3 from '../../components/TableComponentPart3';
-import TableQuestion from '../../components/TableQuestion';
 import { GetAllQuestion, GetSingleQuestion } from '../../redux/apiCalls';
+
 import { publicRequest } from '../../utils/publicRequest';
+import { completeCard2, completeCard4 } from '../../redux/cardSlice';
 
     //pag kumukha ng choices, naka base sa may Primary ID
     //pag kumukha ng question at progress bar, naka base sa Order
@@ -23,123 +23,119 @@ import { publicRequest } from '../../utils/publicRequest';
         const {currentUser} = useSelector((state) => state.auth)
       
         const {questions,isFetching, isError} = useSelector((state) => state.questions)
-        const {user_number, user_category} = currentUser
-
-
-
+        const {email, type,affiliation} = currentUser
         const [loading ,setLoading] = useState(true)
 
-
+        const [currentQuestionID, setCurrentQuestionID] = useState()
     
        const [answer,setAnswer] = useState({
-        user_number: user_number,
-        user_category: user_category,
-        choice: [],
-        others: "",
+        email: email,
+        category: type,
+        affiliation: affiliation,
+        part: `part${getSurveyPart}`,
+        choice: "",
+        essay: "",
        })
 
        
-        const handleChange = (e) => {
-            const value = e.target.value;
-            const inputType = e.target.type;
         
-            let newChoice = answer.choice; // initialize newChoice with the current choice array
-        
-            if (inputType === 'radio') {
-            newChoice = [value];
-            } else if (inputType === 'checkbox') {
-            const isChecked = e.target.checked;
-            const choiceIndex = answer.choice.indexOf(value);
-            if (isChecked) {
-                newChoice = [...answer.choice, value];
-            } else {
-                newChoice = [
-                ...answer.choice.slice(0, choiceIndex),
-                ...answer.choice.slice(choiceIndex + 1),
-                ];
-            }
-            }
-        
-            const newAnswer = { ...answer, choice: newChoice };
-            setIsChange(true);
-
-            setAnswer(newAnswer);
-        };
-
-        
-
-        const handleTextFieldChange = (e) =>{
-           setAnswer((prev) => ({...prev, [e.target.name]:e.target.value}))
-           setIsChange(true);
-
+       const handleChange = (e) => {
+        const value = e.target.value;
+        const inputType = e.target.type;
+      
+        let newChoice = answer.choice;
+      
+        if (inputType === "radio") {
+          newChoice = [value];
+        } else if (inputType === "checkbox") {
+          const isChecked = e.target.checked;
+          const choiceIndex = answer.choice.indexOf(value);
+          if (isChecked) {
+            newChoice = [...answer.choice, value];
+          } else {
+            newChoice = [
+              ...answer.choice.slice(0, choiceIndex),
+              ...answer.choice.slice(choiceIndex + 1),
+            ];
+          }
         }
+      
+        const newAnswer = { ...answer, choice: newChoice };
+        setIsChange(true)
+        setAnswer(newAnswer);
+      };
+
+
+        
+
+       const handleTextFieldChange = (e) => {
+        const value = e.target.value;
+        const name = e.target.name;
+        if (name === "choice") {
+          const selectedChoice = e.target.value;
+          setAnswer((prev) => ({
+            ...prev,
+            [name]: [...prev[name], selectedChoice],
+          }));
+        } else {
+          setAnswer((prev) => ({
+            ...prev,
+            [name]: value,
+          }));
+        }
+        setIsChange(true);
+      }
 
 
 
         const handleSubmit = async (e) => {
             e.preventDefault();
 
-            console.log(answer);
             try {
               if (id <= questions.length) {
-                await publicRequest.post(`/results`, answer);
+                  await publicRequest.post(`/results`, answer);
+
+                //   await publicRequest.post(`/results`, {
+                //     ...answer,
+                //     choice: choiceString, // update the choice property
+                //   });
+                // console.log(answer)
+                
                 const newId = parseInt(id) + 1;
                 if (newId === questions.length + 1) {
-                  navigate(`/part4survey/1`);
+                  dispatch(completeCard4())
+                  navigate(`/`);
                 } else {
                   navigate(`/part3survey/${newId}`);
                 }
               }
+              else{
+                console.log("ERROR!")
+              }
               setAnswer({
-                user_number: user_number,
-                user_category: user_category,
-                choice: [],
-                others: "",
+                email: email,
+                category: type,
+                affiliation: affiliation,
+                part: `part${getSurveyPart}`,
+                choice: "",
+                essay: "",
               });
               setIsChange(false);
 
             } catch (error) {
-
-              console.log({ error: error.message });
-
+              console.log(error);
             }
           };
 
-          
-          const handlePrevious = async (e) =>{
-            try {
-                if(id > 1){
-                    navigate(`/part3survey/${id - 1}`)
-                }
-                setIsChange(false);
-
-            } catch (error) {
-                console.log(error)
-            }
-        }
 
         useEffect(() =>{
-            GetAllQuestion(user_category, getSurveyPart, dispatch)
+            GetAllQuestion(type, getSurveyPart, dispatch)
         },[])
 
-        useEffect(() =>{
-            const currentQuestion = async () =>{
-                setLoading(true)
-                try {
-                    const res = await publicRequest.get(`/${user_category}/${user_category}${getSurveyPart}/questiontype/${id}`)
-                    const questionID = `id${user_category}questionpart${getSurveyPart}`
-                     setAnswer((prev) => ({...prev, question_order: res.data.question_order, part: questionID  }))
-                    setLoading(false)
-                    console.log(res.data)
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-            currentQuestion()
-        },[id])
         
  
-        const totalQuestions = questions.length;
+
+        const totalQuestions = questions.length - 1;
         const progress = ((parseInt(id) - 1) / totalQuestions) * 100;
         
         return (
@@ -151,7 +147,7 @@ import { publicRequest } from '../../utils/publicRequest';
                 <Box sx={{ height: '90%', alignContent: 'flex-start', backgroundColor: 'white', width: '80%', borderRadius: '50px', flexDirection: 'column', mx: 4,  }}>
 
                     <Box sx={{ display: 'flex', alignItems: 'center',  justifyContent: 'center', flexDirection: 'column', gap: 2, height: '100%', py: 4 }}>
-                    <Typography fontWeight={700 } textAlign="center" variant="subtitle1">Beliefs Part 3</Typography>
+                    <Typography fontWeight={700 } textAlign="center" variant="subtitle1">Personal Experience, Beliefs, Opinions, and Thoughts Part 2</Typography>
 
                         <Box sx={{ width: '95%' }}>
                             <LinearProgress variant="determinate" value={progress} sx={{ height: 10, borderRadius: '20px' }} />
@@ -162,13 +158,17 @@ import { publicRequest } from '../../utils/publicRequest';
                         </Box>
                     ) : (
                         <Box sx={{height: '100%', display: 'flex',  flexDirection:'column'}}>
-                                <CurrentQuestion handleChange={handleChange} handleTextFieldChange={handleTextFieldChange} category={user_category} part={getSurveyPart} id={id} />
-                          <Box sx={{ display:'flex', gap:2, justifyContent:'center', alignItems: 'flex-end', marginTop: 'auto' }}>
-                              <Button  disabled={!isChange} type="submit" variant="contained">Next</Button>
-                          </Box>
-                        </Box>                           
+                            <CurrentQuestion handleChange={handleChange} handleTextFieldChange={handleTextFieldChange} category={type} part={getSurveyPart} id={id} />
+                        
+                        <Box sx={{ display:'flex', gap:2, justifyContent:'center', alignItems: 'flex-end', marginTop: 'auto' }}>
+                            <Button  disabled={!isChange} type="submit" variant="contained">Next</Button>
+                        </Box>
+
+                        </Box>
+                            
                     )}
                    
+
                    </Box>
                 </Box>
                 </form>

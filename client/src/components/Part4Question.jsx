@@ -5,7 +5,7 @@ import { GetSingleQuestion } from '../redux/apiCalls'
 import { publicRequest } from '../utils/publicRequest'
 import './index.css'
 
-const Part4Question = ({id, category, part,handleChange,handleTextFieldChange, setIsChange}) => {
+const Part4Question = ({id, category, part,handleChange,handleTextFieldChange, setIsChange, setOpen, open}) => {
 
   const [currentQuestion, setCurrentQuestion] = useState({})
   const [currentChoices, setCurrentChoices] = useState([])
@@ -19,15 +19,14 @@ const Part4Question = ({id, category, part,handleChange,handleTextFieldChange, s
       setLoading(true)
       const getCurrentQuestion = async () =>{
         try {
-          const res = await publicRequest.get(`/${category}/${category}${part}/questiontype/${id}`)
-          let type = res.data.type.toLowerCase()
-          setCurrentQuestionType(type)
-
-          const currentChoice = await publicRequest.get(`${category}/listOfChoices?name=${res.data.question}&part=${category}questionpart${part}`)
-          console.log(currentChoice.data)
-          let currentColumn = currentChoice.data.length
+          const res = await publicRequest.get(`/questions/find/${id}?part=part${part}&category=${category}`)
+          const type = res.data.type_of_question
+           setCurrentQuestionType(type)
+  
+          // const currentChoice = await publicRequest.get(`${category}/listOfChoices?name=${res.data.question}&part=${category}questionpart${part}`)
+          let currentColumn = res.data.choices.length
           let column = 1
-
+  
           if(currentColumn <=6){
             column = 12
           } else if(currentColumn>=7 && currentColumn <=16){
@@ -35,10 +34,10 @@ const Part4Question = ({id, category, part,handleChange,handleTextFieldChange, s
           }else if(currentColumn > 17){
             column = 3
           }
-
+  
           
           setGridQuestion(column)
-          setCurrentChoices(currentChoice.data)
+          setCurrentChoices(res.data.choices)
           setCurrentQuestion(res.data)
           setLoading(false)
         } catch (error) {
@@ -58,14 +57,13 @@ const Part4Question = ({id, category, part,handleChange,handleTextFieldChange, s
 
   const handleClick = (choice) => {
     console.log(choice)
-    if (choice.toggle === 'Yes') {
-      setOpenChoiceId(choice.question_choices);
+    if (choice.essay === true) {
+      setOpenChoiceId(choice.choices);
     } else {
       setOpenChoiceId(null);
     }
   };
 
-  const [open,setOpen] = useState(false)
   const openRadioChange = (event) => {
     setOpen(true)
     setIsChange(false)
@@ -73,10 +71,10 @@ const Part4Question = ({id, category, part,handleChange,handleTextFieldChange, s
   };
 
   const closeRadio = (e) =>{
+    setOpen(false)
 
     setIsChange(true)
 
-    setOpen(false)
   }
 
   return (
@@ -88,7 +86,7 @@ const Part4Question = ({id, category, part,handleChange,handleTextFieldChange, s
     sx={{display:'flex', alignItems:'center', flexDirection:'column',   }}
     >
       <Typography fontWeight={700} variant="h6">Question # {id}  </Typography>
-      <Typography fontWeight={700} textAlign="center" variant="h5">{currentQuestion && currentQuestion.question}</Typography>
+      <Typography fontWeight={700} textAlign="center" variant="h5">{currentQuestion && currentQuestion.title}</Typography>
     
         <Box sx={{display:'flex', alignItems:'center', justifyContent:'center', gap:3, marginTop:5, flexDirection:'column'}}>
           <Box sx={{display:'flex', alignItems:'center', justifyContent:'center', gap: 4}}>
@@ -99,7 +97,7 @@ const Part4Question = ({id, category, part,handleChange,handleTextFieldChange, s
             </Box>
 
             <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', gap: 2}}>
-                <input type="radio" onChange={closeRadio}  value="close" name="rad" id="rad2" style={{transform: 'scale(2)'}} />
+                <input type="radio" onChange={closeRadio}  value="close" name="rad" id="rad2" style={{transform: 'scale(2)'}} defaultChecked />
                 <label htmlFor="rad2">No</label>
             </Box>
     
@@ -110,9 +108,9 @@ const Part4Question = ({id, category, part,handleChange,handleTextFieldChange, s
                 {currentChoices.map((choice, index) =>(
                     <Grid item xs={6} key={index}>
                      <label className="toggle-button" key={choice.id} onClick={() => handleClick(choice)}>
-                     <input className="toggle-button__state" type="checkbox" name="choice" value={choice.question_choices} onChange={handleChange}/>
-                     <span className="toggle-button__text">{choice.question_choices}</span>
-                     {openChoiceId === choice.question_choices && choice.toggle === 'Yes' && <TextField id="outlined-basic" fullWidth name="others" onChange={handleTextFieldChange} mt={2} size='small' label="Specify" variant="standard" />}
+                     <input className="toggle-button__state" type="checkbox" name="choice" value={choice.choices} onChange={handleChange}/>
+                     <span className="toggle-button__text">{choice.choices}</span>
+                  {openChoiceId === choice.choices && choice.essay === true && <TextField id="outlined-basic" fullWidth name="essay" onChange={handleTextFieldChange} mt={2} size='small' label="Specify" required variant="standard" />}
                      
                    </label>
                     </Grid>

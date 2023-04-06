@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux'
 const Home = () => {
 
 
-  console.log(admin)
 
   return (
     <Box sx={{display:'flex'}}>

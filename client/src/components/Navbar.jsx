@@ -2,8 +2,11 @@ import { AppBar, Box, Button, Container, IconButton, Toolbar, Typography } from 
 import Logo from '../assets/logo.png'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
+
+  const {currentUser} = useSelector((state) => state.auth)
 
   const navigate = useNavigate()
   const handleLogout = (e) =>{
@@ -27,7 +30,7 @@ const Navbar = () => {
                     
                     <Box sx={{display:'flex', alignItems:'center', justifyContent:'center', gap: 1}}>
                     <Typography variant='subtitle1' color="text.disabled">Hi,</Typography>
-                    <Typography variant='subtitle2' fontWeight={700} color="text.secondary"> PPSC </Typography>
+                    <Typography variant='subtitle2' fontWeight={700} color="text.secondary"> {currentUser.firstName} </Typography>
                     </Box>
 
                     <Button onClick={handleLogout} size="small" variant="outlined" color="error" > Logout </Button>

@@ -8,35 +8,36 @@ import Part4Question from '../../components/Part4Question';
 import TableQuestion from '../../components/TableQuestion';
 import { GetAllQuestion, GetSingleQuestion } from '../../redux/apiCalls';
 import { publicRequest } from '../../utils/publicRequest';
+import { completeCard4 } from '../../redux/cardSlice';
 
     //pag kumukha ng choices, naka base sa may Primary ID
     //pag kumukha ng question at progress bar, naka base sa Order
 
     const Survey4 = () => {
-        const dispatch = useDispatch()
-        const {id} = useParams()
-        const navigate = useNavigate()
-        const location = useLocation()
-        const getSurveyPart = location.pathname.split('/')[1].split('part')[1].split('survey')[0]
-        const [isChange, setIsChange] = useState(false);
+      const dispatch = useDispatch()
+      const {id} = useParams()
+      const navigate = useNavigate()
+      const location = useLocation()
+      const getSurveyPart = location.pathname.split('/')[1].split('part')[1].split('survey')[0]
+      const [isChange, setIsChange] = useState(false);
 
-        const {currentUser} = useSelector((state) => state.auth)
-      
-        const {questions,isFetching, isError} = useSelector((state) => state.questions)
-        const {user_number, user_category} = currentUser
-
-
-
-        const [loading ,setLoading] = useState(true)
-
-
+      const {currentUser} = useSelector((state) => state.auth)
     
-       const [answer,setAnswer] = useState({
-        user_number: user_number,
-        user_category: user_category,
-        choice: [],
-        others: "",
-       })
+      const {questions,isFetching, isError} = useSelector((state) => state.questions)
+      const {email, type,affiliation} = currentUser
+      const [loading ,setLoading] = useState(true)
+
+      const [currentQuestionID, setCurrentQuestionID] = useState()
+      const [open,setOpen] = useState(false)
+
+        const [answer,setAnswer] = useState({
+          email: email,
+          category: type,
+          affiliation: affiliation,
+          part: `part${getSurveyPart}`,
+          choice: "",
+          essay: "",
+         })
 
        
         const handleChange = (e) => {
@@ -76,50 +77,51 @@ import { publicRequest } from '../../utils/publicRequest';
 
 
 
-        const handleSubmit = async (e) => {
-            e.preventDefault();
-            try {
-              if (id <= questions.length) {
-                await publicRequest.post(`/results`, answer);
-                const newId = parseInt(id) + 1;
-                if (newId === questions.length + 1) {
-                  navigate(`/part4survey/1`);
-                } else {
-                  navigate(`/part3survey/${newId}`);
-                }
-              }
-              setAnswer({
-                user_number: user_number,
-                user_category: user_category,
-                choice: [],
-                others: "",
-              });
-              setIsChange(false);
-
-            } catch (error) {
-              console.log({ error: error.message });
-            }
-          };
-
-
-        useEffect(() =>{
-            GetAllQuestion(user_category, getSurveyPart, dispatch)
-        },[])
         
-        useEffect(() =>{
-            const currentQuestion = async () =>{
-                setLoading(true)
-                try {
-                    const res = await publicRequest.get(`/${user_category}/${user_category}${getSurveyPart}/questiontype/${id}`)
-                    const questionID = `id${user_category}questionpart${getSurveyPart}`
-                     setAnswer((prev) => ({...prev,  question_order: res.data.question_order, part: questionID  }))
-                    setLoading(false)
-                } catch (error) {
-                    console.log(error)
-                }
+        const handleSubmit = async (e) => {
+          e.preventDefault();
+
+          try {
+            if (id <= questions.length) {
+                await publicRequest.post(`/results`, answer);
+
+              //   await publicRequest.post(`/results`, {
+              //     ...answer,
+              //     choice: choiceString, // update the choice property
+              //   });
+              // console.log(answer)
+              
+              const newId = parseInt(id) + 1;
+              if (newId === questions.length + 1) {
+                navigate(`/completed`);
+              } else {
+                navigate(`/part3survey/${newId}`);
+              }
             }
-            currentQuestion()
-        },[id])
+            else{
+              console.log("ERROR!")
+            }
+            setAnswer({
+              email: email,
+              category: type,
+              affiliation: affiliation,
+              part: `part${getSurveyPart}`,
+              choice: "",
+              essay: "",
+            });
+            setIsChange(false);
+
+          } catch (error) {
+            console.log(error);
+          }
+        };
+
+
+  
+          useEffect(() =>{
+            GetAllQuestion(type, getSurveyPart, dispatch)
+        },[])
+
 
         const totalQuestions = questions.length;
         const progress = ((parseInt(id) - 1) / totalQuestions) * 100;
@@ -133,7 +135,7 @@ import { publicRequest } from '../../utils/publicRequest';
                 <Box sx={{ height: '90%', alignContent: 'flex-start', backgroundColor: 'white', width: '80%', borderRadius: '50px', flexDirection: 'column', mx: 4,  }}>
 
                     <Box sx={{ display: 'flex', alignItems: 'center',  justifyContent: 'center', flexDirection: 'column', gap: 2, height: '100%', py: 4 }}>
-                    <Typography fontWeight={700 } textAlign="center" variant="subtitle1">Beliefs Part 2</Typography>
+                    <Typography fontWeight={700 } textAlign="center" variant="subtitle1">Personal Experience, Beliefs, Opinions, and Thoughts Part 3</Typography>
 
                         <Box sx={{ width: '95%' }}>
                             <LinearProgress variant="determinate" value={progress} sx={{ height: 10, borderRadius: '20px' }} />
@@ -144,7 +146,7 @@ import { publicRequest } from '../../utils/publicRequest';
                         </Box>
                     ) : (
                         <Box sx={{height: '100%', display: 'flex',  flexDirection:'column'}}>
-                            <Part4Question handleChange={handleChange} setIsChange={setIsChange} handleTextFieldChange={handleTextFieldChange} category={user_category} part={getSurveyPart} id={id} />
+                            <Part4Question handleChange={handleChange} setIsChange={setIsChange} handleTextFieldChange={handleTextFieldChange} category={type} part={getSurveyPart} id={id} setOpen={setOpen} open={open} />
                           <Box sx={{ display:'flex', gap:2, justifyContent:'center', alignItems: 'flex-end', marginTop: 'auto' }}>
                               <Button disabled={!isChange}  type="submit" variant="contained">Next</Button>
                           </Box>

@@ -5,7 +5,9 @@
     import { Navbar } from '../../components';
     import CurrentQuestion from '../../components/CurrentQuestion';
     import { GetAllQuestion, GetSingleQuestion } from '../../redux/apiCalls';
+    
     import { publicRequest } from '../../utils/publicRequest';
+import { completeCard2 } from '../../redux/cardSlice';
 
         //pag kumukha ng choices, naka base sa may Primary ID
         //pag kumukha ng question at progress bar, naka base sa Order
@@ -21,16 +23,18 @@
             const {currentUser} = useSelector((state) => state.auth)
           
             const {questions,isFetching, isError} = useSelector((state) => state.questions)
-            const {user_number, user_category} = currentUser
+            const {email, type,affiliation} = currentUser
             const [loading ,setLoading] = useState(true)
 
             const [currentQuestionID, setCurrentQuestionID] = useState()
         
            const [answer,setAnswer] = useState({
-            user_number: user_number,
-            user_category: user_category,
-            choice: [],
-            others: "",
+            email: email,
+            category: type,
+            affiliation: affiliation,
+            part: `part${getSurveyPart}`,
+            choice: "",
+            essay: "",
            })
 
            
@@ -89,11 +93,18 @@
 
                 try {
                   if (id <= questions.length) {
-                    await publicRequest.post(`/results`, answer);
+                      await publicRequest.post(`/results`, answer);
+
+                    //   await publicRequest.post(`/results`, {
+                    //     ...answer,
+                    //     choice: choiceString, // update the choice property
+                    //   });
+                    // console.log(answer)
                     
                     const newId = parseInt(id) + 1;
                     if (newId === questions.length + 1) {
-                      navigate(`/part2survey/1`);
+                      dispatch(completeCard2())
+                      navigate(`/`);
                     } else {
                       navigate(`/part1survey/${newId}`);
                     }
@@ -102,56 +113,29 @@
                     console.log("ERROR!")
                   }
                   setAnswer({
-                    user_number: user_number,
-                    user_category: user_category,
-                    choice: [],
-                    others: "",
+                    email: email,
+                    category: type,
+                    affiliation: affiliation,
+                    part: `part${getSurveyPart}`,
+                    choice: "",
+                    essay: "",
                   });
                   setIsChange(false);
-                  console.log(answer);
 
                 } catch (error) {
-                  console.log(answer);
-
                   console.log(error);
-
                 }
               };
 
-            const handlePrevious = async (e) =>{
-                try {
-                    if(id > 1){
-                        navigate(`/part1survey/${id - 1}`)
-                    }
-                    setIsChange(false);
-
-                } catch (error) {
-                    console.log(error)
-                }
-            }
 
             useEffect(() =>{
-                GetAllQuestion(user_category, getSurveyPart, dispatch)
+                GetAllQuestion(type, getSurveyPart, dispatch)
             },[])
 
-            useEffect(() =>{
-                const currentQuestion = async () =>{
-                    setLoading(true)
-                    try {
-                        const res = await publicRequest.get(`/${user_category}/${user_category}${getSurveyPart}/questiontype/${id}`)
-                        const questionID = `id${user_category}questionpart${getSurveyPart}`
-                         setAnswer((prev) => ({...prev, question_order: res.data.question_order, part: questionID  }))
-                        setLoading(false)
-                    } catch (error) {
-                        console.log(error)
-                    }
-                }
-                currentQuestion()
-            },[id])
             
      
 
-            const totalQuestions = questions.length;
+            const totalQuestions = questions.length - 1;
             const progress = ((parseInt(id) - 1) / totalQuestions) * 100;
             
             return (
@@ -174,7 +158,7 @@
                             </Box>
                         ) : (
                             <Box sx={{height: '100%', display: 'flex',  flexDirection:'column'}}>
-                                <CurrentQuestion handleChange={handleChange} handleTextFieldChange={handleTextFieldChange} category={user_category} part={getSurveyPart} id={id} />
+                                <CurrentQuestion handleChange={handleChange} handleTextFieldChange={handleTextFieldChange} category={type} part={getSurveyPart} id={id} />
                             
                             <Box sx={{ display:'flex', gap:2, justifyContent:'center', alignItems: 'flex-end', marginTop: 'auto' }}>
                                 <Button  disabled={!isChange} type="submit" variant="contained">Next</Button>

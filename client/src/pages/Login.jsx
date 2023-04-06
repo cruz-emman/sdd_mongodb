@@ -20,9 +20,8 @@ const Login = () => {
 
 
   const [user, setUser] = useState({
-    user_number:'',
-    user_password:'',
-    user_category: ''
+    email:'',
+    password:'',
   })
 
   const [AgreeBox, setAgreeBox] = useState({
@@ -102,23 +101,9 @@ const Login = () => {
             </Box>
 
             <form onSubmit={handleSubmit} style={{display:'flex', flexDirection:'column',width:'100%', alignItems:"center", justifyContent:'center', height: '100%', gap:'20px'}}>
-              <TextField required fullWidth  onChange={handleChange} name="user_number" label="Name" variant="outlined" />
-              <TextField required fullWidth  onChange={handleChange} type="password" name="user_password" label="password" variant="outlined" />
-              <FormControl required fullWidth>
-                <InputLabel id="demo-simple-select-label">Type</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="category"
-                  defaultValue=""
-                  name="user_category"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={"students"}>Student</MenuItem>
-                  <MenuItem value={"employees"}>Employee</MenuItem>
-                  <MenuItem value={"faculty"}>Faculty</MenuItem>
-                </Select>
-              </FormControl>
+              <TextField required fullWidth  onChange={handleChange} type="email" name="email" label="Email" variant="outlined" />
+              <TextField required fullWidth  onChange={handleChange} type="password" name="password" label="password" variant="outlined" />
+             
               <Box>
               <Checkbox
                 required

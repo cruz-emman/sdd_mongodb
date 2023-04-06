@@ -22,7 +22,7 @@ const UserSchema = new Schema({
     },
     type: {
         type: String,
-        enum: ['faculty', 'employee', 'users'],
+        enum: ['faculty', 'employees', 'students'],
         required: [true, 'Please select a category type']    
     },
     email: {
@@ -30,6 +30,30 @@ const UserSchema = new Schema({
         required: [true, 'Please enter your email address'],
         unique: true,
         index: true
+    },
+    affiliation:{
+        type: String,
+        enum: 
+        [
+        'ppsc_employees',
+        'npc_employees',
+        'njmpti_employees',
+        'nfti_employees',
+        'nfsti_employees',
+        'ppsa_employees',
+        'ppsc_faculty',
+        'npc_faculty',
+        'njmpti_faculty',
+        'nfti_faculty',
+        'nfsti_faculty',
+        'ppsa_faculty',
+        'ppsc_students',
+        'npc_students',
+        'njmpti_students',
+        'nfti_students',
+        'nfsti_students',
+        'ppsa_students'
+        ]
     }
 })
 

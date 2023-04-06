@@ -77,3 +77,29 @@ export const DeleteQuestion = async (req,res) =>{
         res.status(500).json({ message: 'Something went wrong' })
     }
 }
+
+export const GetSingleQuestion = async (req,res) =>{
+    const { id } = req.params
+    const part = req.query.part
+    const category = req.query.category
+    try {
+        const question = await Question.findOne({question_order: id, part:part,type:category}).populate('choices')
+        res.status(200).json(question)
+
+    } catch (error) {
+        res.status(404).json(error)
+    }
+}
+
+
+export const GetQuestionByPart = async (req,res) =>{
+    const category = req.query.category
+    const part = req.query.part
+    try {
+        const question = await Question.find({part:part,type:category}).populate('choices')
+        res.status(200).json(question)
+
+    } catch (error) {
+        res.status(404).json(error)
+    }
+}

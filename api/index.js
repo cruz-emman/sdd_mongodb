@@ -6,6 +6,7 @@ import adminRouter from './routers/admin.js'
 import questionsRouter from './routers/question.js'
 import choicesRouter from './routers/choices.js'
 import authRouter from './routers/auth.js'
+import resultsRouter from './routers/results.js'
 const PORT = process.env.PORT || 3000;
 
 const app = express()
@@ -26,6 +27,7 @@ app.use('/api/users', userRouter)
 app.use('/api/admins', adminRouter)
 app.use('/api/questions', questionsRouter)
 app.use('/api/choices', choicesRouter)
+app.use('/api/results',resultsRouter)
 app.use('/api/auth', authRouter)
 
 app.listen(PORT, () =>{

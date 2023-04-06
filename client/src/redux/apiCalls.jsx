@@ -9,7 +9,7 @@ export const LoginUser = async (user, dispatch) =>{
     dispatch(loginStart())
 
     try {
-        const res = await publicRequest.post('/auth', user)
+        const res = await publicRequest.post('/auth/user', user)
         dispatch(loginSuccess(res.data))
     } catch (error) {
         dispatch(loginFailure())
@@ -21,7 +21,7 @@ export const GetAllQuestion = async (category, part, dispatch) =>{
     dispatch(getQuestionStart())
     
     try {
-        const res = await publicRequest.get(`/${category}/${category}${part}`)
+        const res = await publicRequest.get(`/questions/getQuestion?category=${category}&part=part${part}`)
         dispatch(getQuestionSuccess(res.data))
     } catch (error) {
         dispatch(getQuestionFailure())

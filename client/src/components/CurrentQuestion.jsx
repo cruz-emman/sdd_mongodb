@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField, Typography } from '@mui/material'
+import { Box, Button, CircularProgress, Grid, TextField, Typography } from '@mui/material'
 import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { GetSingleQuestion } from '../redux/apiCalls'
@@ -6,9 +6,10 @@ import { publicRequest } from '../utils/publicRequest'
 import './index.css'
 const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange}) => {
 
+
   const [currentQuestion, setCurrentQuestion] = useState({})
   const [currentChoices, setCurrentChoices] = useState([])
-  const [getCurrentQuestionType, setCurrentQuestionType] = useState("")
+  const [getCurrentQuestionType, setCurrentQuestionType] = useState()
   const [getGridQuestion, setGridQuestion] = useState()
 
 
@@ -18,12 +19,12 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
       setLoading(true)
       const getCurrentQuestion = async () =>{
         try {
-          const res = await publicRequest.get(`/${category}/${category}${part}/questiontype/${id}`)
-          let type = res.data.type.toLowerCase()
-          setCurrentQuestionType(type)
+          const res = await publicRequest.get(`/questions/find/${id}?part=part${part}&category=${category}`)
+          const type = res.data.type_of_question
+           setCurrentQuestionType(type)
 
-          const currentChoice = await publicRequest.get(`${category}/listOfChoices?name=${res.data.question}&part=${category}questionpart${part}`)
-          let currentColumn = currentChoice.data.length
+          // const currentChoice = await publicRequest.get(`${category}/listOfChoices?name=${res.data.question}&part=${category}questionpart${part}`)
+          let currentColumn = res.data.choices.length
           let column = 1
 
           if(currentColumn <=6){
@@ -36,11 +37,11 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
 
           
           setGridQuestion(column)
-          setCurrentChoices(currentChoice.data)
+          setCurrentChoices(res.data.choices)
           setCurrentQuestion(res.data)
           setLoading(false)
         } catch (error) {
-          console.log(error)
+          console.log({error: error.message})
           setLoading(false)
 
         }
@@ -54,33 +55,33 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
   const [openChoiceId, setOpenChoiceId] = useState(null);
 
   const handleClick = (choice) => {
-    if (choice.toggle === 'Yes') {
-      setOpenChoiceId(choice.question_choices);
+    if (choice.essay ===  true) {
+      setOpenChoiceId(choice.choices);
     } else {
       setOpenChoiceId(null);
     }
   };
 
-    
+      
   return (
     <>
     {loading ? (
-      <Typography>Loading</Typography>
-    ): (
+   <CircularProgress />
+   ): (
     <Box
     sx={{display:'flex', alignItems:'center', flexDirection:'column',   }}
     >
       <Typography fontWeight={700} variant="h6">Question # {id}  </Typography>
-      <Typography fontWeight={700} textAlign="center" variant="h5">{currentQuestion && currentQuestion.question}</Typography>
+      <Typography fontWeight={700} textAlign="center" variant="h5">{currentQuestion && currentQuestion.title}</Typography>
       <Grid container spacing={2}  justifyContent="center" alignItems="center" mx={4} p={4} sx={{width: '100%',  height: '100%'}}>
         {currentChoices.map((choice, index) => (
           <Grid item xs={getGridQuestion} key={index} >
-            {getCurrentQuestionType === 'single'?                       (
+            {getCurrentQuestionType === false ?                       (
               <>
                <label className="toggle-button" key={choice.id} onClick={() => handleClick(choice)}>
-                <input className="toggle-button__state" type="radio" name="choice" value={choice.question_choices} onChange={handleChange} />
-                <span className="toggle-button__text">{choice.question_choices}</span>
-                {openChoiceId === choice.question_choices && choice.toggle === 'Yes' && <TextField id="outlined-basic" fullWidth name="others" onChange={handleTextFieldChange}  mt={2} size='small' required label="Specify" variant="standard" />}
+                <input className="toggle-button__state" type="radio" name="choice" value={choice.choices} onChange={handleChange} />
+                <span className="toggle-button__text">{choice.choices}</span>
+                {openChoiceId === choice.choices && choice.essay === true && <TextField id="outlined-basic" fullWidth name="essay" onChange={handleTextFieldChange}  mt={2} size='small' required label="Specify" variant="standard" />}
               </label>
                 
 
@@ -88,9 +89,9 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
             ):(
               <>
                 <label className="toggle-button" key={choice.id} onClick={() => handleClick(choice)}>
-                  <input className="toggle-button__state" type="checkbox" name="choice" value={choice.question_choices} onChange={handleChange}/>
-                  <span className="toggle-button__text">{choice.question_choices}</span>
-                  {openChoiceId === choice.question_choices && choice.toggle === 'Yes' && <TextField id="outlined-basic" fullWidth name="others" onChange={handleTextFieldChange} mt={2} size='small' label="Specify" variant="standard" />}
+                  <input className="toggle-button__state" type="checkbox" name="choice" value={choice.choices} onChange={handleChange}/>
+                  <span className="toggle-button__text">{choice.choices}</span>
+                  {openChoiceId === choice.choices && choice.essay === true && <TextField id="outlined-basic" fullWidth name="essay" onChange={handleTextFieldChange} mt={2} size='small' label="Specify" variant="standard" />}
                   
                 </label>
               </>
