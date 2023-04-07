@@ -10,6 +10,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { LoginUser } from '../redux/apiCalls'
 import { useDispatch, useSelector } from 'react-redux'
 import { resetState } from '../redux/authSlice'
+import {completeCard1, completeCard2, completeCard3} from '../redux/cardSlice'
+
 const Login = () => {
 
   const navigate = useNavigate()
@@ -54,7 +56,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await LoginUser(user, dispatch);
-
+      dispatch(completeCard1())
     } catch (error) {
       console.log(error);
     }

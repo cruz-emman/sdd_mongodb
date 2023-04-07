@@ -20,7 +20,6 @@ const Completed = () => {
 
   const {currentUser} = useSelector((state) => state.auth)
   const {card1,card2,card3,card4} = useSelector((state) => state.cards);
-console.log(currentUser)
 
   const handleLogout = async (e) =>{
     e.preventDefault();
