@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "homepage": "http://admin.ppsconline.net/",
+  "homepage": "https://clientppsconline.netlify.app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
