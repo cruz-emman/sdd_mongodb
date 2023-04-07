@@ -34,9 +34,15 @@ const cardSlice = createSlice({
         state.card3 = false;
         state.card4 = true;    
     },
+    completeCards : (state) =>{
+      state.card1 = true;
+      state.card2 = false;
+      state.card3 = false;
+      state.card4 = false;    
+    }
   },
 });
 
-export const {completeCard1,completeCard2,completeCard3,completeCard4} = cardSlice.actions
+export const {completeCard1,completeCard2,completeCard3,completeCard4,completeCards} = cardSlice.actions
 
 export default cardSlice.reducer

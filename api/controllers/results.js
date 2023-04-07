@@ -28,3 +28,14 @@ export const GetResults = async (req,res) =>{
         res.status(400).json(error);
     }
 }
+
+export const CompletedResults = async (req,res) =>{
+    const email = req.query.email
+
+    try {
+        const results = await Results.updateMany({email: email}, {$set: {status: true}})
+        res.status(200).json(results)
+    } catch (error) {
+        res.status(400).json(error)
+    }
+}

@@ -7,6 +7,9 @@ import Completed from './pages/Part1/Completed'
 import Survey2 from './pages/Part1/Survey2'
 import Survey3 from './pages/Part1/Survey3'
 import Survey4 from './pages/Part1/Survey4'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+
 
 const App = () => {
   return (
@@ -48,6 +51,7 @@ const App = () => {
         </Route>
         
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   </Box>
 

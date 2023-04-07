@@ -68,10 +68,9 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
     {loading ? (
    <CircularProgress />
    ): (
-    <Box
-    sx={{display:'flex', alignItems:'center', flexDirection:'column',   }}
-    >
-      <Typography fontWeight={700} variant="h6">Question # {id}  </Typography>
+    <Box sx={{display:'flex',alignItems:'center', justifyContent:'center', flexDirection:'column'}}>
+    
+      <Typography fontWeight={700} textAlign="center" variant="h6">Question # {id}  </Typography>
       <Typography fontWeight={700} textAlign="center" variant="h5">{currentQuestion && currentQuestion.title}</Typography>
       <Grid container spacing={2}  justifyContent="center" alignItems="center" mx={4} p={4} sx={{width: '100%',  height: '100%'}}>
         {currentChoices.map((choice, index) => (
@@ -81,7 +80,7 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
                <label className="toggle-button" key={choice.id} onClick={() => handleClick(choice)}>
                 <input className="toggle-button__state" type="radio" name="choice" value={choice.choices} onChange={handleChange} />
                 <span className="toggle-button__text">{choice.choices}</span>
-                {openChoiceId === choice.choices && choice.essay === true && <TextField id="outlined-basic" fullWidth name="essay" onChange={handleTextFieldChange}  mt={2} size='small' required label="Specify" variant="standard" />}
+                {/* {openChoiceId === choice.choices && choice.essay === true && <TextField id="outlined-basic" fullWidth name="essay" onChange={handleTextFieldChange}  mt={2} size='small' required label="Specify" variant="standard" />} */}
               </label>
                 
 
@@ -91,19 +90,19 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
                 <label className="toggle-button" key={choice.id} onClick={() => handleClick(choice)}>
                   <input className="toggle-button__state" type="checkbox" name="choice" value={choice.choices} onChange={handleChange}/>
                   <span className="toggle-button__text">{choice.choices}</span>
-                  {openChoiceId === choice.choices && choice.essay === true && <TextField id="outlined-basic" fullWidth name="essay" onChange={handleTextFieldChange} mt={2} size='small' label="Specify" variant="standard" />}
-                  
+                  {/* {openChoiceId === choice.choices && choice.essay === true && <TextField id="outlined-basic" fullWidth name="essay" onChange={handleTextFieldChange} mt={2} size='small' label="Specify" variant="standard" />} */}
                 </label>
               </>
             )}
             
  
-          
+            {openChoiceId === choice.choices && choice.essay === true && <TextField id="outlined-basic" fullWidth name="essay" onChange={handleTextFieldChange}  mt={2} size='small' required label="Specify" variant="standard" />}
           </Grid>
         ))}
         
       </Grid>
-    </Box>
+          </Box>
+
     )}
     </>
 

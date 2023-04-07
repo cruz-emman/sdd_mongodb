@@ -8,7 +8,7 @@ import Part4Question from '../../components/Part4Question';
 import TableQuestion from '../../components/TableQuestion';
 import { GetAllQuestion, GetSingleQuestion } from '../../redux/apiCalls';
 import { publicRequest } from '../../utils/publicRequest';
-import { completeCard4 } from '../../redux/cardSlice';
+import { completeCard4, completeCards } from '../../redux/cardSlice';
 
     //pag kumukha ng choices, naka base sa may Primary ID
     //pag kumukha ng question at progress bar, naka base sa Order
@@ -29,6 +29,7 @@ import { completeCard4 } from '../../redux/cardSlice';
 
       const [currentQuestionID, setCurrentQuestionID] = useState()
       const [open,setOpen] = useState(false)
+      const [visibleTextField, setVisibleTextField] = useState(false);
 
         const [answer,setAnswer] = useState({
           email: email,
@@ -40,7 +41,7 @@ import { completeCard4 } from '../../redux/cardSlice';
          })
 
        
-        const handleChange = (e) => {
+        const handleChange = (e, choice) => {
             const value = e.target.value;
             const inputType = e.target.type;
         
@@ -63,7 +64,11 @@ import { completeCard4 } from '../../redux/cardSlice';
         
             const newAnswer = { ...answer, choice: newChoice };
             setIsChange(true);
-
+            if (choice.essay) {
+              setVisibleTextField(e.target.checked);
+            } else{
+              
+            }
             setAnswer(newAnswer);
         };
 
@@ -95,7 +100,7 @@ import { completeCard4 } from '../../redux/cardSlice';
               if (newId === questions.length + 1) {
                 navigate(`/completed`);
               } else {
-                navigate(`/part3survey/${newId}`);
+                navigate(`/part4survey/${newId}`);
               }
             }
             else{
@@ -110,12 +115,18 @@ import { completeCard4 } from '../../redux/cardSlice';
               essay: "",
             });
             setIsChange(false);
+            setOpen(false)
+            setVisibleTextField(false)
 
           } catch (error) {
             console.log(error);
           }
         };
 
+
+        const handleCompleteSurvey = async (e) =>{
+          
+        } 
 
   
           useEffect(() =>{
@@ -145,8 +156,8 @@ import { completeCard4 } from '../../redux/cardSlice';
                             <CircularProgress />
                         </Box>
                     ) : (
-                        <Box sx={{height: '100%', display: 'flex',  flexDirection:'column'}}>
-                            <Part4Question handleChange={handleChange} setIsChange={setIsChange} handleTextFieldChange={handleTextFieldChange} category={type} part={getSurveyPart} id={id} setOpen={setOpen} open={open} />
+                        <Box sx={{height: '100%', display: 'flex',  flexDirection:'column', position:'relative'}}>
+                            <Part4Question handleChange={handleChange} setIsChange={setIsChange} handleTextFieldChange={handleTextFieldChange} category={type} part={getSurveyPart} id={id} setOpen={setOpen} open={open} setVisibleTextField={setVisibleTextField} visibleTextField={visibleTextField} />
                           <Box sx={{ display:'flex', gap:2, justifyContent:'center', alignItems: 'flex-end', marginTop: 'auto' }}>
                               <Button disabled={!isChange}  type="submit" variant="contained">Next</Button>
                           </Box>

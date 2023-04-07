@@ -5,13 +5,16 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { authRequest } from '../utils/publicRequest'
 import {useNavigate} from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+
 import { LoginUser } from '../redux/apiCalls'
 import { useDispatch, useSelector } from 'react-redux'
+import { resetState } from '../redux/authSlice'
 const Login = () => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const {currentUser, isFetching, isError} = useSelector((state) => state.auth)
+  const {currentUser, isFetching, isError, isSuccess} = useSelector((state) => state.auth)
   const [checked, setChecked] = useState(false);
 
   const [open, setOpen] = useState(false);
@@ -44,16 +47,34 @@ const Login = () => {
   };
   
 
+ 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await LoginUser(user, dispatch);
-      navigate('/');
+
     } catch (error) {
       console.log(error);
     }
   };
+  
+
+  useEffect(() =>{
+    if(isError){
+      toast.error("Incorrect Username or Password")
+      dispatch(resetState())
+
+    }
+  },[isError])
+
+  useEffect(() =>{
+    if(isSuccess === true){
+      toast.success("Login Successful")
+      navigate('/')
+    }
+  },[isSuccess])
   
 
   
