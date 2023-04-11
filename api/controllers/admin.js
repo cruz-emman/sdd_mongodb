@@ -16,7 +16,7 @@ export const AddAdmin = async (req,res) =>{
             affiliation,
             password
         })
-        const savedAdmin = await newAdmin.save().exec()
+        const savedAdmin = await newAdmin.save()
         res.status(200).json(savedAdmin)
     } catch (error) {
         res.status(500).json({error:error.message});

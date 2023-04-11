@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Navbar } from '../../components'
 import { Box, Button, Typography } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
@@ -19,12 +19,21 @@ const Completed = () => {
 
 
   const {currentUser} = useSelector((state) => state.auth)
+  const {email, type,affiliation} = currentUser
+
+  const [completedSurvey, setCompletedSurvey] = useState({
+    email: email,
+    category: type,
+    affiliation: affiliation
+  })
+
   const {card1,card2,card3,card4} = useSelector((state) => state.cards);
 
   const handleLogout = async (e) =>{
     e.preventDefault();
 
   try {
+    await publicRequest.post('/completed',completedSurvey )
     await publicRequest.post(`/results/completed?email=${currentUser.email}`)
     localStorage.removeItem('persist:root')
     dispatch(completeCard1())
@@ -35,6 +44,8 @@ const Completed = () => {
   }
   }
 
+
+  
 
 
  

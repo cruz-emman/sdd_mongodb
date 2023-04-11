@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const cardSlice = createSlice({
   name: 'card',
   initialState: {
-    card1: false,
+    card1: true,
     card2: false,
     card3: false,
     card4: false,
@@ -35,7 +35,7 @@ const cardSlice = createSlice({
         state.card4 = true;    
     },
     completeCards : (state) =>{
-      state.card1 = true;
+      state.card1 = false;
       state.card2 = false;
       state.card3 = false;
       state.card4 = false;    

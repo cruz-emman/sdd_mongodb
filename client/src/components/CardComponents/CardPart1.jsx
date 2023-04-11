@@ -3,6 +3,7 @@ import React from 'react'
 import Part1 from '../../assets/part1.jpg'
 import { Link } from 'react-router-dom'
 const CardPart1 = ({card}) => {
+  console.log(card)
   return (
     <>
       {card ? (

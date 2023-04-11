@@ -38,8 +38,11 @@ import { completeCard4, completeCards } from '../../redux/cardSlice';
           part: `part${getSurveyPart}`,
           choice: "",
           essay: "",
-         })
+          question_order: id
 
+         })
+         
+        
        
         const handleChange = (e, choice) => {
             const value = e.target.value;
@@ -89,7 +92,6 @@ import { completeCard4, completeCards } from '../../redux/cardSlice';
           try {
             if (id <= questions.length) {
                 await publicRequest.post(`/results`, answer);
-
               //   await publicRequest.post(`/results`, {
               //     ...answer,
               //     choice: choiceString, // update the choice property
@@ -98,6 +100,7 @@ import { completeCard4, completeCards } from '../../redux/cardSlice';
               
               const newId = parseInt(id) + 1;
               if (newId === questions.length + 1) {
+                dispatch(completeCards())
                 navigate(`/completed`);
               } else {
                 navigate(`/part4survey/${newId}`);
@@ -113,6 +116,8 @@ import { completeCard4, completeCards } from '../../redux/cardSlice';
               part: `part${getSurveyPart}`,
               choice: "",
               essay: "",
+              question_order: ""
+
             });
             setIsChange(false);
             setOpen(false)

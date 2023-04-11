@@ -56,7 +56,6 @@ const Login = () => {
     e.preventDefault();
     try {
       await LoginUser(user, dispatch);
-      dispatch(completeCard1())
     } catch (error) {
       console.log(error);
     }
@@ -64,19 +63,24 @@ const Login = () => {
   
 
   useEffect(() =>{
-    if(isError){
+    if(isError === true){
       toast.error("Incorrect Username or Password")
       dispatch(resetState())
 
     }
   },[isError])
 
-  useEffect(() =>{
-    if(isSuccess === true){
-      toast.success("Login Successful")
-      navigate('/')
+  useEffect(() => {
+    let successToastDisplayed = false;
+  
+    if (isSuccess === true && !successToastDisplayed) {
+      toast.success("Login Successful");
+      successToastDisplayed = true;
+      dispatch(completeCard1());
+      navigate('/');
     }
-  },[isSuccess])
+  }, [isSuccess]);
+  
   
 
   

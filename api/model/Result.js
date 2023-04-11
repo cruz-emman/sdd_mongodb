@@ -19,6 +19,9 @@ const ResultsSchema = new Schema({
     essay: {
         type: String,
     },
+    question_order: {
+        type: String,
+    },
     affiliation:{
         type: String,
     },

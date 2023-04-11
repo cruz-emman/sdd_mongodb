@@ -36,6 +36,8 @@ import { completeCard2, completeCard3 } from '../../redux/cardSlice';
         part: `part${getSurveyPart}`,
         choice: "",
         essay: "",
+        question_order: id
+
        })
 
        
@@ -120,6 +122,8 @@ import { completeCard2, completeCard3 } from '../../redux/cardSlice';
                 part: `part${getSurveyPart}`,
                 choice: "",
                 essay: "",
+                question_order: ""
+
               });
               setIsChange(false);
 
