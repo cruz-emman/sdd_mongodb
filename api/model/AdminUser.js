@@ -47,6 +47,10 @@ const AdminUserSchema = new Schema({
         'nfti_students',
         'nfsti_students',
         'ppsa_students']
+    },
+    superAdmin: {
+        type: Boolean,
+        default: false
     }
 })
 

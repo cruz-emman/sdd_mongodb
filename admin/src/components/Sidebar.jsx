@@ -10,10 +10,15 @@ import { resetState } from '../redux/adminSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../redux/adminSlice';
 import { toast } from 'react-toastify';
-
+import DashboardIcon from '@mui/icons-material/Dashboard';
 const Sidebar = () => {
 
   const {admin, isFetching, isError, isSuccess} = useSelector((state) => state.admin)
+  const {affiliation, superAdmin} = admin
+
+  const no_underscore_affiliation = affiliation.replace(/_/g, " ")
+  const getCategory = affiliation.split("_")[1]
+
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -55,9 +60,35 @@ const Sidebar = () => {
             <ListSubheader component="div" id="nested-list-subheader">
               Charts
             </ListSubheader>
-          }
+          } 
         >
-          <Link to="/studentsDashboard">
+          <Link to="/  ">
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary="dashboard" />
+            </ListItemButton>
+            </ListItem>
+          </Link>
+
+        {superAdmin === false ? (
+          <>
+            <Link to="/dashboard  ">
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <Man3Icon />
+                </ListItemIcon>
+                <ListItemText primary={getCategory} />
+            </ListItemButton>
+            </ListItem>
+          </Link>
+          </>
+        ): (
+          <>
+        <Link to="/studentsDashboard">
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -89,6 +120,11 @@ const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           </Link>
+          </>
+        )}
+
+         
+
         </List>
 
         

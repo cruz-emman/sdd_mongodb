@@ -56,3 +56,5 @@ export const ResultQuestionChart = async (req,res) =>{
 
     }
 }
+
+//GET TOTAL RESPONDENTS

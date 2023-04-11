@@ -2,7 +2,10 @@ import mongoose from "mongoose";
 const {Schema} = mongoose;
 
 const CompletedSchema = new Schema({
-    email : {type: String},
+    email : {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+    },
     category:{
         type:String,
     },
@@ -12,6 +15,6 @@ const CompletedSchema = new Schema({
 },   { timestamps: true },
 )
 
-const Completed= mongoose.model('Completed', CompletedSchema)
+const Completed= mongoose.model('Complete', CompletedSchema)
 
 export default  Completed
