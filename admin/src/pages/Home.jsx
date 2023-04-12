@@ -1,11 +1,14 @@
-import { Box, Typography, CircularProgress, InputLabel, MenuItem , FormControl , Select  } from '@mui/material'
+import { Box, Typography, CircularProgress, InputLabel, MenuItem , FormControl , Select, Button  } from '@mui/material'
 import React,{ useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
-import RespondentsChart from '../components/RespondentsChart'
 import { useSelector } from 'react-redux'
 import {publicRequest} from '../utils/publicRequest'
 import DataTable from '../components/DataTable'
+import { LocalizationProvider, DatePicker, DateTimePicker } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import dayjs from "dayjs";
+import DayjsUtils from "@date-io/dayjs";
 
 const Home = () => {
 
@@ -18,44 +21,71 @@ const Home = () => {
 
 
 
+
   const [getTotal, setGetTotal] = useState()
   const [getRecentSurvey, setRecentSurvey] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const [date, setDate] = useState('');
+    const [date, setDate] = useState({
+      start: dayjs(),
+      end: dayjs()
+    });
+  
+    const handleChangeDateStart = (newValue) => {
+      setDate({
+        ...date,
+        start: newValue
+      });
+    };
+  
+    const handleChangeDateEnd = (newValue) => {
+      setDate({
+        ...date,
+        end: newValue
+      });
+    };
 
-  const handleChange = (event) => {
-    setDate(event.target.value);
-  };
 
-  useEffect(() =>{
+    const handleSearchDate = (e) =>{
+      const startDateISO = date.start.toISOString();
+      const endDateISO = date.end.toISOString();
 
-    const getTotal = async () =>{
-      setLoading(true)
+      console.log(startDateISO)
 
-      try {
-        if(superAdmin === true){
-          setGetTotal(res.data)
 
-        }else if(superAdmin === false){
-          const countData = await publicRequest.get(`/completed/getTotalAffiliation?affiliate=${affiliation}`)
-          const surveys = await publicRequest.get(`/completed/getRecentSurvey?affiliate=${affiliation}`)
-          console.log(surveys.data)
-          
-          setRecentSurvey(surveys.data)
-          setGetTotal(countData.data)
-        }
-        setLoading(false)
-      } catch (error) {
-        console.log(error)
-        setLoading(false)
-      }
+
     }
-    getTotal()
-  },[setGetTotal])
+
+    useEffect(() =>{
+      const getTotal = async () =>{
+        setLoading(true)
+  
+        try {
+          if(superAdmin === true){
+            setGetTotal(res.data)
+  
+          }else if(superAdmin === false){
+            const countData = await publicRequest.get(`/completed/getTotalAffiliation?affiliate=${affiliation}`)
+            const surveys = await publicRequest.get(`/completed/getRecentSurvey?affiliate=${affiliation}`)
+
+            
+            //Part 1
+            const question1Result = await publicRequest.get(`/results/resultChart?question_order=1&affiliate=${affiliation}&part=part1`)
+            console.log(question1Result.data)
 
 
-
+            setRecentSurvey(surveys.data)
+            setGetTotal(countData.data)
+          }
+          setLoading(false)
+        } catch (error) {
+          console.log(error)
+          setLoading(false)
+        }
+      }
+      getTotal()
+    },[setGetTotal,setDate, ])
+  
 
   return (
     <Box sx={{display:'flex'}}>
@@ -104,21 +134,31 @@ const Home = () => {
         <Box sx={{p:4, height: '95%', width: '100%', display:'flex', flexDirection:'column', gap:1}}>.
           <Box sx={{display:'flex', alignItems:'center'}}>
           <Typography sx={{display:'flex', flex:2}} variant="h5" color="text.disabled" fontWeight={700}>Recent Survey</Typography>
-          <FormControl  sx={{display:'flex', flex:1}} >
-          <InputLabel id="demo-simple-select-label">Sort By</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={date}
-            label="Age"
-            onChange={handleChange}
-          >
-            <MenuItem value="all">All</MenuItem>
-            <MenuItem value="month">Month</MenuItem>
-            <MenuItem value="quarter">Quarter</MenuItem>
-            <MenuItem value="year">Year</MenuItem>
-          </Select>
-        </FormControl>
+          <Box>
+          {/* <LocalizationProvider dateAdapter={AdapterDayjs }>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
+              <Typography sx={{ fontWeight: 600, color: 'gray' }}>Start: </Typography>
+              <DatePicker 
+                label="Start Date"
+                value={date.start}
+                onChange={handleChangeDateStart}
+                renderInput={(params) => <TextField {...params} />}
+              />
+              <Typography sx={{ fontWeight: 600, color: 'gray' }}>End: </Typography>
+              <DatePicker 
+                label="End Date"
+                value={date.end}
+                onChange={handleChangeDateEnd}
+                renderInput={(params) => <TextField {...params} />}
+              />
+
+              <Button variant="contained" onClick={handleSearchDate}>
+                Search
+              </Button>
+            </Box>
+        </LocalizationProvider> */}
+
+          </Box>
           </Box>
           {loading ? (
             <Box sx={{display:'flex', alignItems:'center', justifyContent:'center'}}>

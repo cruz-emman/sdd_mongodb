@@ -32,15 +32,11 @@ const DataTable = ({data, loading}) => {
       width: 300,
       filterable: true,
       renderCell: (params) => {
-        const dateString = params.row.createdAt;
-        const date = new Date(dateString);
-        const day = date.getDate();
-        const month = date.getMonth() + 1;
-        const year = date.getFullYear();
-        return `${day}-${month}-${year}`;
-      },
+        const date = params.row.createdAt.split("T")[0]; // Extract the date portion
+        return date;
+          },
     }
-    
+      
   ];
   
   return (

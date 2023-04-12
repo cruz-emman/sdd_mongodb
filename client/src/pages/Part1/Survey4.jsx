@@ -36,9 +36,8 @@ import { completeCard4, completeCards } from '../../redux/cardSlice';
           category: type,
           affiliation: affiliation,
           part: `part${getSurveyPart}`,
-          choice: "",
+          choice: "No",
           essay: "",
-          question_order: id
 
          })
          
@@ -91,8 +90,11 @@ import { completeCard4, completeCards } from '../../redux/cardSlice';
 
           try {
             if (id <= questions.length) {
-                await publicRequest.post(`/results`, answer);
-              //   await publicRequest.post(`/results`, {
+              await publicRequest.post(`/results`, {
+                ...answer,
+                question_order: id
+
+              });              //   await publicRequest.post(`/results`, {
               //     ...answer,
               //     choice: choiceString, // update the choice property
               //   });
@@ -114,9 +116,8 @@ import { completeCard4, completeCards } from '../../redux/cardSlice';
               category: type,
               affiliation: affiliation,
               part: `part${getSurveyPart}`,
-              choice: "",
+              choice: "No",
               essay: "",
-              question_order: ""
 
             });
             setIsChange(false);
@@ -164,7 +165,7 @@ import { completeCard4, completeCards } from '../../redux/cardSlice';
                         <Box sx={{height: '100%', display: 'flex',  flexDirection:'column', position:'relative'}}>
                             <Part4Question handleChange={handleChange} setIsChange={setIsChange} handleTextFieldChange={handleTextFieldChange} category={type} part={getSurveyPart} id={id} setOpen={setOpen} open={open} setVisibleTextField={setVisibleTextField} visibleTextField={visibleTextField} />
                           <Box sx={{ display:'flex', gap:2, justifyContent:'center', alignItems: 'flex-end', marginTop: 'auto' }}>
-                              <Button disabled={!isChange}  type="submit" variant="contained">Next</Button>
+                              <Button  type="submit" variant="contained">Next</Button>
                           </Box>
                         </Box>                           
                     )}

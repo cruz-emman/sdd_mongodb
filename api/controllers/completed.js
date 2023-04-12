@@ -73,3 +73,37 @@ export const GetRecentSurvey = async (req,res) =>{
         res.status(error).json(error)
     }
 }
+
+
+// export const GetRecentSurvey = async (req, res) => {
+//     const affiliate = req.query.affiliate;
+//     const startDate = req.query.startDate ? new Date(req.query.startDate) : null;
+//     const endDate = req.query.endDate ? new Date(req.query.endDate) : null;
+    
+//     if (!startDate || isNaN(startDate.getTime())) {
+//         return res.status(400).json({ message: "Invalid start date" });
+//     }
+    
+//     if (!endDate || isNaN(endDate.getTime())) {
+//         return res.status(400).json({ message: "Invalid end date" });
+//     }
+    
+//     try {
+//       let results;
+//       if (affiliate) {
+//         results = await Completed.find({
+//           affiliation: affiliate,
+//           createdAt: { $gte: startDate, $lte: endDate }, // Filter by date range
+//         })
+//           .populate({ path: "email", select: "firstName  lastName email" })
+//           .sort({ createdAt: "desc" });
+//       } else {
+//         results = await Completed.find({
+//           createdAt: { $gte: startDate, $lte: endDate }, // Filter by date range
+//         });
+//       }
+//       res.status(200).json(results);
+//     } catch (error) {
+//       res.status(error).json(error);
+//     }
+//   };

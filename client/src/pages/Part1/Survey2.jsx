@@ -36,7 +36,6 @@ import { completeCard2, completeCard3 } from '../../redux/cardSlice';
         part: `part${getSurveyPart}`,
         choice: "",
         essay: "",
-        question_order: id
 
        })
 
@@ -96,8 +95,11 @@ import { completeCard2, completeCard3 } from '../../redux/cardSlice';
 
             try {
               if (id <= questions.length) {
-                  await publicRequest.post(`/results`, answer);
+                await publicRequest.post(`/results`, {
+                  ...answer,
+                  question_order: id
 
+                });
                 //   await publicRequest.post(`/results`, {
                 //     ...answer,
                 //     choice: choiceString, // update the choice property
@@ -122,7 +124,6 @@ import { completeCard2, completeCard3 } from '../../redux/cardSlice';
                 part: `part${getSurveyPart}`,
                 choice: "",
                 essay: "",
-                question_order: ""
 
               });
               setIsChange(false);
