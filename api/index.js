@@ -20,7 +20,7 @@ const connectDB = async () =>{
         await mongoose.connect('mongodb+srv://admin:admin@cluster0.hijtikb.mongodb.net/SDD?retryWrites=true&w=majority')
         console.log("Database Connection established")
     } catch (error) {
-        console.error('Error connecting to the database:', err.message);
+        console.error(error);
     }
 }
 
