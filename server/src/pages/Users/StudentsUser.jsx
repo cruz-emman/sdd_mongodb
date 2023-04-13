@@ -3,48 +3,52 @@ import React, {useEffect, useState} from 'react'
 import { Sidebar } from '../../components'
 import BeatLoader from "react-spinners/BeatLoader";
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { Link, useLocation } from 'react-router-dom';
-import {  usersRequest } from '../../utils/publicRequest';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import {  publicRequest } from '../../utils/publicRequest';
 
 
 const StudentsUser = () => {
 
   const location = useLocation()
+  const pathname = location.pathname.split('/')[1]
+
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([])
 
-  const pathname = location.pathname.split('/')[1]
-
-
   useEffect(() =>{
    
-    const getStudentssUser = async () =>{
+    const getFacultysUser = async () =>{
         try {
-            const res = await usersRequest.get('/')
-            let filteredUser = res.data.filter((item) => item.user_category === 'students')
-            setData(filteredUser)
+            const res = await publicRequest.get('/users')
+            const filteredDate = res.data.filter((user) => user.type === 'students')
+            setData(filteredDate)
+            
             setLoading(false)
         } catch (error) {
             console.log({message: error.message})
         }
     }
-    getStudentssUser()
+    getFacultysUser()
 
   },[setData])
 
   const handleDelete = async (e) =>{
     try {
-        await usersRequest.delete(`/${e.user_id}`)
-        setData(prev => prev.filter(row => row.user_id !== e.user_id))
+      await publicRequest.delete(`/users/${e._id}`);
+      setData(data.filter((user) => user._id !== e._id));
     } catch (error) {
-        console.log(error)
+      console.log({message: error.message})
     }
-  }
+};
+
 
   const columns = [
     
-    { field: 'user_number', headerName: 'User Number', width: 500 },
-    { field: 'user_category', headerName: 'Category', width: 400 },
+    { field: 'firstName', headerName: 'First Name', width: 150 },
+    { field: 'lastName', headerName: 'Last Name', width: 200 },
+    { field: 'email', headerName: 'Email', width: 200 },
+    { field: 'type', headerName: 'type', width: 200 },
+    { field: 'affiliation', headerName: 'Affiliation', width: 200 },
     {
       field: 'action',
       headerName: 'Action',
@@ -53,7 +57,7 @@ const StudentsUser = () => {
         return (
           <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
 
-          <Link to={`/${pathname}/edit/${params.row.user_id}`}>
+            <Link to={`/${pathname}/edit/${params.row._id}`}>
             <Button color="primary" 
                 // onClick={() => handleQuestion(params.row[`id${getTable}`])} 
                 variant="contained" size="small">
@@ -72,20 +76,22 @@ const StudentsUser = () => {
   ];
   
   return (
-    <Box sx={{display:'flex', flexDirection:'row', gap:1}}>
-        <Box sx={{display:'flex', flex:.5}}>
+    <Box sx={{display:'flex'}}>
           <Sidebar />
-        </Box>
-        <Box sx={{display:'flex', flex:2, p:4}}>
+        <Box sx={{display:'flex', flex:6, p:4}}>
 
         <Box sx={{display:'flex', flexDirection:'column', gap:2, width: '100%'}}>
 
           <Box sx={{display:'flex', alignItems:'center', justifyContent:'space-between', width: '100%'}}> 
             <Typography  variant='h5' color="text.disabled" sx={{fontWeight:"bold", textTransform: 'uppercase'}}>Students Users</Typography>
             
-            <Link to={`/${pathname}/add`}>
-              <Button variant='contained' color="success">Add User</Button>
-            </Link>
+            <Box sx={{display:'flex', alignItems:'center', gap:2}}>
+              <Link to={`/${pathname}/add`}>
+                <Button variant='contained' color="success">Add User</Button>
+              </Link>
+              <Button variant="outlined">Import CSV</Button>
+            </Box>
+
 
           </Box>
           {loading ? (
@@ -102,7 +108,7 @@ const StudentsUser = () => {
             <DataGrid
                 {...data}
                 rows={loading ? [] : data}
-                getRowId={(row) => row[`user_id`]}
+                getRowId={(row) => row._id}
                 columns={columns}
                 pageSize={9}
                 components={{ Toolbar: GridToolbar }}

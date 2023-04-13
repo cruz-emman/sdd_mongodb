@@ -23,14 +23,11 @@ const Sidebar = () => {
 
   return (
     <Box sx={{
-      position: 'fixed',
-      left: 0,
-      top: 0,
-      bottom: 0,
-      width: 300,
-      height: '100%',
+      backgroundColor: 'white',
       boxShadow: 3,
-      minHeight: '100vh'
+      minHeight: '100vh',
+      flex:1,
+      position: 'relative',
     }}>
         <Box sx={{display:'flex', flexDirection:'column', p:2, alignItems:'center', justifyContent:'center', gap: 4, borderBottom: 1, color: 'gray'}}>
           <Box component="img" src={Logo} sx={{width: 150, height: 150, }}  />
@@ -81,90 +78,8 @@ const Sidebar = () => {
   
         </List>
 
-        <List 
-            dense
-           sx={{px:2}}
-           subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-              Charts
-            </ListSubheader>
-          }
-        >
-          <Link to = "/studentsDashboard">
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <Man3Icon />
-                </ListItemIcon>
-                <ListItemText primary="Students" />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-
-          <Link to = "/facultyDashboard">
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <InboxIcon />
-                </ListItemIcon>
-                <ListItemText primary="Faculty" />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-
-          <Link to = "/employeesDashboard">
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <BadgeIcon />
-                </ListItemIcon>
-                <ListItemText primary="Employee" />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-        </List>
-
-        <List
-          sx={{px:2}}
-          subheader={
-           <ListSubheader component="div" id="nested-list-subheader">
-             Questions
-           </ListSubheader>
-         }
-         dense
-        > 
-        {/*  QUESTIONS */}
-          <Link to="/studentsQuestion">
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <QuestionAnswerIcon />
-                </ListItemIcon>
-                <ListItemText primary="Student Questions" />
-              </ListItemButton>
-            </ListItem> 
-          </Link>
-          <Link to="/facultyQuestion">
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <QuestionAnswerIcon />
-                </ListItemIcon>
-                <ListItemText primary="Faculty Questions" />
-              </ListItemButton>
-            </ListItem> 
-          </Link>
-          <Link to="/employeesQuestion">
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <QuestionAnswerIcon />
-                </ListItemIcon>
-                <ListItemText primary="Employee Questions" />
-              </ListItemButton>
-            </ListItem> 
-          </Link>
-        </List>
+       
+      
 
         <Box sx={{ display:'flex', gap:2, justifyContent:'center', alignItems: 'flex-end', marginTop: 10, mx: 4 }}>
           <Button onClick={handleLogoUt} variant="contained" color="secondary" sx={{width: '100%'}}>Logout</Button>

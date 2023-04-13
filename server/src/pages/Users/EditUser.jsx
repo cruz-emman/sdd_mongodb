@@ -4,7 +4,7 @@ import { Sidebar } from '../../components'
 import BeatLoader from "react-spinners/BeatLoader";
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import {  usersRequest } from '../../utils/publicRequest';
+import {  publicRequest, usersRequest } from '../../utils/publicRequest';
 
 
 const EditUser = () => {
@@ -12,18 +12,22 @@ const EditUser = () => {
   const {id} = useParams()
   const location = useLocation()
   const navigate = useNavigate()
-  const pathname = location.pathname.split('/')[1]
+  const pathname = location.pathname.split('/')[1].split("Users")[0]
 
 
 
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([])
   const [info,setInfo] = useState({
-    user_number: '',
-    user_category: '',
-    user_password: ''
+    firstName: '',
+    lastName: '',
+    password: '',
+    email: '',
+    affiliation: '',
+    type: 'faculty'
   })
 
+  console.log(id)
 
   
 
@@ -31,16 +35,19 @@ const EditUser = () => {
    
     const getStudentssUser = async () =>{
         try {
-            const res = await usersRequest.get(`/find/${id}`)
+            const res = await publicRequest.get(`users/find/${id}`)
             setInfo({
-              user_number: res.data[0].user_number || "",
-              user_category: res.data[0].user_category || '',
-              user_password: res.data[0].user_password
+              email: res.data.email || "",
+              firstName: res.data.firstName || '',
+              lastName: res.data.lastName || '',
+              password: res.data.password || '',
+              affiliation: res.data.affiliation || '',
+
             })
          
             setLoading(false)
         } catch (error) {
-            console.log({message: error.message})
+            console.log(error)
         }
     }
     getStudentssUser()
@@ -51,8 +58,8 @@ const EditUser = () => {
   const handleSubmit = async (e) =>{
     e.preventDefault()
     try {
-      await usersRequest.put(`/${id}`, info)
-      navigate(`/${pathname}`)
+      await publicRequest.put(`users/${id}`, info)
+      navigate(`/${pathname}Users`)
     } catch (error) {
       console.log(error)
     }
@@ -62,7 +69,6 @@ const EditUser = () => {
     setInfo(prev => ({...prev, [e.target.name]: e.target.value}))
   }
   
-  console.log(info)
 
 
   return (
@@ -74,22 +80,47 @@ const EditUser = () => {
 
           <form onSubmit={handleSubmit} style={{display:'flex', flexDirection:'column', gap:"20px", width: '100%'}}>
             <Typography fontWeight={700} variant="h4" color="text.secondary">Edit User</Typography>
-            <TextField onChange={handleChange}  value={info.user_number} name="user_number" label="User Number" />
+            <TextField onChange={handleChange}  value={info.email} name="email" label="Email" />
 
-            <TextField onChange={handleChange}  value={info.user_password} name="user_password" label="User Password" />
+            <TextField onChange={handleChange}  value={info.password} name="password" label="Password" />
+            <TextField onChange={handleChange}  value={info.firstName} name="firstName" label="First Name" />
+            <TextField onChange={handleChange}  value={info.lastName} name="lastName" label="Last Name" />
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <InputLabel id="demo-simple-select-label">Affiliation</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                name="user_category"
-                value={info.user_category}
+                name="affiliation"
+                value={info.affiliation}
                 onChange={handleChange}
               
               >
-                <MenuItem value={"students"}>Students</MenuItem>
-                <MenuItem value={"faculty"}>Faculty</MenuItem>
-                <MenuItem value={"employees"}>Employees</MenuItem>
+ {pathname === 'faculty' && [
+                  <MenuItem key="ppsc_faculty" value={"ppsc_faculty"}>PPS Faculty</MenuItem>,
+                  <MenuItem key="npc_faculty" value={"npc_faculty"}>NPC Faculty</MenuItem>,
+                  <MenuItem key="njmpti_faculty" value={"njmpti_faculty"}>NJMPTI Faculty</MenuItem>,
+                  <MenuItem key="nfti_faculty" value={"nfti_faculty"}>NFTI Faculty</MenuItem>,
+                  <MenuItem key="nfsti_faculty" value={"nfsti_faculty"}>NFSTI Faculty</MenuItem>,
+                  <MenuItem key="ppsa_faculty" value={"ppsa_faculty"}>PPSA Faculty</MenuItem>
+                ]}
+
+                {pathname === 'students' && [
+                  <MenuItem key="ppsc_students" value={"ppsc_students"}>PPS Students</MenuItem>,
+                  <MenuItem key="npc_students" value={"npc_students"}>NPC Students</MenuItem>,
+                  <MenuItem key="njmpti_students" value={"njmpti_students"}>NJMPTI Students</MenuItem>,
+                  <MenuItem key="nfti_students" value={"nfti_students"}>NFTI Students</MenuItem>,
+                  <MenuItem key="nfsti_students" value={"nfsti_students"}>NFSTI Students</MenuItem>,
+                  <MenuItem key="ppsa_students" value={"ppsa_students"}>PPSA Students</MenuItem>
+                ]}
+
+                {pathname === 'employees' && [
+                  <MenuItem key="ppsc_employees" value={"ppsc_employees"}>PPS employees</MenuItem>,
+                  <MenuItem key="npc_employees" value={"npc_employees"}>NPC employees</MenuItem>,
+                  <MenuItem key="njmpti_employees" value={"njmpti_employees"}>NJMPTI employees</MenuItem>,
+                  <MenuItem key="nfti_employees" value={"nfti_employees"}>NFTI employees</MenuItem>,
+                  <MenuItem key="nfsti_employees" value={"nfsti_employees"}>NFSTI employees</MenuItem>,
+                  <MenuItem key="ppsa_employees" value={"ppsa_employees"}>PPSA employees</MenuItem>
+                ]}    
               </Select>
             </FormControl>
 

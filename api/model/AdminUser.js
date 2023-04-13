@@ -29,7 +29,9 @@ const AdminUserSchema = new Schema({
     affiliation:{
         type: String,
         enum: 
-        ['ppsc_employees',
+        ['super_admin',
+        'tech_admin',
+        'ppsc_employees',
         'npc_employees',
         'njmpti_employees',
         'nfti_employees',
@@ -49,6 +51,10 @@ const AdminUserSchema = new Schema({
         'ppsa_students']
     },
     superAdmin: {
+        type: Boolean,
+        default: false
+    },
+    techAdmin: {
         type: Boolean,
         default: false
     }

@@ -14,8 +14,8 @@ const Login = () => {
 
 
   const [userAdmin, setAdmin] = useState({
-    admin_user: '',
-    admin_password: ''
+    email: '',
+    password: ''
   })
   
 
@@ -52,12 +52,12 @@ const Login = () => {
         <form action="" onSubmit={handleLogin}>
         <Box sx={{display:'flex', alignItems:'center', justifyContent:'center', flexDirection:'column', gap:2}}>
           <Box component="img" src={Logo} />
-          <Typography sx={{fontWeight: 'light'}} variant="h2">Sex-Dissagrated System</Typography>
+          <Typography sx={{fontWeight: 'light'}} variant="h2">Sex-Dissagrated System Tech</Typography>
           <Typography sx={{fontWeight: 700}} variant="h5">Philippine Public Safety College</Typography>
         </Box>
         <Box sx={{display:'flex', alignItems:'center', justifyContent:'center', flexDirection:'column', width: '100%', gap: 3}}>
-          <TextField fullWidth required label="Username" name="admin_user" onChange={handleChange} type="text" variant="outlined" />
-          <TextField fullWidth required label="Username" name="admin_password" onChange={handleChange} type="password" variant="outlined" />
+          <TextField fullWidth required label="Email" name="email" onChange={handleChange} type="text" variant="outlined" />
+          <TextField fullWidth required label="password" name="password" onChange={handleChange} type="password" variant="outlined" />
           <Button type="submit" size="large" color='success' fullWidth variant="outlined">Login</Button>
         </Box>
         </form>
