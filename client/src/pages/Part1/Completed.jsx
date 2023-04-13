@@ -19,8 +19,10 @@ const Completed = () => {
 
 
   const {currentUser} = useSelector((state) => state.auth)
-  const {email, type,affiliation} = currentUser
-
+  console.log(currentUser)
+  
+  const {email, type, affiliation} = currentUser || {}
+  
   const [completedSurvey, setCompletedSurvey] = useState({
     email: email,
     category: type,
@@ -31,7 +33,7 @@ const Completed = () => {
 
   const handleLogout = async (e) =>{
     e.preventDefault();
-
+    console.log(completedSurvey)
   try {
     await publicRequest.post('/completed',completedSurvey )
     await publicRequest.post(`/results/completed?email=${currentUser.email}`)

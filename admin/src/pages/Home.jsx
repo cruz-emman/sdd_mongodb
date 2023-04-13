@@ -65,15 +65,17 @@ const Home = () => {
             setGetTotal(res.data)
   
           }else if(superAdmin === false){
+            //bilang or computed kung ilan nag survey
             const countData = await publicRequest.get(`/completed/getTotalAffiliation?affiliate=${affiliation}`)
+
+            //eto ung mga nag survey, total survey
             const surveys = await publicRequest.get(`/completed/getRecentSurvey?affiliate=${affiliation}`)
 
             
             //Part 1
             const question1Result = await publicRequest.get(`/results/resultChart?question_order=1&affiliate=${affiliation}&part=part1`)
-            console.log(question1Result.data)
 
-
+            console.log(surveys.data)
             setRecentSurvey(surveys.data)
             setGetTotal(countData.data)
           }
