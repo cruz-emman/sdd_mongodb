@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Tab, Box } from '@mui/material';
 import BeatLoader from "react-spinners/BeatLoader";
 import { publicRequest } from '../../utils/publicRequest';
+import { useSelector } from 'react-redux'
 
 const BeliefsTable = () => {
 
+
+    const {admin} = useSelector((state) => state.admin)
     const {affiliation, superAdmin} = admin
     const no_underscore_affiliation = affiliation.replace(/_/g, " ")
     const getCategory = affiliation.split("_")[1]
@@ -135,19 +138,19 @@ const BeliefsTable = () => {
         ):(
           <TableBody>
             <TableRow>
-                <TableCell>{table5[0]?.question}</TableCell>
+                <TableCell>It is important for me to know the different gender</TableCell>
             {table5 ? (
                 table5.map((item, index) => {
                 return (
-                    <TableCell component="th" scope="row" align="right">
-                        {item.choice_count}
+                    <TableCell key={index} component="th" scope="row" align="right">
+                        {item.count}
                     </TableCell>
                   
                 );
                 })
             ) : (
                 <Box>
-                <TableCell colSpan={6} align="center">
+                <TableCell key={index} colSpan={6} align="center">
                     {loading ? 'Loading...' : 'No data available'}
                 </TableCell>
                 </Box>
@@ -155,19 +158,19 @@ const BeliefsTable = () => {
               </TableRow>
               
               <TableRow>
-                <TableCell>{table6[0]?.question}</TableCell>
+                <TableCell>I believe wthat gender has nothing to do with what people do everyday</TableCell>
             {table6 ? (
                 table6.map((item, index) => {
                 return (
-                    <TableCell component="th" scope="row" align="right">
-                        {item.choice_count}
+                    <TableCell key={index} component="th" scope="row" align="right">
+                        {item.count}
                     </TableCell>
                   
                 );
                 })
             ) : (
                 <Box>
-                <TableCell colSpan={6} align="center">
+                <TableCell key={index} colSpan={6} align="center">
                     {loading ? 'Loading...' : 'No data available'}
                 </TableCell>
                 </Box>
@@ -175,19 +178,19 @@ const BeliefsTable = () => {
               </TableRow>
                     
               <TableRow>
-                <TableCell>{table7[0]?.question}</TableCell>
+                <TableCell>Men and women are treated equally in our society</TableCell>
             {table7 ? (
                 table7.map((item, index) => {
                 return (
-                    <TableCell component="th" scope="row" align="right">
-                        {item.choice_count}
+                    <TableCell key={index} component="th" scope="row" align="right">
+                        {item.count}
                     </TableCell>
                   
                 );
                 })
             ) : (
                 <Box>
-                <TableCell colSpan={6} align="center">
+                <TableCell key={index} colSpan={6} align="center">
                     {loading ? 'Loading...' : 'No data available'}
                 </TableCell>
                 </Box>
@@ -195,19 +198,19 @@ const BeliefsTable = () => {
               </TableRow>
 
               <TableRow>
-                <TableCell>{table8[0]?.question}</TableCell>
+                <TableCell>Our culture does not prescribes/assigns certain responsibilites specifically for women and men</TableCell>
             {table8 ? (
                 table8.map((item, index) => {
                 return (
-                    <TableCell component="th" scope="row" align="right">
-                        {item.choice_count}
+                    <TableCell key={index} component="th" scope="row" align="right">
+                        {item.count}
                     </TableCell>
                   
                 );
                 })
             ) : (
                 <Box>
-                <TableCell colSpan={6} align="center">
+                <TableCell key={index} colSpan={6} align="center">
                     {loading ? 'Loading...' : 'No data available'}
                 </TableCell>
                 </Box>
@@ -215,19 +218,19 @@ const BeliefsTable = () => {
               </TableRow>
 
               <TableRow>
-                <TableCell>{table9[0]?.question}</TableCell>
+                <TableCell>It is acceeptable for woman to work provided that they will not neglect their families</TableCell>
             {table9 ? (
                 table9.map((item, index) => {
                 return (
-                    <TableCell component="th" scope="row" align="right">
-                        {item.choice_count}
+                    <TableCell key={index} component="th" scope="row" align="right">
+                        {item.count}
                     </TableCell>
                   
                 );
                 })
             ) : (
                 <Box>
-                <TableCell colSpan={6} align="center">
+                <TableCell key={index} colSpan={6} align="center">
                     {loading ? 'Loading...' : 'No data available'}
                 </TableCell>
                 </Box>
@@ -235,19 +238,19 @@ const BeliefsTable = () => {
               </TableRow>
 
               <TableRow>
-                <TableCell>{table10[0]?.question}</TableCell>
+                <TableCell>Women must not be disrespected because of their gestures or manner of dressing   </TableCell>
             {table10 ? (
                 table10.map((item, index) => {
                 return (
-                    <TableCell component="th" scope="row" align="right">
-                        {item.choice_count}
+                    <TableCell key={index} component="th" scope="row" align="right">
+                        {item.count}
                     </TableCell>
                   
                 );
                 })
             ) : (
                 <Box>
-                <TableCell colSpan={6} align="center">
+                <TableCell key={index} colSpan={6} align="center">
                     {loading ? 'Loading...' : 'No data available'}
                 </TableCell>
                 </Box>
@@ -255,19 +258,19 @@ const BeliefsTable = () => {
               </TableRow>
 
               <TableRow>
-                <TableCell>{table11[0]?.question}</TableCell>
+                <TableCell>Fathers should be a good provider for their families</TableCell>
             {table11 ? (
                 table11.map((item, index) => {
                 return (
-                    <TableCell component="th" scope="row" align="right">
-                        {item.choice_count}
+                    <TableCell key={index} component="th" scope="row" align="right">
+                        {item.count}
                     </TableCell>
                   
                 );
                 })
             ) : (
                 <Box>
-                <TableCell colSpan={6} align="center">
+                <TableCell key={index} colSpan={6} align="center">
                     {loading ? 'Loading...' : 'No data available'}
                 </TableCell>
                 </Box>
@@ -275,19 +278,19 @@ const BeliefsTable = () => {
               </TableRow>
 
               <TableRow>
-                <TableCell>{table12[0]?.question}</TableCell>
+                <TableCell>Women should have equal access to education and employment to support their families</TableCell>
             {table12 ? (
                 table12.map((item, index) => {
                 return (
-                    <TableCell component="th" scope="row" align="right">
-                        {item.choice_count}
+                    <TableCell key={index} component="th" scope="row" align="right">
+                        {item.count}
                     </TableCell>
                   
                 );
                 })
             ) : (
                 <Box>
-                <TableCell colSpan={6} align="center">
+                <TableCell key={index} colSpan={6} align="center">
                     {loading ? 'Loading...' : 'No data available'}
                 </TableCell>
                 </Box>
@@ -295,19 +298,19 @@ const BeliefsTable = () => {
               </TableRow>
 
               <TableRow>
-                <TableCell>{table13[0]?.question}</TableCell>
+                <TableCell>Household chore is a responsibility of all thee members of the family</TableCell>
             {table13 ? (
                 table13.map((item, index) => {
                 return (
-                    <TableCell component="th" scope="row" align="right">
-                        {item.choice_count}
+                    <TableCell key={index} component="th" scope="row" align="right">
+                        {item.count}
                     </TableCell>
                   
                 );
                 })
             ) : (
                 <Box>
-                <TableCell colSpan={6} align="center">
+                <TableCell key={index} colSpan={6} align="center">
                     {loading ? 'Loading...' : 'No data available'}
                 </TableCell>
                 </Box>
@@ -315,19 +318,19 @@ const BeliefsTable = () => {
               </TableRow>
 
               <TableRow>
-                <TableCell>{table14[0]?.question}</TableCell>
+                <TableCell>Being a woman/man is not a major issue/concern for me everyday</TableCell>
             {table14 ? (
                 table14.map((item, index) => {
                 return (
-                    <TableCell component="th" scope="row" align="right">
-                        {item.choice_count}
+                    <TableCell key={index} component="th" scope="row" align="right">
+                        {item.count}
                     </TableCell>
                   
                 );
                 })
             ) : (
                 <Box>
-                <TableCell colSpan={6} align="center">
+                <TableCell key={index} colSpan={6} align="center">
                     {loading ? 'Loading...' : 'No data available'}
                 </TableCell>
                 </Box>
@@ -335,19 +338,19 @@ const BeliefsTable = () => {
               </TableRow>
 
               <TableRow>
-                <TableCell>{table15[0]?.question}</TableCell>
+                <TableCell>Our brothers and sisterss coming from the LGBTQIA2S+ community should be fully accepted by the society</TableCell>
             {table15 ? (
                 table15.map((item, index) => {
                 return (
-                    <TableCell component="th" scope="row" align="right">
-                        {item.choice_count}
+                    <TableCell key={index} component="th" scope="row" align="right">
+                        {item.count}
                     </TableCell>
                   
                 );
                 })
             ) : (
                 <Box>
-                <TableCell colSpan={6} align="center">
+                <TableCell key={index} colSpan={6} align="center">
                     {loading ? 'Loading...' : 'No data available'}
                 </TableCell>
                 </Box>
