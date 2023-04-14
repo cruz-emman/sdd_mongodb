@@ -33,7 +33,6 @@ const AddUser = () => {
   
   const handleSubmit = async (e) =>{
     e.preventDefault()
-    console.log(info)
     try {
       await publicRequest.post(`users/`, info )
       navigate(`/${pathname}Users`)

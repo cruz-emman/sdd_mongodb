@@ -8,7 +8,7 @@ import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../assets/logo.png'
 import { logOut } from '../redux/adminSlice';
-
+import DashboardIcon from '@mui/icons-material/Dashboard';
 const Sidebar = () => {
   const navigate = useNavigate()
   const handleLogoUt =  (e) =>{
@@ -31,7 +31,7 @@ const Sidebar = () => {
     }}>
         <Box sx={{display:'flex', flexDirection:'column', p:2, alignItems:'center', justifyContent:'center', gap: 4, borderBottom: 1, color: 'gray'}}>
           <Box component="img" src={Logo} sx={{width: 150, height: 150, }}  />
-          <Typography sx={{fontWeight: 700}} color="text-secondary">PPSC-ADMIN</Typography>
+          <Typography sx={{fontWeight: 700}} color="text-secondary">Tech Admin</Typography>
         </Box>
 
         <List 
@@ -43,6 +43,19 @@ const Sidebar = () => {
             </ListSubheader>
           }
         >
+
+          <Link to="/">
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItemButton>
+            </ListItem>
+          </Link>   
+
+
           <Link to="/studentsUsers">
             <ListItem disablePadding>
               <ListItemButton>
