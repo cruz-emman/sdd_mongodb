@@ -9,8 +9,6 @@ const PersonalExperienceTable = () => {
 
   const {admin} = useSelector((state) => state.admin)
   const {affiliation, superAdmin} = admin
-
-  
   const no_underscore_affiliation = affiliation.replace(/_/g, " ")
   const getCategory = affiliation.split("_")[1]
 
@@ -26,26 +24,26 @@ const PersonalExperienceTable = () => {
           
           const getTable1 = await publicRequest.get(`/results/resultChart?question_order=1&affiliate=${affiliation}&part=part2`);
           const sortData1 = getTable1.data.sort((a, b) => {
-            const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
-            return choices.indexOf(b.name) - choices.indexOf(a.name);
+          const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
+          return choices.indexOf(b.name) - choices.indexOf(a.name);
           });
           setTable1(sortData1);
 
-          const getTable2 = await publicRequest.get(`/results/resultChart?question_order=1&affiliate=${affiliation}&part=part2`);
+          const getTable2 = await publicRequest.get(`/results/resultChart?question_order=2&affiliate=${affiliation}&part=part2`);
           const sortData2 = getTable2.data.sort((a, b) => {
           const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
           return choices.indexOf(b.name) - choices.indexOf(a.name);
           });
           setTable2(sortData2);
 
-          const getTable3 = await publicRequest.get(`/results/resultChart?question_order=1&affiliate=${affiliation}&part=part2`);
+          const getTable3 = await publicRequest.get(`/results/resultChart?question_order=3&affiliate=${affiliation}&part=part2`);
           const sortData3 = getTable3.data.sort((a, b) => {
             const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
             return choices.indexOf(b.name) - choices.indexOf(a.name);
           });
           setTable3(sortData3);
 
-          const getTable4 = await publicRequest.get(`/results/resultChart?question_order=1&affiliate=${affiliation}&part=part2`);
+          const getTable4 = await publicRequest.get(`/results/resultChart?question_order=4&affiliate=${affiliation}&part=part2`);
           const sortData4 = getTable4.data.sort((a, b) => {
           const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
           return choices.indexOf(b.name) - choices.indexOf(a.name);
@@ -73,8 +71,10 @@ const PersonalExperienceTable = () => {
             <TableCell align="right">2(D)</TableCell>
             <TableCell align="right">1(SD)</TableCell>
           </TableRow>
-        
+          
         </TableHead>
+        
+        
         {loading ? (
            <BeatLoader 
            color="#36d7b7" 
@@ -91,15 +91,14 @@ const PersonalExperienceTable = () => {
             {table1 ? (
                 table1.map((item, index) => {
                 return (
-                    <TableCell component="th" scope="row" align="right">
+                    <TableCell key={index} component="th" scope="row" align="right">
                         {item.count}
                     </TableCell>
-                  
                 );
                 })
             ) : (
                 <Box>
-                <TableCell colSpan={6} align="center">
+                <TableCell key={index} colSpan={6} align="center">
                     {loading ? 'Loading...' : 'No data available'}
                 </TableCell>
                 </Box>
@@ -111,15 +110,15 @@ const PersonalExperienceTable = () => {
             {table2 ? (
                 table2.map((item, index) => {
                 return (
-                    <TableCell component="th" scope="row" align="right">
-                        {item.choice_count}
+                    <TableCell key={index} component="th" scope="row" align="right">
+                        {item.count}
                     </TableCell>
                   
                 );
                 })
             ) : (
                 <Box>
-                <TableCell colSpan={6} align="center">
+                <TableCell key={index} colSpan={6} align="center">
                     {loading ? 'Loading...' : 'No data available'}
                 </TableCell>
                 </Box>
@@ -131,15 +130,15 @@ const PersonalExperienceTable = () => {
             {table3 ? (
                 table3.map((item, index) => {
                 return (
-                    <TableCell component="th" scope="row" align="right">
-                        {item.choice_count}
+                    <TableCell key={index} component="th" scope="row" align="right">
+                        {item.count}
                     </TableCell>
                   
                 );
                 })
             ) : (
                 <Box>
-                <TableCell colSpan={6} align="center">
+                <TableCell key={index} colSpan={6} align="center">
                     {loading ? 'Loading...' : 'No data available'}
                 </TableCell>
                 </Box>
@@ -151,27 +150,26 @@ const PersonalExperienceTable = () => {
             {table4 ? (
                 table4.map((item, index) => {
                 return (
-                    <TableCell component="th" scope="row" align="right">
-                        {item.choice_count}
+                    <TableCell key={index} component="th" scope="row" align="right">
+                        {item.count}
                     </TableCell>
                   
                 );
                 })
             ) : (
                 <Box>
-                <TableCell colSpan={6} align="center">
+                <TableCell key={index} colSpan={6} align="center">
                     {loading ? 'Loading...' : 'No data available'}
                 </TableCell>
                 </Box>
             )}
               </TableRow>
 
-
-
         </TableBody>
         )}
       </Table>
     </TableContainer>
+    
   );
 }
 

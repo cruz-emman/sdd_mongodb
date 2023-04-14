@@ -76,7 +76,7 @@ const Part4Question = ({id, category, part,handleChange,handleTextFieldChange, s
       <Typography fontWeight={700} variant="h6" textAlign={"center"}>Question # {id}  </Typography>
       <Typography fontWeight={700} textAlign="center" variant="h5">{currentQuestion && currentQuestion.title}</Typography>
     
-       {id === '5' ? (
+       {id === '5' || id === '6' ? (
          <Box sx={{display:'flex', flexDirection:'column', gap: 4}}>
  <Box sx={{display:'flex', alignItems:'center',justifyContent:'center', gap:5, pt:2}}>
            
