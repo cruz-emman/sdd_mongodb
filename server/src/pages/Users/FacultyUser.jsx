@@ -7,6 +7,21 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import {  publicRequest } from '../../utils/publicRequest';
 
 
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const formData = new FormData();
+    formData.append('file', e.target.file.files[0]); // Updated to access file input using name 'file'
+    await publicRequest.post('/importUser', formData);
+
+    console.log('IMPORTED SUCCESFULLEY')
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 const FacultyUser = () => {
 
   const location = useLocation()
@@ -89,7 +104,13 @@ const FacultyUser = () => {
               <Link to={`/${pathname}/add`}>
                 <Button variant='contained' color="success">Add User</Button>
               </Link>
-              <Button variant="outlined">Import CSV</Button>
+              
+              <form encType="multipart/form-data" onSubmit={handleSubmit} action="/importUser" method="post">
+                 <input type="file" name="file" />
+                  <Button variant="outlined" type='submit'>Import CSV</Button>
+              </form>
+
+
             </Box>
           </Box>
           {loading ? (
