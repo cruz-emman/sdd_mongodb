@@ -53,6 +53,10 @@ const Dashboard = () => {
     const getTotal = async () =>{
       try {
         if(superAdmin === true){
+
+          const res = await publicRequest.get(`/completed/getTotalAffiliation?category=${"san to kukunin?"}`)
+
+
           setGetTotal(res.data)
 
         }else if(superAdmin === false){

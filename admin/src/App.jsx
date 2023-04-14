@@ -8,6 +8,8 @@ import Home from './pages/Home'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 import FacultyDashboard from './pages/FacultyDashboard'
+import StudentsDashboard from './pages/StudentsDashboard'
+import EmployeesDashboard from './pages/EmployeesDashboard'
 import Dashboard from './pages/Dashboard'
 const App = () => {
   return (
@@ -21,6 +23,8 @@ const App = () => {
               <Route element={<PrivateRoute />}>
                 <Route path="/" exact element={<Home />} />
                 <Route path="/facultyDashboard" element={<FacultyDashboard />} />
+                <Route path="/employeesDashboard" element={<EmployeesDashboard />} />
+                <Route path="/studentsDashboard" element={<StudentsDashboard />} />
 
 
 

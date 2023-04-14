@@ -22,9 +22,14 @@ const Home = () => {
 
 
 
+
   const [getTotal, setGetTotal] = useState()
   const [getRecentSurvey, setRecentSurvey] = useState([])
   const [loading, setLoading] = useState(true)
+
+  const [totalStudents, setTotalStudents] = useState()
+  const [totalEmployees, setTotalEmployees] = useState()
+  const [totalFaculty, setTotalFaculty] = useState()
 
     const [date, setDate] = useState({
       start: dayjs(),
@@ -62,8 +67,13 @@ const Home = () => {
   
         try {
           if(superAdmin === true){
-            setGetTotal(res.data)
-  
+            const countDataEmployeees = await publicRequest.get(`/completed/getTotalAffiliation?category=employees`)
+            const countDataFaculty = await publicRequest.get(`/completed/getTotalAffiliation?category=faculty`)
+            const countDataStudents = await publicRequest.get(`/completed/getTotalAffiliation?category=students`)
+
+            setTotalFaculty(countDataFaculty.data)
+            setTotalEmployees(countDataEmployeees.data)
+            setTotalStudents(countDataStudents.data)
           }else if(superAdmin === false){
             //bilang or computed kung ilan nag survey
             const countData = await publicRequest.get(`/completed/getTotalAffiliation?affiliate=${affiliation}`)
@@ -101,21 +111,21 @@ const Home = () => {
             <Box sx={{display:'flex', p:4, alignItems:'center',flexDirection:'column',height: 1, width: '25%',boxShadow:3, backgroundColor: "#00c853"}}>
               <Typography variant="subtitle2" color="white" sx={{textTransform: 'uppercase', fontWeight:'700', borderBottom: 2,}}>Employees</Typography>
               <Box sx={{display:'flex', alignItems:'center',justifyContent:'center', height:'100%', width: '100%',}} >
-              <Typography variant="h2" color="white" sx={{textTransform: 'uppercase', fontWeight:'700'}}>Total</Typography>
+              <Typography variant="h2" color="white" sx={{textTransform: 'uppercase', fontWeight:'700'}}>{totalEmployees}</Typography>
               </Box>
             </Box>
 
             <Box sx={{display:'flex', p:4, alignItems:'center',flexDirection:'column',height: 1, width: '25%',boxShadow:3, backgroundColor: "#00c853"}}>
               <Typography variant="subtitle2" color="white" sx={{textTransform: 'uppercase', fontWeight:'700', borderBottom: 2,}}>Faculty</Typography>
               <Box sx={{display:'flex', alignItems:'center',justifyContent:'center', height:'100%', width: '100%',}} >
-              <Typography variant="h2" color="white" sx={{textTransform: 'uppercase', fontWeight:'700'}}>Total</Typography>
+              <Typography variant="h2" color="white" sx={{textTransform: 'uppercase', fontWeight:'700'}}>{totalFaculty}</Typography>
               </Box>
             </Box>
 
             <Box sx={{display:'flex', p:4, alignItems:'center',flexDirection:'column',height: 1, width: '25%',boxShadow:3, backgroundColor: "#673ab7"}}>
-              <Typography variant="subtitle2" color="white" sx={{textTransform: 'uppercase', fontWeight:'700', borderBottom: 2,}}>Faculty</Typography>
+              <Typography variant="subtitle2" color="white" sx={{textTransform: 'uppercase', fontWeight:'700', borderBottom: 2,}}>Students</Typography>
               <Box sx={{display:'flex', alignItems:'center',justifyContent:'center', height:'100%', width: '100%',}} >
-              <Typography variant="h2" color="white" sx={{textTransform: 'uppercase', fontWeight:'700'}}>Total</Typography>
+              <Typography variant="h2" color="white" sx={{textTransform: 'uppercase', fontWeight:'700'}}>{totalStudents}</Typography>
               </Box>
             </Box>
             </>

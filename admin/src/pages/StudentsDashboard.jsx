@@ -3,7 +3,7 @@ import React from 'react'
 
 const StudentsDashboard = () => {
   return (
-    <Box></Box>
+    <Box>Students</Box>
   )
 }
 

@@ -39,14 +39,14 @@ export const GetComplete = async (req,res) =>{
 
 export const GetTotalByAffilation = async (req,res) =>{
     const affiliate = req.query.affiliate
+    const category = req.query.category
 
     try {
         let results
         if(affiliate){
              results = await Completed.find({affiliation: affiliate}).count()
-        } else{
-             results = await Completed.find().count()
-
+        } else if(category){
+             results = await Completed.find({category: category}).count()
         }
         res.status(200).json(results)
     } catch (error) {
