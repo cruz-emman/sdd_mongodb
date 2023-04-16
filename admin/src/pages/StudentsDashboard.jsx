@@ -24,6 +24,8 @@ import Part4Number1 from '../components/Tables/Part4Number1'
 import Part4Number2 from '../components/Tables/Part4Number2'
 import Part4Number3 from '../components/Tables/Part4Number3'
 import Part4Number4 from '../components/Tables/Part4Number4'
+import Part4Number5 from '../components/Tables/Part4Number5'
+import Part4Number6 from '../components/Tables/Part4Number6'
 import { useLocation } from 'react-router-dom'
 
 const StudentsDashboard = () => {
@@ -242,6 +244,8 @@ const StudentsDashboard = () => {
             <Part4Number2 />
             <Part4Number3 />
             <Part4Number4 />
+            <Part4Number5 />
+            <Part4Number6 />
 
           </Box>
 

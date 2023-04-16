@@ -2,7 +2,7 @@ import express from 'express'
 
 import { AddResult, CompletedResults, GetResults, ResultQuestionChart, ResultQuestionChartEssay, ResultQuestionChartSuperAdmin, ResultQuestionSuperAdmin } from '../controllers/results.js'
 
-import { AddResult, CompletedResults, GetResults, ResultQuestionChart, ResultQuestionChartEssay, ResultQuestionChartSuperAdmin } from '../controllers/results.js'
+
 
 
 const router = express.Router()
@@ -28,8 +28,5 @@ router.get('/resultEssay', ResultQuestionChartEssay)
 router.get('/resultEssaySuperAdmin', ResultQuestionSuperAdmin)
 
 
-
-//Get essay 
-router.get('/resultEssay', ResultQuestionChartEssay)
 
 export default router
