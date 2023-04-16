@@ -1,5 +1,9 @@
 import express from 'express'
+
 import { AddResult, CompletedResults, GetResults, ResultQuestionChart, ResultQuestionChartEssay, ResultQuestionChartSuperAdmin, ResultQuestionSuperAdmin } from '../controllers/results.js'
+
+import { AddResult, CompletedResults, GetResults, ResultQuestionChart, ResultQuestionChartEssay, ResultQuestionChartSuperAdmin } from '../controllers/results.js'
+
 
 const router = express.Router()
 
@@ -17,10 +21,15 @@ router.get('/resultChart', ResultQuestionChart)
 router.get('/resultChartSuperAdmin', ResultQuestionChartSuperAdmin)
 
 
+
 //Others
 router.get('/resultEssay', ResultQuestionChartEssay)
 
 router.get('/resultEssaySuperAdmin', ResultQuestionSuperAdmin)
 
+
+
+//Get essay 
+router.get('/resultEssay', ResultQuestionChartEssay)
 
 export default router
