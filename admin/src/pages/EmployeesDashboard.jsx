@@ -89,19 +89,19 @@ const EmployeesDashboard = () => {
           const getEducation = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=8&category=employees&part=part1`)
           setEducationData(getEducation.data)
 
-          const getSpouse = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=10&category=employees&part=part1`)
+          const getSpouse = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=9&category=employees&part=part1`)
           setSpouseData(getSpouse.data)
 
-          const getPlace = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=12&category=employees&part=part1`)
+          const getPlace = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=14&category=employees&part=part1`)
           setPlaceData(getPlace.data)
 
-          const getPosition = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=13&category=employees&part=part1`)
+          const getPosition = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=11&category=employees&part=part1`)
           setPositionData(getPosition.data)
 
-          const getSalary = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=15&category=employees&part=part1`)
+          const getSalary = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=13&category=employees&part=part1`)
           setSalaryData(getSalary.data)
 
-          const getYears = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=16&category=employees&part=part1`)
+          const getYears = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=15&category=employees&part=part1`)
           setYearsData(getYears.data)
 
           const getEthnicityothers = await publicRequest.get(`/results/resultEssay?question_order=5&affiliate=ppsc_employees&part=part1`)
