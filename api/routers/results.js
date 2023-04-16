@@ -28,5 +28,4 @@ router.get('/resultEssay', ResultQuestionChartEssay)
 router.get('/resultEssaySuperAdmin', ResultQuestionSuperAdmin)
 
 
-
 export default router
