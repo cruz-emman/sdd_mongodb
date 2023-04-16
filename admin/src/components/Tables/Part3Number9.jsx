@@ -3,33 +3,56 @@ import React, { useState, useEffect } from 'react';
 import BeatLoader from "react-spinners/BeatLoader";
 import { publicRequest } from '../../utils/publicRequest';
 import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom';
 
 const Part3Number9 = () => {
+
+    const location = useLocation()
+    const category = location.pathname.split("/")[1].split("Dashboard")[0]
 
     const {admin} = useSelector((state) => state.admin)
     const {affiliation, superAdmin} = admin
     const no_underscore_affiliation = affiliation.replace(/_/g, " ")
     const getCategory = affiliation.split("_")[1]
 
-    const [table16, setTable16] = useState([])
+    const [table24, setTable24] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const getTables = async () => {
             try {
-                const getTable16 = await publicRequest.get(`/results/resultChart?question_order=9&affiliate=${affiliation}&part=part3`)
-                const sortData16 = getTable16.data.sort((a, b) => {
-                    const choices = ['Yes', 'No'];
-                    return choices.indexOf(b.name) - choices.indexOf(a.name);
-                  });
-                setTable16(sortData16)
-                setLoading(false)
+                if(superAdmin === true){
+                    const getTable24 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=9&category=${category}&part=part3`);
+                    const choices24 = ['Yes', 'No'];
+                    const sortData24 = choices24.map(choice => {
+                    const data = getTable24.data.find(item => item.name.includes(choice));
+                    return {
+                        name: choice,
+                        count: data ? data.count : 0,
+                        };
+                    });
+                    setTable24(sortData24);
+                    setLoading(false) 
+
+                }else if(superAdmin === false){
+                    const getTable24 = await publicRequest.get(`/results/resultChart?question_order=9&affiliate=${affiliation}&part=part3`);
+                    const choices24 = ['Yes', 'No'];
+                    const sortData24 = choices24.map(choice => {
+                    const data = getTable24.data.find(item => item.name.includes(choice));
+                    return {
+                        name: choice,
+                        count: data ? data.count : 0,
+                        };
+                    });
+                    setTable24(sortData24);
+                    setLoading(false)
+                }
             } catch (error) {
                 console.log(error)
             }
         }
         getTables()
-    }, [setTable16])
+    }, [setTable24])
 
 
     return (
@@ -57,7 +80,7 @@ const Part3Number9 = () => {
                             ):(
                                 <>
                                     <TableCell>9) I can rest at home druing holidays and weekends </TableCell>
-                                {table16.map((item, index) =>{
+                                {table24.map((item, index) =>{
                                     return(
                                         <TableCell key={index}>{item.count}</TableCell>
 

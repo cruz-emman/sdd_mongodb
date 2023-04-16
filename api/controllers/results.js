@@ -87,6 +87,34 @@ export const ResultQuestionChartSuperAdmin = async (req,res) =>{
     } catch (error) {
         res.status(400).json(error)
     }
+
+    
+}
+
+export const ResultQuestionChartEssay = async (req,res) =>{
+    const question_order = req.query.question_order
+    const affiliate = req.query.affiliate
+    const part = req.query.part
+    try {
+        
+        const result = await Results.find({ essay: { $ne: "" }, question_order: question_order, affiliation: affiliate, part: part, status: true}, { essay: 1, _id: 0 },  );
+        res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const ResultQuestionSuperAdmin = async (req,res) =>{
+    const question_order = req.query.question_order
+    const category = req.query.category
+    const part = req.query.part
+    try {
+        
+        const result = await Results.find({ essay: { $ne: "" }, question_order: question_order, category: category, part: part, status: true}, { essay: 1, _id: 0 },  );
+        res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
