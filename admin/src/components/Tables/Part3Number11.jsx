@@ -3,33 +3,56 @@ import React, { useState, useEffect } from 'react';
 import BeatLoader from "react-spinners/BeatLoader";
 import { publicRequest } from '../../utils/publicRequest';
 import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom';
 
 const Part3Number11 = () => {
+
+    const location = useLocation()
+    const category = location.pathname.split("/")[1].split("Dashboard")[0]
 
     const {admin} = useSelector((state) => state.admin)
     const {affiliation, superAdmin} = admin
     const no_underscore_affiliation = affiliation.replace(/_/g, " ")
     const getCategory = affiliation.split("_")[1]
 
-    const [table16, setTable16] = useState([])
+    const [table26, setTable26] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const getTables = async () => {
             try {
-                const getTable16 = await publicRequest.get(`/results/resultChart?question_order=11&affiliate=${affiliation}&part=part3`)
-                const sortData16 = getTable16.data.sort((a, b) => {
-                    const choices = ['Owned', 'Spouse/ Partner', 'Relatives, house helper etc', 'None'];
-                    return choices.indexOf(b.name) - choices.indexOf(a.name);
-                  });
-                setTable16(sortData16)
-                setLoading(false)
+                if(superAdmin === true){
+                    const getTable26 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=11&category=${category}&part=part3`);
+                    const choices26 = ['Self', 'Spouse/ Partner', 'Relatives, house helper etc.', 'Shared by family members'];
+                    const sortData26 = choices26.map(choice => {
+                    const data = getTable26.data.find(item => item.name.includes(choice));
+                    return {
+                        name: choice,
+                        count: data ? data.count : 0,
+                        };
+                    });
+                    setTable26(sortData26);
+                    setLoading(false) 
+
+                }else if(superAdmin === false){
+                    const getTable26 = await publicRequest.get(`/results/resultChart?question_order=11&affiliate=${affiliation}&part=part3`);
+                    const choices26 = ['Self', 'Spouse/ Partner', 'Relatives, house helper etc.', 'Shared by family members'];
+                    const sortData26 = choices26.map(choice => {
+                    const data = getTable26.data.find(item => item.name.includes(choice));
+                    return {
+                        name: choice,
+                        count: data ? data.count : 0,
+                        };
+                    });
+                    setTable26(sortData26);
+                    setLoading(false)
+                }
             } catch (error) {
                 console.log(error)
             }
         }
         getTables()
-    }, [setTable16])
+    }, [setTable26])
 
 
     return (
@@ -59,7 +82,7 @@ const Part3Number11 = () => {
                             ):(
                                 <>
                                     <TableCell>11) If there are meetings in the barangay or subdivision, most of the time, the person attending is/are</TableCell>
-                                {table16.map((item, index) =>{
+                                {table26.map((item, index) =>{
                                     return(
                                         <TableCell key={index}>{item.count}</TableCell>
 

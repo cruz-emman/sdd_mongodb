@@ -3,33 +3,56 @@ import React, { useState, useEffect } from 'react';
 import BeatLoader from "react-spinners/BeatLoader";
 import { publicRequest } from '../../utils/publicRequest';
 import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom';
 
 const Part3Number7 = () => {
+
+    const location = useLocation()
+    const category = location.pathname.split("/")[1].split("Dashboard")[0]
 
     const {admin} = useSelector((state) => state.admin)
     const {affiliation, superAdmin} = admin
     const no_underscore_affiliation = affiliation.replace(/_/g, " ")
     const getCategory = affiliation.split("_")[1]
 
-    const [table16, setTable16] = useState([])
+    const [table22, setTable22] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const getTables = async () => {
             try {
-                const getTable16 = await publicRequest.get(`/results/resultChart?question_order=7&affiliate=${affiliation}&part=part3`)
-                const sortData16 = getTable16.data.sort((a, b) => {
-                    const choices = ['Yes', 'No', 'Not Applicable'];
-                    return choices.indexOf(b.name) - choices.indexOf(a.name);
-                  });
-                setTable16(sortData16)
-                setLoading(false)
+                if(superAdmin === true){
+                    const getTable22 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=7&category=${category}&part=part3`);
+                    const choices22 = ['Yes', 'No', 'Not Applicable'];
+                    const sortData22 = choices22.map(choice => {
+                    const data = getTable22.data.find(item => item.name.includes(choice));
+                    return {
+                        name: choice,
+                        count: data ? data.count : 0,
+                        };
+                    });
+                    setTable22(sortData22);
+                    setLoading(false) 
+
+                }else if(superAdmin === false){
+                    const getTable22 = await publicRequest.get(`/results/resultChart?question_order=7&affiliate=${affiliation}&part=part3`);
+                    const choices22 = ['Yes', 'No', 'Not Applicable'];
+                    const sortData22 = choices22.map(choice => {
+                    const data = getTable22.data.find(item => item.name.includes(choice));
+                    return {
+                        name: choice,
+                        count: data ? data.count : 0,
+                        };
+                    });
+                    setTable22(sortData22);
+                    setLoading(false)
+                }
             } catch (error) {
                 console.log(error)
             }
         }
         getTables()
-    }, [setTable16])
+    }, [setTable22])
 
 
     return (
@@ -58,7 +81,7 @@ const Part3Number7 = () => {
                             ):(
                                 <>
                                     <TableCell>7) At home, there are occasions that we (siblings, relatives or other members of the family) fight and hurt each other physically</TableCell>
-                                {table16.map((item, index) =>{
+                                {table22.map((item, index) =>{
                                     return(
                                         <TableCell key={index}>{item.count}</TableCell>
 

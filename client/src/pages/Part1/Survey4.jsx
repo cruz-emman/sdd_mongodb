@@ -36,7 +36,7 @@ import { completeCard4, completeCards } from '../../redux/cardSlice';
           category: type,
           affiliation: affiliation,
           part: `part${getSurveyPart}`,
-          choice: "No",
+          choice: "",
           essay: "",
 
          })
@@ -116,7 +116,7 @@ import { completeCard4, completeCards } from '../../redux/cardSlice';
               category: type,
               affiliation: affiliation,
               part: `part${getSurveyPart}`,
-              choice: "No",
+              choice: "",
               essay: "",
 
             });

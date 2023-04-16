@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Accordion, Box, Typography, AccordionDetails, AccordionSummary } from '@mui/material'
 import React,{ useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
@@ -21,8 +21,17 @@ import Part3Number9 from '../components/Tables/Part3Number9'
 import Part3Number10 from '../components/Tables/Part3Number10'
 import Part3Number11 from '../components/Tables/Part3Number11'
 import Part4Number1 from '../components/Tables/Part4Number1'
+import Part4Number2 from '../components/Tables/Part4Number2'
+import Part4Number3 from '../components/Tables/Part4Number3'
+import Part4Number4 from '../components/Tables/Part4Number4'
+import Part4Number5 from '../components/Tables/Part4Number5'
+import { useLocation } from 'react-router-dom'
+import Part4Number6 from '../components/Tables/Part4Number6'
+
 
 const FacultyDashboard = () => {
+
+
 
   const {admin} = useSelector((state) => state.admin)
   const {affiliation, superAdmin} = admin
@@ -46,6 +55,7 @@ const FacultyDashboard = () => {
   const [placeData, setPlaceData] = useState([])
   const [yearsData, setYearsData] = useState([])
   const [salaryData, setSalaryData] = useState([])
+  const [ethnicityothersData, setEthnicityothersData] = useState([])
 
   useEffect(() =>{
     setLoading(true)
@@ -65,40 +75,46 @@ const FacultyDashboard = () => {
 
           const getAge = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=1&category=faculty&part=part1`)
           console.log(getAge.data)
-        setAgeData(getAge.data)
+          setAgeData(getAge.data)
 
-          const getGender = await publicRequest.get(`/results/resultChart?question_order=2&affiliate=${affiliation}&part=part1`)
+          const getGender = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=2&category=faculty&part=part1`)
           setGenderData(getGender.data)
 
-          const getCivil = await publicRequest.get(`/results/resultChart?question_order=4&affiliate=${affiliation}&part=part1`)
+          const getCivil = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=4&category=faculty&part=part1`)
           setCivilData(getCivil.data)
 
-          const getEthnicity = await publicRequest.get(`/results/resultChart?question_order=5&affiliate=${affiliation}&part=part1`)
+          const getEthnicity = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=5&category=faculty&part=part1`)
           setEthnicityData(getEthnicity.data)
 
-          const getNoofchild = await publicRequest.get(`/results/resultChart?question_order=6&affiliate=${affiliation}&part=part1`)
+          const getNoofchild = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=6&category=faculty&part=part1`)
           setNoofchildData(getNoofchild.data)
 
-          const getAgeofchild = await publicRequest.get(`/results/resultChart?question_order=7&affiliate=${affiliation}&part=part1`)
+          const getAgeofchild = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=7&category=faculty&part=part1`)
           setAgeofchildData(getAgeofchild.data)
 
-          const getEducation = await publicRequest.get(`/results/resultChart?question_order=8&affiliate=${affiliation}&part=part1`)
+          const getEducation = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=8&category=faculty&part=part1`)
           setEducationData(getEducation.data)
 
-          const getSpouse = await publicRequest.get(`/results/resultChart?question_order=10&affiliate=${affiliation}&part=part1`)
+          const getSpouse = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=10&category=faculty&part=part1`)
           setSpouseData(getSpouse.data)
 
-          const getPlace = await publicRequest.get(`/results/resultChart?question_order=12&affiliate=${affiliation}&part=part1`)
+          const getPlace = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=12&category=faculty&part=part1`)
           setPlaceData(getPlace.data)
 
-          const getPosition = await publicRequest.get(`/results/resultChart?question_order=13&affiliate=${affiliation}&part=part1`)
+          const getPosition = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=13&category=faculty&part=part1`)
           setPositionData(getPosition.data)
 
-          const getSalary = await publicRequest.get(`/results/resultChart?question_order=15&affiliate=${affiliation}&part=part1`)
+          const getSalary = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=15&category=faculty&part=part1`)
           setSalaryData(getSalary.data)
 
-          const getYears = await publicRequest.get(`/results/resultChart?question_order=16&affiliate=${affiliation}&part=part1`)
+          const getYears = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=16&category=faculty&part=part1`)
           setYearsData(getYears.data)
+
+          const getEthnicityothers = await publicRequest.get(`/results/resultEssay?question_order=5&affiliate=ppsc_faculty&part=part1`)
+          setEthnicityothersData(getEthnicityothers.data)
+
+
+
 
           setGetTotal(res.data)
         }
@@ -109,7 +125,7 @@ const FacultyDashboard = () => {
       }
     }
     getTotal()
-  },[setGetTotal])
+  },[setGetTotal, setAgeData, setGenderData, setCivilData, setEthnicityData, setNoofchildData, setAgeofchildData, setEducationData, setSpouseData, setPlaceData, setPositionData, setSalaryData, setYearsData, setEthnicityothersData])
 
 
   return (
@@ -138,6 +154,27 @@ const FacultyDashboard = () => {
           <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}>Ethnicity</Typography>
             <BarChartResults data={ethnicityData} />
+
+            
+            <Accordion sx={{ width: '100%' }}>
+              <AccordionSummary sx={{
+                "&:hover": {
+                  backgroundColor: "#797D7F",
+                  color: "#fff"
+                }
+              }} aria-controls="panel1a-content" id="panel1a-header">
+                <Typography>Others</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                {ethnicityothersData.map((data) => (
+                  <Typography sx={{borderBottom:1, borderColor:'gray', py:1}} key={data._id}>
+                    {data.essay}  
+                  </Typography>
+                ))}
+              </AccordionDetails>
+            </Accordion>
+
+
           </Box>
 
           <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
@@ -210,6 +247,11 @@ const FacultyDashboard = () => {
           <Box sx={{display:'flex', flexDirection:'column', gap:1, py:2, boxShadow:3, alignItems:'center', backgroundColor:'#E5E4E2', width:'100%'}}>
             <Typography variant="h6" fontWeight={700}  >PART II B</Typography>
             <Part4Number1 />
+            <Part4Number2 />
+            <Part4Number3 />
+            <Part4Number4 />
+            <Part4Number5 />
+            <Part4Number6 />
 
           </Box>
 
