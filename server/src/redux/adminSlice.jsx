@@ -7,6 +7,7 @@ export const adminSlice = createSlice({
         isError: false,
         isSuccess: false,
         isUpdated: false,
+        isMessage: "",
     },
     reducers: {
         resetState: (state) =>{
@@ -15,6 +16,7 @@ export const adminSlice = createSlice({
             state.isError = false
             state.isSuccess = false
             state.isUpdated = false
+            state.isMessage = ""
 
         },
         loginStart: (state)=>{
@@ -24,12 +26,15 @@ export const adminSlice = createSlice({
         loginSuccess: (state, action) =>{
             state.isFetching = true;
             state.isSuccess = true;
-            state.admin = action.payload
+            state.admin = action.payload,
+            state.isMessage = "";
         },
-        loginFailure: (state) =>{
+        loginFailure: (state, action) =>{
             state.isSuccess = false;
             state.isFetching = false;
             state.isError = true;
+            state.isMessage = action.payload;
+
         }, 
         logOut: (state) =>{
             state.admin = null;
