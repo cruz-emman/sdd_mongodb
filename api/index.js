@@ -8,6 +8,7 @@ import choicesRouter from './routers/choices.js'
 import authRouter from './routers/auth.js'
 import resultsRouter from './routers/results.js'
 import completedRouter from './routers/completed.js'
+import userRoute from './routers/userRoute.js'
 const PORT = process.env.PORT || 3000;
 
 const app = express()
@@ -31,6 +32,7 @@ app.use('/api/choices', choicesRouter)
 app.use('/api/results',resultsRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/completed', completedRouter)
+app.use('/api/', userRoute);
 
 app.listen(PORT, () =>{
     connectDB()

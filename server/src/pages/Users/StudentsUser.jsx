@@ -7,11 +7,25 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import {  publicRequest } from '../../utils/publicRequest';
 
 
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const formData = new FormData();
+    formData.append('file', e.target.file.files[0]); // Updated to access file input using name 'file'
+    await publicRequest.post('/importUser', formData);
+
+    console.log('IMPORTED SUCCESFULLY')
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 const StudentsUser = () => {
 
   const location = useLocation()
   const pathname = location.pathname.split('/')[1]
-  const [file, setFile] = useState(null);
 
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([])
@@ -42,22 +56,7 @@ const StudentsUser = () => {
     }
 };
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-  const handleSubmit = async (event) => {
-    event.preventDefault();
 
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const response = await publicRequest.post('/users/import-user', formData);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   const columns = [
     
     { field: 'firstName', headerName: 'First Name', width: 150 },
@@ -105,13 +104,15 @@ const StudentsUser = () => {
               <Link to={`/${pathname}/add`}>
                 <Button variant='contained' color="success">Add User</Button>
               </Link>
-                          
-              <form onSubmit={handleSubmit}>
-                <input type="file" onChange={handleFileChange} />
-                <Button variant="contained" type="submit">Import</Button>
-              </form>   
-            </Box>
+              
+              
+              <form encType="multipart/form-data" onSubmit={handleSubmit} action="/importUser" method="post">
+                 <input type="file" name="file" />
+                  <Button variant="outlined" type='submit'>Import CSV</Button>
+              </form>
 
+
+            </Box>
 
 
           </Box>
