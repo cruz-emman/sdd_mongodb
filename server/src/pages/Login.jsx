@@ -10,7 +10,9 @@ import { resetState } from '../redux/adminSlice'
 const Login = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const {admin, isFetching, isError, isSuccess} = useSelector((state) => state.admin)
+  const {admin, isFetching, isError, isSuccess, isMessage} = useSelector((state) => state.admin)
+
+
 
 
   const [userAdmin, setAdmin] = useState({
@@ -30,7 +32,7 @@ const Login = () => {
 
   useEffect(() =>{
     if(isError){
-      toast.error("Incorrect Username or Password")
+      toast.error(isMessage)
     }
     dispatch(resetState())
   },[dispatch, isError])

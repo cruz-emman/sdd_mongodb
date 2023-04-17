@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material'
 import React,{ useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
@@ -21,6 +21,13 @@ import Part3Number9 from '../components/Tables/Part3Number9'
 import Part3Number10 from '../components/Tables/Part3Number10'
 import Part3Number11 from '../components/Tables/Part3Number11'
 import Part4Number1 from '../components/Tables/Part4Number1'
+import Part4Number2 from '../components/Tables/Part4Number2'
+import Part4Number3 from '../components/Tables/Part4Number3'
+import Part4Number4 from '../components/Tables/Part4Number4'
+import Part4Number5 from '../components/Tables/Part4Number5'
+import Part4Number6 from '../components/Tables/Part4Number6'
+
+
 
 const Dashboard = () => {
 
@@ -46,6 +53,8 @@ const Dashboard = () => {
   const [placeData, setPlaceData] = useState([])
   const [yearsData, setYearsData] = useState([])
   const [salaryData, setSalaryData] = useState([])
+  const [ethothersData, setEthothersData] = useState([])
+  const [ethnicityothersData, setEthnicityothersData] = useState([])
 
   useEffect(() =>{
     setLoading(true)
@@ -94,6 +103,9 @@ const Dashboard = () => {
           const getYears = await publicRequest.get(`/results/resultChart?question_order=16&affiliate=${affiliation}&part=part1`)
           setYearsData(getYears.data)
 
+          const getEthnicityothers = await publicRequest.get(`/results/resultEssay?question_order=5&affiliate=${affiliation}&part=part1`)
+          setEthnicityothersData(getEthnicityothers.data)
+
           setGetTotal(res.data)
         }
         setLoading(false)
@@ -103,7 +115,7 @@ const Dashboard = () => {
       }
     }
     getTotal()
-  },[setGetTotal])
+  },[setGetTotal, setAgeData, setGenderData, setCivilData, setEthnicityData, setNoofchildData, setAgeofchildData, setEducationData, setSpouseData, setPlaceData, setPositionData, setSalaryData, setYearsData, setEthnicityothersData])
 
 
   return (
@@ -132,6 +144,24 @@ const Dashboard = () => {
           <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}>Ethnicity</Typography>
             <BarChartResults data={ethnicityData} />
+
+            <Accordion sx={{ width: '100%' }}>
+              <AccordionSummary sx={{
+                "&:hover": {
+                  backgroundColor: "#797D7F",
+                  color: "#fff"
+                }
+              }} aria-controls="panel1a-content" id="panel1a-header">
+                <Typography>Others</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                {ethnicityothersData.map((data) => (
+                  <Typography sx={{borderBottom:1, borderColor:'gray', py:1}} key={data._id}>
+                    {data.essay}  
+                  </Typography>
+                ))}
+              </AccordionDetails>
+            </Accordion>
           </Box>
 
           <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
@@ -199,11 +229,16 @@ const Dashboard = () => {
             <Part3Number9 />
             <Part3Number10 />
             <Part3Number11 />
-          </Box>
+          </Box>    
 
           <Box sx={{display:'flex', flexDirection:'column', gap:1, py:2, boxShadow:3, alignItems:'center', backgroundColor:'#E5E4E2', width:'100%'}}>
             <Typography variant="h6" fontWeight={700}  >PART II B</Typography>
             <Part4Number1 />
+            <Part4Number2 />
+            <Part4Number3 />
+            <Part4Number4 />
+            <Part4Number5 />
+            <Part4Number6 />
 
           </Box>
 

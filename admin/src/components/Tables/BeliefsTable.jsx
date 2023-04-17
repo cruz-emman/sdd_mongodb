@@ -3,8 +3,12 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import BeatLoader from "react-spinners/BeatLoader";
 import { publicRequest } from '../../utils/publicRequest';
 import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom';
 
 const BeliefsTable = () => {
+
+    const location = useLocation()
+    const category = location.pathname.split("/")[1].split("Dashboard")[0]
 
 
     const {admin} = useSelector((state) => state.admin)
@@ -28,84 +32,262 @@ const BeliefsTable = () => {
   useEffect(() =>{
     const getTables = async () =>{
         try {
-            const getTable5 = await publicRequest.get(`/results/resultChart?question_order=5&affiliate=${affiliation}&part=part2`);
-            const sortData5 = getTable5.data.sort((a, b) => {
-            const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
-            return choices.indexOf(b.name) - choices.indexOf(a.name);
-          });
-          setTable5(sortData5);
-
-            const getTable6 = await publicRequest.get(`/results/resultChart?question_order=6&affiliate=${affiliation}&part=part2`);
-            const sortData6 = getTable6.data.sort((a, b) => {
-            const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
-            return choices.indexOf(b.name) - choices.indexOf(a.name);
-          });
-          setTable6(sortData6);
-
-            const getTable7 = await publicRequest.get(`/results/resultChart?question_order=7&affiliate=${affiliation}&part=part2`);
-            const sortData7 = getTable7.data.sort((a, b) => {
-            const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
-            return choices.indexOf(b.name) - choices.indexOf(a.name);
-          });
-          setTable7(sortData7);
-
-            const getTable8 = await publicRequest.get(`/results/resultChart?question_order=8&affiliate=${affiliation}&part=part2`);
-            const sortData8 = getTable8.data.sort((a, b) => {
-            const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
-            return choices.indexOf(b.name) - choices.indexOf(a.name);
-          });
-          setTable8(sortData8);
-
-            const getTable9 = await publicRequest.get(`/results/resultChart?question_order=9&affiliate=${affiliation}&part=part2`);
-            const sortData9 = getTable9.data.sort((a, b) => {
-            const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
-            return choices.indexOf(b.name) - choices.indexOf(a.name);
-          });
-            setTable9(sortData9);
-
-            const getTable10 = await publicRequest.get(`/results/resultChart?question_order=10&affiliate=${affiliation}&part=part2`);
-            const sortData10 = getTable10.data.sort((a, b) => {
-            const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
-            return choices.indexOf(b.name) - choices.indexOf(a.name);
-          });
-          setTable10(sortData10);
-
-          const getTable11 = await publicRequest.get(`/results/resultChart?question_order=11&affiliate=${affiliation}&part=part2`);
-          const sortData11 = getTable11.data.sort((a, b) => {
-          const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
-          return choices.indexOf(b.name) - choices.indexOf(a.name);
-        });
-        setTable11(sortData11);
-
-        const getTable12 = await publicRequest.get(`/results/resultChart?question_order=12&affiliate=${affiliation}&part=part2`);
-        const sortData12 = getTable12.data.sort((a, b) => {
-        const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
-        return choices.indexOf(b.name) - choices.indexOf(a.name);
-      });
-      setTable12(sortData12);
-
-        const getTable13 = await publicRequest.get(`/results/resultChart?question_order=13&affiliate=${affiliation}&part=part2`);
-        const sortData13 = getTable13.data.sort((a, b) => {
-        const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
-        return choices.indexOf(b.name) - choices.indexOf(a.name);
-        });
-        setTable13(sortData13);
-
-        const getTable14 = await publicRequest.get(`/results/resultChart?question_order=14&affiliate=${affiliation}&part=part2`);
-        const sortData14 = getTable14.data.sort((a, b) => {
-        const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
-        return choices.indexOf(b.name) - choices.indexOf(a.name);
-    });
-        setTable14(sortData14);
-
-        const getTable15 = await publicRequest.get(`/results/resultChart?question_order=15&affiliate=${affiliation}&part=part2`);
-        const sortData15 = getTable15.data.sort((a, b) => {
-        const choices = ['5 Strongly Agree', '4 Agree', '3 Neutral', '2 Disagree', '1 Strongly Disagree'];
-        return choices.indexOf(b.name) - choices.indexOf(a.name);
-      });
-      setTable15(sortData15);
             
+            
+            if(superAdmin === true){
+                const getTable5 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=5&category=${category}&part=part2`);
+                const choices5 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData5 = choices5.map(choice => {
+                const data = getTable5.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable5(sortData5);
+
+                const getTable6 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=6&category=${category}&part=part2`);
+                const choices6 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData6 = choices6.map(choice => {
+                const data = getTable6.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable6(sortData6);
+
+                const getTable7 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=7&category=${category}&part=part2`);
+                const choices7 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData7 = choices7.map(choice => {
+                const data = getTable7.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable7(sortData7);
+
+                const getTable8 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=8&category=${category}&part=part2`);
+                const choices8 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData8 = choices8.map(choice => {
+                const data = getTable8.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable8(sortData8);
+
+                const getTable9 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=9&category=${category}&part=part2`);
+                const choices9 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData9 = choices9.map(choice => {
+                const data = getTable9.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable9(sortData9);
+
+                const getTable10 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=10&category=${category}&part=part2`);
+                const choices10 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData10 = choices10.map(choice => {
+                const data = getTable10.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable10(sortData10);
+
+                const getTable11 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=11&category=${category}&part=part2`);
+                const choices11 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData11 = choices11.map(choice => {
+                const data = getTable11.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable11(sortData11);
+
+                const getTable12 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=12&category=${category}&part=part2`);
+                const choices12 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData12 = choices12.map(choice => {
+                const data = getTable12.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable12(sortData12);
+
+                const getTable13 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=13&category=${category}&part=part2`);
+                const choices13 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData13 = choices13.map(choice => {
+                const data = getTable13.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable13(sortData13);
+
+                const getTable14 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=14&category=${category}&part=part2`);
+                const choices14 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData14 = choices14.map(choice => {
+                const data = getTable14.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable14(sortData14);
+
+                const getTable15 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=15&category=${category}&part=part2`);
+                const choices15 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData15 = choices15.map(choice => {
+                const data = getTable15.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable15(sortData15);
+
+                //
+
+                setLoading(false)
+
+            }else if(superAdmin === false){
+
+                const getTable5 = await publicRequest.get(`/results/resultChart?question_order=5&affiliate=${affiliation}&part=part2`);
+                const choices5 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData5 = choices5.map(choice => {
+                const data = getTable5.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable5(sortData5);
+
+                const getTable6 = await publicRequest.get(`/results/resultChart?question_order=6&affiliate=${affiliation}&part=part2`);
+                const choices6 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData6 = choices6.map(choice => {
+                const data = getTable6.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable6(sortData6);
+
+                const getTable7 = await publicRequest.get(`/results/resultChart?question_order=7&affiliate=${affiliation}&part=part2`);
+                const choices7 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData7 = choices7.map(choice => {
+                const data = getTable7.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable7(sortData7);
+
+                const getTable8 = await publicRequest.get(`/results/resultChart?question_order=8&affiliate=${affiliation}&part=part2`);
+                const choices8 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData8 = choices8.map(choice => {
+                const data = getTable8.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable8(sortData8);
+
+                const getTable9 = await publicRequest.get(`/results/resultChart?question_order=9&affiliate=${affiliation}&part=part2`);
+                const choices9 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData9 = choices9.map(choice => {
+                const data = getTable9.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable9(sortData9);
+
+                const getTable10 = await publicRequest.get(`/results/resultChart?question_order=10&affiliate=${affiliation}&part=part2`);
+                const choices10 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData10 = choices10.map(choice => {
+                const data = getTable10.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable10(sortData10);
+
+                const getTable11 = await publicRequest.get(`/results/resultChart?question_order=11&affiliate=${affiliation}&part=part2`);
+                const choices11 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData11 = choices11.map(choice => {
+                const data = getTable11.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable11(sortData11);
+
+                const getTable12 = await publicRequest.get(`/results/resultChart?question_order=12&affiliate=${affiliation}&part=part2`);
+                const choices12 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData12 = choices12.map(choice => {
+                const data = getTable12.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable12(sortData12);
+
+                const getTable13 = await publicRequest.get(`/results/resultChart?question_order=13&affiliate=${affiliation}&part=part2`);
+                const choices13 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData13 = choices13.map(choice => {
+                const data = getTable13.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable13(sortData13);
+
+                const getTable14 = await publicRequest.get(`/results/resultChart?question_order=14&affiliate=${affiliation}&part=part2`);
+                const choices14 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData14 = choices14.map(choice => {
+                const data = getTable14.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable14(sortData14);
+
+                const getTable15 = await publicRequest.get(`/results/resultChart?question_order=15&affiliate=${affiliation}&part=part2`);
+                const choices15 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];
+                const sortData15 = choices15.map(choice => {
+                const data = getTable15.data.find(item => item.name.includes(choice));
+                return {
+                    name: choice,
+                    count: data ? data.count : 0,
+                    };
+                });
+                setTable15(sortData15);
+                
             setLoading(false)
+
+            }
+
+            
         } catch (error) {
             
         }

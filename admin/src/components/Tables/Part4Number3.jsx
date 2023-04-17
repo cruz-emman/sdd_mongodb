@@ -5,11 +5,12 @@ import { publicRequest } from '../../utils/publicRequest';
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom';
 
-const Part4Number1 = () => {
+const Part4Number3 = () => {
 
     const location = useLocation()
     const category = location.pathname.split("/")[1].split("Dashboard")[0]
 
+    
     const {admin} = useSelector((state) => state.admin)
     const {affiliation, superAdmin} = admin
     const no_underscore_affiliation = affiliation.replace(/_/g, " ")
@@ -20,15 +21,12 @@ const Part4Number1 = () => {
 
     const [ethnicityothersData, setEthnicityothersData] = useState([])
 
-
-
     useEffect(() => {
         const getTables = async () => {
             try {
-
                 if(superAdmin === true){
-                    const getTable16 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=1&category=${category}&part=part4`);
-                    const choices16 = ['GAD Orientation', 'Gender Mainstreaming', 'GAD Analysis Tools', 'Gender Mainstreaming Evaluation Framework', 'Gender Sensitivity Training', 'GAD Planning and Budgeting', 'Harmonized Gender and Development Guidelines',  'Others, enumerate', 'No'];
+                    const getTable16 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=3&category=${category}&part=part4`);
+                    const choices16 = ['National Womens Month Celebration', 'GAD Corner/ Bulletin Child Minding/ Daycare Center/ Lactation/ Breastfeeding Station, enumerate', 'Use of Gender Fair Language', '18-day Campaign to End Violence Against Women and Children', 'GAD Awareness thru Film Showing', 'Others, enumerate', 'No'];
                     const sortData16 = choices16.map(choice => {
                     const data = getTable16.data.find(item => item.name.includes(choice));
                     return {
@@ -38,18 +36,15 @@ const Part4Number1 = () => {
                     });
                     setTable16(sortData16);
                     setLoading(false) 
-                    console.log(getTable16.data)
 
-                    const getEthnicityothers = await publicRequest.get(`/results/resultEssaySuperAdmin?question_order=1&category=${category}&part=part4`)
+                    const getEthnicityothers = await publicRequest.get(`/results/resultEssaySuperAdmin?question_order=3&category=${category}&part=part4`)
                     setEthnicityothersData(getEthnicityothers.data)
                     console.log(getEthnicityothers.data)
                     setLoading(false)
 
-                    
-
                 }else if(superAdmin === false){
-                    const getTable16 = await publicRequest.get(`/results/resultChart?question_order=1&affiliate=${affiliation}&part=part4`);
-                    const choices16 = ['GAD Orientation', 'Gender Mainstreaming', 'GAD Analysis Tools', 'Gender Mainstreaming Evaluation Framework', 'Gender Sensitivity Training', 'GAD Planning and Budgeting', 'Harmonized Gender and Development Guidelines',  'Others, enumerate', 'No'];
+                    const getTable16 = await publicRequest.get(`/results/resultChart?question_order=3&affiliate=${affiliation}&part=part4`);
+                    const choices16 = ['National Womens Month Celebration', 'GAD Corner/ Bulletin Child Minding/ Daycare Center/ Lactation/ Breastfeeding Station, enumerate', 'Use of Gender Fair Language', '18-day Campaign to End Violence Against Women and Children', 'GAD Awareness thru Film Showing', 'Others, enumerate', 'No'];
                     const sortData16 = choices16.map(choice => {
                     const data = getTable16.data.find(item => item.name.includes(choice));
                     return {
@@ -58,16 +53,12 @@ const Part4Number1 = () => {
                         };
                     });
                     setTable16(sortData16);
-
-                    const getEthnicityothers = await publicRequest.get(`/results/resultEssay?question_order=1&affiliate=${affiliation}&part=part4`)
+                    const getEthnicityothers = await publicRequest.get(`/results/resultEssay?question_order=3&affiliate=${affiliation}&part=part4`)
                     setEthnicityothersData(getEthnicityothers.data)
                     console.log(getEthnicityothers.data)
                    
                     setLoading(false)
                 }
-                
-                    
-                
             } catch (error) {
                 console.log(error)
             }
@@ -83,13 +74,11 @@ const Part4Number1 = () => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Question</TableCell>
-                                <TableCell>GAD Orientation</TableCell>
-                                <TableCell>Gender Mainstreaming</TableCell>
-                                <TableCell>GAD Analysis Tools</TableCell>
-                                <TableCell>Gender Mainstreaming Evaluation Framework</TableCell>
-                                <TableCell>Gender Sensitivity Training</TableCell>
-                                <TableCell>GAD Planning and Budgeting</TableCell>
-                                <TableCell>Harmonized Gender and Development Guidelines</TableCell>
+                                <TableCell>National Women's Month Celebration</TableCell>
+                                <TableCell>GAD Corner/ Bulletin Child Minding/ Daycare Center/ Lactation/ Breastfeeding Station</TableCell>
+                                <TableCell>Use of Gender Fair Language</TableCell>
+                                <TableCell>18-day Campaign to End Violence Against Women and Children</TableCell>
+                                <TableCell>GAD Awareness thru Film Showing</TableCell>
                                 <TableCell>Others</TableCell>
                                 <TableCell>No</TableCell>
                             </TableRow>
@@ -107,7 +96,7 @@ const Part4Number1 = () => {
                             />
                             ):(
                                 <>
-                                    <TableCell sx={{ width: "30%", borderRight:1 }}>1) Have you attended GAD seminars/trainings</TableCell>
+                                    <TableCell sx={{ width: "30%",  borderRight:1 }}>3) Are you aware of the GAD programs in your organization</TableCell>
                                 {table16.map((item, index) =>{
                                     return(
                                         <TableCell key={index}>{item.count}</TableCell>
@@ -117,13 +106,12 @@ const Part4Number1 = () => {
                                 </>
                             
                         )}
-
-
                         </TableRow>
 
                      </TableBody>
 
                     </Table>
+
                     <Accordion sx={{ width: '100%' }}>
                         <AccordionSummary sx={{
                             "&:hover": {
@@ -146,4 +134,4 @@ const Part4Number1 = () => {
     );
 }
 
-export default Part4Number1;
+export default Part4Number3;

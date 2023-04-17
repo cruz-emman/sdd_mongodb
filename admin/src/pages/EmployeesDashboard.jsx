@@ -26,11 +26,8 @@ import Part4Number3 from '../components/Tables/Part4Number3'
 import Part4Number4 from '../components/Tables/Part4Number4'
 import Part4Number5 from '../components/Tables/Part4Number5'
 import Part4Number6 from '../components/Tables/Part4Number6'
-import { useLocation } from 'react-router-dom'
 
-const StudentsDashboard = () => {
-
-
+const EmployeesDashboard = () => {
 
   const {admin} = useSelector((state) => state.admin)
   const {affiliation, superAdmin} = admin
@@ -63,55 +60,52 @@ const StudentsDashboard = () => {
       try {
         if(superAdmin === false){
 
-          const res = await publicRequest.get(`/completed/getTotalAffiliation?category=students`)
-          console.log(res.data)
-
-
+          const res = await publicRequest.get(`/completed/getTotalAffiliation?category=employees`)
+        
           setGetTotal(res.data)
 
         }else if(superAdmin === true){
           const res = await publicRequest.get(`/completed/getTotalAffiliation?affiliate=${affiliation}`)
 
-          const getAge = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=1&category=students&part=part1`)
+          const getAge = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=1&category=employees&part=part1`)
           console.log(getAge.data)
           setAgeData(getAge.data)
 
-          const getGender = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=2&category=students&part=part1`)
+          const getGender = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=2&category=employees&part=part1`)
           setGenderData(getGender.data)
 
-          const getCivil = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=4&category=students&part=part1`)
+          const getCivil = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=4&category=employees&part=part1`)
           setCivilData(getCivil.data)
 
-          const getEthnicity = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=5&category=students&part=part1`)
+          const getEthnicity = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=5&category=employees&part=part1`)
           setEthnicityData(getEthnicity.data)
 
-          const getNoofchild = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=6&category=students&part=part1`)
+          const getNoofchild = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=6&category=employees&part=part1`)
           setNoofchildData(getNoofchild.data)
 
-          const getAgeofchild = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=7&category=students&part=part1`)
+          const getAgeofchild = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=7&category=employees&part=part1`)
           setAgeofchildData(getAgeofchild.data)
 
-          const getEducation = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=8&category=students&part=part1`)
+          const getEducation = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=8&category=employees&part=part1`)
           setEducationData(getEducation.data)
 
-          const getSpouse = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=10&category=students&part=part1`)
+          const getSpouse = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=9&category=employees&part=part1`)
           setSpouseData(getSpouse.data)
 
-          const getPlace = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=12&category=students&part=part1`)
+          const getPlace = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=14&category=employees&part=part1`)
           setPlaceData(getPlace.data)
 
-          const getPosition = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=13&category=students&part=part1`)
+          const getPosition = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=11&category=employees&part=part1`)
           setPositionData(getPosition.data)
 
-          const getSalary = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=15&category=students&part=part1`)
+          const getSalary = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=13&category=employees&part=part1`)
           setSalaryData(getSalary.data)
 
-          const getYears = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=16&category=students&part=part1`)
+          const getYears = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=15&category=employees&part=part1`)
           setYearsData(getYears.data)
 
-          const getEthnicityothers = await publicRequest.get(`/results/resultEssay?question_order=5&affiliate=ppsc_students&part=part1`)
+          const getEthnicityothers = await publicRequest.get(`/results/resultEssay?question_order=5&affiliate=ppsc_employees&part=part1`)
           setEthnicityothersData(getEthnicityothers.data)
-
 
           setGetTotal(res.data)
         }
@@ -131,7 +125,7 @@ const StudentsDashboard = () => {
       <Box sx={{display:'flex', flex:6, flexDirection:'column'}}>
         <Navbar />
         <Box sx={{display:'flex', flexWrap:'wrap', p:4, gap:4, alignItems:'center', justifyContent:'center' , flexDirection:'column', width: '100%'}}>
-        <Typography variant='h3' color="black">STUDENTS DASHBOARD</Typography>
+        <Typography variant='h3' color="black">EMPLOYEES DASHBOARD</Typography>
           {/* AGE */}
           <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}  >Age</Typography>
@@ -152,6 +146,7 @@ const StudentsDashboard = () => {
             <Typography variant="h6" fontWeight={700}>Ethnicity</Typography>
             <BarChartResults data={ethnicityData} />
 
+
             <Accordion sx={{ width: '100%' }}>
               <AccordionSummary sx={{
                 "&:hover": {
@@ -170,6 +165,8 @@ const StudentsDashboard = () => {
               </AccordionDetails>
             </Accordion>
           </Box>
+
+          
 
           <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}>Number of Children</Typography>
@@ -261,4 +258,4 @@ const StudentsDashboard = () => {
   )
 }
 
-export default StudentsDashboard
+export default EmployeesDashboard

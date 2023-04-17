@@ -1,7 +1,7 @@
 import AdminUser from "../model/AdminUser.js";
 
 export const AddAdmin = async (req,res) =>{
-    const {firstName, lastName, middleName, suffix, email, affiliation, password} = req.body;
+    const {firstName, lastName, middleName, suffix, email, affiliation, password, superAdmin, techAdmin} = req.body;
 
     if(!firstName || !lastName || !email || !affiliation ) 
     return res.status(400).json("Please add all fields")
@@ -14,7 +14,9 @@ export const AddAdmin = async (req,res) =>{
             suffix,
             email,
             affiliation,
-            password
+            password,
+            superAdmin,
+            techAdmin
         })
         const savedAdmin = await newAdmin.save()
         res.status(200).json(savedAdmin)

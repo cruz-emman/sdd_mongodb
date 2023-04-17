@@ -3,8 +3,12 @@ import React, { useState, useEffect } from 'react';
 import BeatLoader from "react-spinners/BeatLoader";
 import { publicRequest } from '../../utils/publicRequest';
 import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom';
 
 const Part3Number3 = () => {
+
+    const location = useLocation()
+    const category = location.pathname.split("/")[1].split("Dashboard")[0]
 
     const {admin} = useSelector((state) => state.admin)
     const {affiliation, superAdmin} = admin
@@ -17,13 +21,32 @@ const Part3Number3 = () => {
     useEffect(() => {
         const getTables = async () => {
             try {
-                const getTable18 = await publicRequest.get(`/results/resultChart?question_order=3&affiliate=${affiliation}&part=part3`)
-                const sortData18 = getTable18.data.sort((a, b) => {
-                    const choices = ['Yes', 'No'];
-                    return choices.indexOf(b.name) - choices.indexOf(a.name);
-                  });
-                setTable18(sortData18)
-                setLoading(false)
+                if(superAdmin === true){
+                    const getTable18 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=3&category=${category}&part=part3`);
+                    const choices18 = ['Yes', 'No'];
+                    const sortData18 = choices18.map(choice => {
+                    const data = getTable18.data.find(item => item.name.includes(choice));
+                    return {
+                        name: choice,
+                        count: data ? data.count : 0,
+                        };
+                    });
+                    setTable18(sortData18);
+                    setLoading(false) 
+
+                }else if(superAdmin === false){
+                    const getTable18 = await publicRequest.get(`/results/resultChart?question_order=3&affiliate=${affiliation}&part=part3`);
+                    const choices18 = ['Yes', 'No'];
+                    const sortData18 = choices18.map(choice => {
+                    const data = getTable18.data.find(item => item.name.includes(choice));
+                    return {
+                        name: choice,
+                        count: data ? data.count : 0,
+                        };
+                    });
+                    setTable18(sortData18);
+                    setLoading(false)
+                }
             } catch (error) {
                 console.log(error)
             }
@@ -56,7 +79,7 @@ const Part3Number3 = () => {
                             />
                             ):(
                                 <>
-                                    <TableCell>3) My salary income is enough to support the needs of the family</TableCell>
+                                    <TableCell sx={{ width: "30%", borderRight:1 }}>3) My salary income is enough to support the needs of the family</TableCell>
                                 {table18.map((item) =>{
                                     return(
                                         <TableCell>{item.count}</TableCell>

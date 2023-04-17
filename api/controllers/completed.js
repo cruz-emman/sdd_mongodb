@@ -39,14 +39,14 @@ export const GetComplete = async (req,res) =>{
 
 export const GetTotalByAffilation = async (req,res) =>{
     const affiliate = req.query.affiliate
+    const category = req.query.category
 
     try {
         let results
         if(affiliate){
              results = await Completed.find({affiliation: affiliate}).count()
-        } else{
-             results = await Completed.find().count()
-
+        } else if(category){
+             results = await Completed.find({category: category}).count()
         }
         res.status(200).json(results)
     } catch (error) {
@@ -66,7 +66,8 @@ export const GetRecentSurvey = async (req,res) =>{
                         .sort({createdAt: 'desc'})
 
         } else{
-             results = await Completed.find()
+             results = await Completed.find().populate({path: "email", select: "firstName  lastName email"})
+             .sort({createdAt: 'desc'})
         }
         res.status(200).json(results)
     } catch (error) {

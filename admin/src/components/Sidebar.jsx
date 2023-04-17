@@ -16,6 +16,7 @@ const Sidebar = () => {
   const {admin, isFetching, isError, isSuccess} = useSelector((state) => state.admin)
   const {affiliation, superAdmin} = admin
 
+
   const no_underscore_affiliation = affiliation.replace(/_/g, " ")
   const getCategory = affiliation.split("_")[1]
 
