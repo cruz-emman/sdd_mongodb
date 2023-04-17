@@ -81,7 +81,7 @@ const Part3Number10 = () => {
                             />
                             ):(
                                 <>
-                                    <TableCell>10) If child/ children are in school age, most of the time, the person attending the school activities is/are</TableCell>
+                                    <TableCell sx={{ width: "30%", borderRight:1 }}>10) If child/ children are in school age, most of the time, the person <br/> attending the school activities is/are</TableCell>
                                 {table25.map((item, index) =>{
                                     return(
                                         <TableCell key={index}>{item.count}</TableCell>

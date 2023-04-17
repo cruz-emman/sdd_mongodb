@@ -107,7 +107,7 @@ const Part4Number1 = () => {
                             />
                             ):(
                                 <>
-                                    <TableCell>1) Have you attended GAD seminars/trainings</TableCell>
+                                    <TableCell sx={{ width: "30%", borderRight:1 }}>1) Have you attended GAD seminars/trainings</TableCell>
                                 {table16.map((item, index) =>{
                                     return(
                                         <TableCell key={index}>{item.count}</TableCell>

@@ -101,7 +101,7 @@ const Part4Number2 = () => {
                             />
                             ):(
                                 <>
-                                    <TableCell>2) Have you attended/participated in forums, conferences or law dialogues on laws about women or human rights and Women's Rights</TableCell>
+                                    <TableCell sx={{ width: "30%", borderRight:1 }}>2) Have you attended/participated in forums, conferences or law dialogues on laws about women or human rights and Women's Rights</TableCell>
                                 {table16.map((item, index) =>{
                                     return(
                                         <TableCell key={index}>{item.count}</TableCell>

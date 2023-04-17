@@ -79,7 +79,7 @@ const Part3Number8 = () => {
                             />
                             ):(
                                 <>
-                                    <TableCell>8) I am forced to bring home office works most of the time</TableCell>
+                                    <TableCell sx={{ width: "30%",  borderRight:1 }}>8) I am forced to bring home office works most of the time</TableCell>
                                 {table23.map((item, index) =>{
                                     return(
                                         <TableCell key={index}>{item.count}</TableCell>

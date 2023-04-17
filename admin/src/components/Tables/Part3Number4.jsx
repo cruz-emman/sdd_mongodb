@@ -81,7 +81,7 @@ const Part3Number4 = () => {
                             />
                             ):(
                                 <>
-                                    <TableCell>4) Our house is</TableCell>
+                                    <TableCell sx={{ width: "30%", borderRight:1 }}>4) Our house is</TableCell>
                                 {table19.map((item, index) =>{
                                     return(
                                         <TableCell key={index} >{item.count}</TableCell>

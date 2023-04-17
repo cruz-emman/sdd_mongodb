@@ -99,7 +99,7 @@ const Part3Number2 = () => {
                             />
                             ):(
                                 <>
-                                    <TableCell>2) My source/s of income is/are</TableCell>
+                                    <TableCell sx={{ width: "30%",  borderRight:1 }}> 2) My source/s of income is/are</TableCell>
                                 {table17.map((item, index) =>{
                                     return(
                                         <TableCell key = {index} >{item.count}</TableCell>

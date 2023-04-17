@@ -80,7 +80,7 @@ const Part3Number7 = () => {
                             />
                             ):(
                                 <>
-                                    <TableCell>7) At home, there are occasions that we (siblings, relatives or other members of the family) fight and hurt each other physically</TableCell>
+                                    <TableCell sx={{ width: "30%",  borderRight:1 }}>7) At home, there are occasions that we (siblings, relatives or other <br /> members of the family) fight and hurt each other physically</TableCell>
                                 {table22.map((item, index) =>{
                                     return(
                                         <TableCell key={index}>{item.count}</TableCell>

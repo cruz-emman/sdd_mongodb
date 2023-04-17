@@ -96,7 +96,7 @@ const Part4Number3 = () => {
                             />
                             ):(
                                 <>
-                                    <TableCell>3) Are you aware of the GAD programs in your organization</TableCell>
+                                    <TableCell sx={{ width: "30%",  borderRight:1 }}>3) Are you aware of the GAD programs in your organization</TableCell>
                                 {table16.map((item, index) =>{
                                     return(
                                         <TableCell key={index}>{item.count}</TableCell>

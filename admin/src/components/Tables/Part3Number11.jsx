@@ -81,7 +81,7 @@ const Part3Number11 = () => {
                             />
                             ):(
                                 <>
-                                    <TableCell>11) If there are meetings in the barangay or subdivision, most of the time, the person attending is/are</TableCell>
+                                    <TableCell sx={{ width: "30%", borderRight:1 }}>11) If there are meetings in the barangay or subdivision, most of the time, <br/> the person attending is/are</TableCell>
                                 {table26.map((item, index) =>{
                                     return(
                                         <TableCell key={index}>{item.count}</TableCell>

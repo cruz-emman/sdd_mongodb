@@ -96,7 +96,7 @@ const Part4Number4 = () => {
                             />
                             ):(
                                 <>
-                                    <TableCell>4) Have you benefited from the GAD programs implemented by our organization? How and in what way?</TableCell>
+                                    <TableCell sx={{ width: "30%", borderRight:1 }}> 4) Have you benefited from the GAD programs implemented by our organization? How and in what way?</TableCell>
                                 {table16.map((item, index) =>{
                                     return(
                                         <TableCell key={index}>{item.count}</TableCell>

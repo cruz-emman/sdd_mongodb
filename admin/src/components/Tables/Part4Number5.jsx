@@ -58,7 +58,7 @@ const Part4Number5 = () => {
               <AccordionSummary sx={{
                             "&:hover": {
                             backgroundColor: "#797D7F",
-                            color: "#fff"
+                            color: "#fff",
                             }
                         }} aria-controls="panel1a-content" id="panel1a-header">
                 <Typography>5) I need to know more about GAD (If yes what do you whant to know more? If no why?)</Typography>

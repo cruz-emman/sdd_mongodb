@@ -79,7 +79,7 @@ const Part3Number9 = () => {
                             />
                             ):(
                                 <>
-                                    <TableCell>9) I can rest at home druing holidays and weekends </TableCell>
+                                    <TableCell sx={{ width: "30%",  borderRight:1 }}>9) I can rest at home druing holidays and weekends </TableCell>
                                 {table24.map((item, index) =>{
                                     return(
                                         <TableCell key={index}>{item.count}</TableCell>

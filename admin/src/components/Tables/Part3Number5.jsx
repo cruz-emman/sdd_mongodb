@@ -81,7 +81,7 @@ const Part3Number5 = () => {
                             />
                             ):(
                                 <>
-                                    <TableCell>5) At home, household chores like cooking, washing clothes, cleaning the house, etc is being done by</TableCell>
+                                    <TableCell sx={{ width: "30%", borderRight:1 }}>5) At home, household chores like cooking, washing clothes, <br/> cleaning the house, etc is being done by</TableCell>
                                 {table20.map((item, index) =>{
                                     return(
                                         <TableCell key={index}>{item.count}</TableCell>

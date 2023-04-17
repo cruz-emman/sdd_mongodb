@@ -79,7 +79,7 @@ const Part3Number3 = () => {
                             />
                             ):(
                                 <>
-                                    <TableCell>3) My salary income is enough to support the needs of the family</TableCell>
+                                    <TableCell sx={{ width: "30%", borderRight:1 }}>3) My salary income is enough to support the needs of the family</TableCell>
                                 {table18.map((item) =>{
                                     return(
                                         <TableCell>{item.count}</TableCell>

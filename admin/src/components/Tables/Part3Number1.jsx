@@ -65,8 +65,8 @@
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Questions</TableCell>
-                                    <TableCell>Yes</TableCell>
-                                    <TableCell>No</TableCell>
+                                    <TableCell >Yes</TableCell>
+                                    <TableCell >No</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -82,7 +82,7 @@
                                 />
                                 ):(
                                     <>
-                                        <TableCell>1) I am the breadwinner of the family</TableCell>
+                                        <TableCell sx={{ width: "30%", borderRight:1 }}>1) I am the breadwinner of the family</TableCell>
                                     {table16.map((item, index) =>{
                                         return(
                                             <TableCell key={index}>{item.count}</TableCell>
