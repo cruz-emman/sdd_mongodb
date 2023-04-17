@@ -15,7 +15,7 @@ const handleSubmit = async (e) => {
     formData.append('file', e.target.file.files[0]); // Updated to access file input using name 'file'
     await publicRequest.post('/importUser', formData);
 
-    console.log('IMPORTED SUCCESFULLEY')
+    console.log('IMPORTED SUCCESFULLY')
   } catch (error) {
     console.log(error);
   }
