@@ -66,7 +66,8 @@ export const GetRecentSurvey = async (req,res) =>{
                         .sort({createdAt: 'desc'})
 
         } else{
-             results = await Completed.find()
+             results = await Completed.find().populate({path: "email", select: "firstName  lastName email"})
+             .sort({createdAt: 'desc'})
         }
         res.status(200).json(results)
     } catch (error) {

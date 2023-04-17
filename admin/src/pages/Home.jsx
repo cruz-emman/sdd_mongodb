@@ -71,6 +71,11 @@ const Home = () => {
             const countDataFaculty = await publicRequest.get(`/completed/getTotalAffiliation?category=faculty`)
             const countDataStudents = await publicRequest.get(`/completed/getTotalAffiliation?category=students`)
 
+            const surveys = await publicRequest.get(`/completed/getRecentSurvey?`)
+            setRecentSurvey(surveys.data)
+
+
+
             setTotalFaculty(countDataFaculty.data)
             setTotalEmployees(countDataEmployeees.data)
             setTotalStudents(countDataStudents.data)
@@ -85,7 +90,6 @@ const Home = () => {
             //Part 1
             const question1Result = await publicRequest.get(`/results/resultChart?question_order=1&affiliate=${affiliation}&part=part1`)
 
-            console.log(surveys.data)
             setRecentSurvey(surveys.data)
             setGetTotal(countData.data)
           }
