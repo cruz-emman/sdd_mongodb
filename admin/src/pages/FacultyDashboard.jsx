@@ -1,5 +1,5 @@
-import { Accordion, Box, Typography, AccordionDetails, AccordionSummary } from '@mui/material'
-import React,{ useState, useEffect } from 'react'
+import { Accordion, Box, Typography, AccordionDetails, AccordionSummary, Checkbox, Button } from '@mui/material'
+import React,{ useState, useEffect, useRef } from 'react'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import RespondentsChart from '../components/RespondentsChart'
@@ -29,7 +29,66 @@ import { useLocation } from 'react-router-dom'
 import Part4Number6 from '../components/Tables/Part4Number6'
 
 
+
+import { useReactToPrint } from 'react-to-print';
+
+
 const FacultyDashboard = () => {
+
+
+
+  const [selectedBox, setSelectedBox] = useState(null);
+  const componentRefs = {
+    allData: useRef(),
+    ageData: useRef(),
+    genderData: useRef(),
+    civilData: useRef(),
+    ethnicityData: useRef(),
+    numOfChildData: useRef(),
+    ageRangeData: useRef(),
+    highestEducData: useRef(),
+    employmentStatData: useRef(),
+    mositionData: useRef(),
+    monthlyData: useRef(),
+    placeData: useRef(),
+    accuNumberData: useRef(),
+    personalExData: useRef(),
+    part2AData: useRef(),
+    part2BData: useRef()
+
+  };
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRefs[selectedBox].current,
+    documentTitle: 'EmployeeChartsPDF',
+    onAfterPrint: () => alert('Print PDF closed'),
+  });
+
+  const handleBoxSelect = (box) => {
+    setSelectedBox(box);
+  };
+  const handleAllDataSelect = (event) => {
+    if (event.target.checked) {
+      setSelectedBox('allData');
+    } else {
+      setSelectedBox(null);
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -133,25 +192,31 @@ const FacultyDashboard = () => {
       <Sidebar />
       <Box sx={{display:'flex', flex:6, flexDirection:'column'}}>
         <Navbar />
-        <Box sx={{display:'flex', flexWrap:'wrap', p:4, gap:4, alignItems:'center', justifyContent:'center' , flexDirection:'column', width: '100%'}}>
+        <Button sx={{position: 'absolute', margin:2}}  onClick={handlePrint} variant="outlined"> 
+              Print selected to PDF
+          </Button>
+        <Box  sx={{display:'flex', flexWrap:'wrap', p:4, gap:4, alignItems:'center', justifyContent:'center' , flexDirection:'column', width: '100%'}}>
         <Typography variant='h3' color="black">FACULTY DASHBOARD</Typography>
           {/* AGE */}
-          <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
+          <Box ref={componentRefs.ageData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}  >Age</Typography>
             <PieChartResults data={ageData} />
+            <Checkbox checked={selectedBox === 'ageData'} onChange={() => handleBoxSelect('ageData')} />
           </Box>
 
-          <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
+          <Box ref={componentRefs.genderData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}>Gender</Typography>
             <PieChartResults data={genderData} />
+              <Checkbox checked={selectedBox === 'genderData'} onChange={() => handleBoxSelect('genderData')} />
           </Box>
 
-          <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
+          <Box ref={componentRefs.civilData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}>Civil Status</Typography>
             <PieChartResults data={civilData} />
+              <Checkbox checked={selectedBox === 'civilData'} onChange={() => handleBoxSelect('civilData')} />
           </Box>
 
-          <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
+          <Box ref={componentRefs.ethnicityData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}>Ethnicity</Typography>
             <BarChartResults data={ethnicityData} />
 
@@ -173,63 +238,73 @@ const FacultyDashboard = () => {
                 ))}
               </AccordionDetails>
             </Accordion>
-
+            
+            <Checkbox checked={selectedBox === 'ethnicityData'} onChange={() => handleBoxSelect('ethnicityData')} />
 
           </Box>
 
-          <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
+          <Box ref={componentRefs.numOfChildData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}>Number of Children</Typography>
             <PieChartResults data={noofchildData} />
+            <Checkbox checked={selectedBox === 'numOfChildData'} onChange={() => handleBoxSelect('numOfChildData')} />
           </Box>
 
-          <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
+          <Box ref={componentRefs.ageRangeData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}>Age Range of Children</Typography>
             <BarChartResults data={ageofchildData} />
+            <Checkbox checked={selectedBox === 'ageRangeData'} onChange={() => handleBoxSelect('ageRangeData')} />
           </Box>
 
-          <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
+          <Box ref={componentRefs.highestEducData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}>Highest Educational Attainment</Typography>
             <PieChartResults data={educationData} />
+            <Checkbox checked={selectedBox === 'highestEducData'} onChange={() => handleBoxSelect('highestEducData')} />
           </Box>
 
-          <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
+          <Box ref={componentRefs.employmentStatData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}>Employment Status of Spouse</Typography>
             <PieChartResults data={spouseData} />
+              <Checkbox checked={selectedBox === 'employmentStatData'} onChange={() => handleBoxSelect('employmentStatData')} />
           </Box>
 
-          <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
+          <Box ref={componentRefs.positionData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}>Rank/ Position Title</Typography>
             <BarChartResults data={positionData} />
+              <Checkbox checked={selectedBox === 'positionData'} onChange={() => handleBoxSelect('positionData')} />
           </Box>
 
-          <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
+          <Box ref={componentRefs.monthlyData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}>Monthly Salary Bracket</Typography>
             <BarChartResults data={salaryData} />
+              <Checkbox checked={selectedBox === 'monthlyData'} onChange={() => handleBoxSelect('monthlyData')} />
           </Box>
 
-          <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
+          <Box ref={componentRefs.placeData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}>Place of Assignment</Typography>
             <BarChartResults data={placeData} />
+            <Checkbox checked={selectedBox === 'placeData'} onChange={() => handleBoxSelect('placeData')} />
           </Box>
 
-          <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
+          <Box ref={componentRefs.accuNumberData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}>Accumulated Number of Years in Government Service</Typography>
             <PieChartResults data={yearsData} />
+            <Checkbox checked={selectedBox === 'accuNumberData'} onChange={() => handleBoxSelect('accuNumberData')} />
           </Box>
 
 
           <Typography variant='h5' sx={{ display:'flex', justifyContent:'center' }}>PART 2</Typography>
           <Typography variant='h6' sx={{ display:'flex', justifyContent:'center' }}>Demographic Profile of Respondents</Typography>
 
-          <Box sx={{display:'flex', flexDirection:'column', gap:2, boxShadow:3, py:2,  alignItems:'center', backgroundColor:'#E5E4E2', width:'100%'}}>
+          <Box ref={componentRefs.personalExData} sx={{display:'flex', flexDirection:'column', gap:2, boxShadow:3, py:2,  alignItems:'center', backgroundColor:'#E5E4E2', width:'100%'}}>
           <Typography variant="h6" fontWeight={700}  >Personal Experience</Typography>
           <PersonalExperienceTable/>
 
           <Typography variant="h6" fontWeight={700}  >Beliefs, Opinions and Thoughts</Typography>
             <BeliefsTable /> 
+          <Checkbox checked={selectedBox === 'personalExData'} onChange={() => handleBoxSelect('personalExData')} />
           </Box>
 
-          <Box sx={{display:'flex', flexDirection:'column', gap:1, py:2, boxShadow:3, alignItems:'center', backgroundColor:'#E5E4E2', width:'100%'}}>
+          <Box ref={componentRefs.part2AData} sx={{display:'flex', flexDirection:'column', gap:1, py:2, boxShadow:3, alignItems:'center', backgroundColor:'#E5E4E2', width:'100%'}}>
             <Typography variant="h6" fontWeight={700}  >PART II A</Typography>
             <Part3Number1 />
             <Part3Number2 />
@@ -242,9 +317,10 @@ const FacultyDashboard = () => {
             <Part3Number9 />
             <Part3Number10 />
             <Part3Number11 />
+            <Checkbox checked={selectedBox === 'part2AData'} onChange={() => handleBoxSelect('part2AData')} />
           </Box>
 
-          <Box sx={{display:'flex', flexDirection:'column', gap:1, py:2, boxShadow:3, alignItems:'center', backgroundColor:'#E5E4E2', width:'100%'}}>
+          <Box ref={componentRefs.part2BData} sx={{display:'flex', flexDirection:'column', gap:1, py:2, boxShadow:3, alignItems:'center', backgroundColor:'#E5E4E2', width:'100%'}}>
             <Typography variant="h6" fontWeight={700}  >PART II B</Typography>
             <Part4Number1 />
             <Part4Number2 />
@@ -252,6 +328,7 @@ const FacultyDashboard = () => {
             <Part4Number4 />
             <Part4Number5 />
             <Part4Number6 />
+              <Checkbox checked={selectedBox === 'part2BData'} onChange={() => handleBoxSelect('part2BData')}/>
 
           </Box>
 
