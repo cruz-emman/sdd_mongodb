@@ -5,21 +5,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import {  publicRequest } from '../../utils/publicRequest';
-
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  try {
-    const formData = new FormData();
-    formData.append('file', e.target.file.files[0]); // Updated to access file input using name 'file'
-    await publicRequest.post('/importUser', formData);
-
-    console.log('IMPORTED SUCCESFULLY')
-  } catch (error) {
-    console.log(error);
-  }
-};
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const StudentsUser = () => {
@@ -30,22 +16,7 @@ const StudentsUser = () => {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([])
 
-  useEffect(() =>{
-   
-    const getFacultysUser = async () =>{
-        try {
-            const res = await publicRequest.get('/users')
-            const filteredDate = res.data.filter((user) => user.type === 'students')
-            setData(filteredDate)
-            
-            setLoading(false)
-        } catch (error) {
-            console.log({message: error.message})
-        }
-    }
-    getFacultysUser()
 
-  },[setData])
 
   const handleDelete = async (e) =>{
     try {
@@ -55,6 +26,23 @@ const StudentsUser = () => {
       console.log({message: error.message})
     }
 };
+
+
+const handleSubmitCSV = async (e) => {
+  e.preventDefault();
+
+  try {
+    const formData = new FormData();
+    formData.append('file', e.target.file.files[0]); // Updated to access file input using name 'file'
+    await publicRequest.post('/importUser', formData);
+    toast.success("Successfully Imported")
+
+  } catch (error) {
+    toast.error("Error uploading file: " + error.message)
+    console.log(error)
+  }
+};
+
 
 
   const columns = [
@@ -90,6 +78,23 @@ const StudentsUser = () => {
     },
   ];
   
+
+  useEffect(() =>{
+   
+    const getFacultysUser = async () =>{
+        try {
+            const res = await publicRequest.get('/users')
+            const filteredDate = res.data.filter((user) => user.type === 'students')
+            setData(filteredDate)
+            
+            setLoading(false)
+        } catch (error) {
+            console.log({message: error.message})
+        }
+    }
+    getFacultysUser()
+
+  },[setData])
   return (
     <Box sx={{display:'flex'}}>
           <Sidebar />
@@ -106,7 +111,7 @@ const StudentsUser = () => {
               </Link>
               
               
-              <form encType="multipart/form-data" onSubmit={handleSubmit} action="/importUser" method="post">
+              <form encType="multipart/form-data" onSubmit={handleSubmitCSV} action="/importUser" method="post">
                  <input type="file" name="file" />
                   <Button variant="outlined" type='submit'>Import CSV</Button>
               </form>

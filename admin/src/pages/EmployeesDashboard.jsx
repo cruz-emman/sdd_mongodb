@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography, CircularProgress  } from '@mui/material'
 import React,{ useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
@@ -108,8 +108,9 @@ const EmployeesDashboard = () => {
           setEthnicityothersData(getEthnicityothers.data)
 
           setGetTotal(res.data)
+          setLoading(false)
+
         }
-        setLoading(false)
       } catch (error) {
   
         setLoading(false)
@@ -129,7 +130,8 @@ const EmployeesDashboard = () => {
           {/* AGE */}
           <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}  >Age</Typography>
-            <PieChartResults data={ageData} />
+         
+<PieChartResults data={ageData} />
           </Box>
 
           <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>

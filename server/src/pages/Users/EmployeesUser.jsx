@@ -3,34 +3,35 @@ import React, {useEffect, useState} from 'react'
 import { Sidebar } from '../../components'
 import BeatLoader from "react-spinners/BeatLoader";
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import {  publicRequest } from '../../utils/publicRequest';
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  try {
-    const formData = new FormData();
-    formData.append('file', e.target.file.files[0]); // Updated to access file input using name 'file'
-    await publicRequest.post('/importUser', formData);
-
-    console.log('IMPORTED SUCCESFULLY')
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-
-
-
+import { ToastContainer, toast } from 'react-toastify';
 
 const EmployeesUser = () => {
 
   const location = useLocation()
   const pathname = location.pathname.split('/')[1]
+  const navigate = useNavigate()
 
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([])
+
+  const handleSubmitCSV = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const formData = new FormData();
+      formData.append('file', e.target.file.files[0]); // Updated to access file input using name 'file'
+      await publicRequest.post('/importUser', formData);
+      toast.info("Refreshing...")
+      navigate(0)
+    } catch (error) {
+      toast.error("Error uploading file: " + error.message)
+    }
+  };
+  
+
 
   useEffect(() =>{
    
@@ -92,6 +93,8 @@ const EmployeesUser = () => {
     },
   ];
   
+
+  
   return (
     <Box sx={{display:'flex'}}>
           <Sidebar />
@@ -107,7 +110,7 @@ const EmployeesUser = () => {
                 <Button variant='contained' color="success">Add User</Button>
               </Link>
         
-              <form encType="multipart/form-data" onSubmit={handleSubmit} action="/importUser" method="post">
+              <form encType="multipart/form-data" onSubmit={handleSubmitCSV} action="/importUser" method="post">
                  <input type="file" name="file" />
                   <Button variant="outlined" type='submit'>Import CSV</Button>
               </form>
