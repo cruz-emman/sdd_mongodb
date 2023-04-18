@@ -8,7 +8,7 @@ import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend } from 'rechar
 //   { name: 'Group D', value: 200 },
 // ];
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FA1E3C', '#D9F034', '#6B985E', '#572F95', '#C084B2', '#AE5C50', '#788889', '#137C2E'];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
