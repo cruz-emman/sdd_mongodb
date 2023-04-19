@@ -60,7 +60,7 @@ const FacultyDashboard = () => {
 
   const handlePrint = useReactToPrint({
     content: () => componentRefs[selectedBox].current,
-    documentTitle: 'EmployeeChartsPDF',
+    documentTitle: 'FacultyChartPDF',
     onAfterPrint: () => alert('Print PDF closed'),
   });
 
@@ -74,22 +74,6 @@ const FacultyDashboard = () => {
       setSelectedBox(null);
     }
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   const {admin} = useSelector((state) => state.admin)
@@ -192,11 +176,19 @@ const FacultyDashboard = () => {
       <Sidebar />
       <Box sx={{display:'flex', flex:6, flexDirection:'column'}}>
         <Navbar />
+        
         <Button sx={{position: 'absolute', margin:2}}  onClick={handlePrint} variant="outlined"> 
               Print selected to PDF
           </Button>
+
+          <Typography sx={{textAlign:'center'}}>PRINT ALL TO PDF</Typography>
+          <Checkbox sx={{p:3}} checked={selectedBox === 'allData'} onChange={() => handleBoxSelect('allData')} />
+
         <Box  sx={{display:'flex', flexWrap:'wrap', p:4, gap:4, alignItems:'center', justifyContent:'center' , flexDirection:'column', width: '100%'}}>
         <Typography variant='h3' color="black">FACULTY DASHBOARD</Typography>
+
+        <Box ref={componentRefs.allData}>
+
           {/* AGE */}
           <Box ref={componentRefs.ageData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}  >Age</Typography>
@@ -331,7 +323,7 @@ const FacultyDashboard = () => {
               <Checkbox checked={selectedBox === 'part2BData'} onChange={() => handleBoxSelect('part2BData')}/>
 
           </Box>
-
+          </Box>
         </Box>
 
         <Box sx={{ display:'flex', width:'100%', height:'100%', justifyContent:'center', flexDirection:'column', gap: 2 }}>

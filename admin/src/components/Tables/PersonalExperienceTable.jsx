@@ -38,7 +38,6 @@ const PersonalExperienceTable = () => {
                 };
               });
               setTable1(sortData1);
-              console.log(sortData1);
 
               const getTable2 = await publicRequest.get(`/results/resultChartSuperAdmin?question_order=2&category=${category}&part=part2`);
               const choices2 = ['1 Strongly Disagree', '2 Disagree', '3 Neutral', '4 Agree', '5 Strongly Agree'];

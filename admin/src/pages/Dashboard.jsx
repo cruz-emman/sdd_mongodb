@@ -39,6 +39,7 @@ const Dashboard = () => {
   const getCategory = affiliation.split("_")[1]
 
 
+
   const [getTotal, setGetTotal] = useState()
   const [loading, setLoading] = useState(true)
   const [ageData, setAgeData] = useState([])
@@ -124,7 +125,7 @@ const Dashboard = () => {
       <Box sx={{display:'flex', flex:6, flexDirection:'column'}}>
         <Navbar />
         <Box sx={{display:'flex', flexWrap:'wrap', p:4, gap:4, alignItems:'center', justifyContent:'center' , flexDirection:'column', width: '100%'}}>
-        <Typography variant='h3' color="black">FACULTY DASHBOARD</Typography>
+        <Typography variant='h3' color="black">{getCategory.toUpperCase()} DASHBOARD</Typography>
           {/* AGE */}
           <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}  >Age</Typography>

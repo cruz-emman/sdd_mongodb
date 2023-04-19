@@ -213,6 +213,9 @@ const StudentsDashboard = () => {
 
         <Box sx={{display:'flex', flexWrap:'wrap', p:4, gap:4, alignItems:'center', justifyContent:'center' , flexDirection:'column', width: '100%'}}>
         <Typography variant='h3' color="black">STUDENTS DASHBOARD</Typography>
+        <Box ref={componentRefs.allData}>
+
+        
           {/* AGE */}
           <Box ref={componentRefs.ageData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}  >Age</Typography>
@@ -348,7 +351,7 @@ const StudentsDashboard = () => {
             
             <Checkbox checked={selectedBox === 'part2BData'} onChange={() => handleBoxSelect('part2BData')}/>
           </Box>
-
+        </Box>
         </Box>
 
         <Box sx={{ display:'flex', width:'100%', height:'100%', justifyContent:'center', flexDirection:'column', gap: 2 }}>

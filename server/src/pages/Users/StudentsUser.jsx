@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react'
 import { Sidebar } from '../../components'
 import BeatLoader from "react-spinners/BeatLoader";
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import {  publicRequest } from '../../utils/publicRequest';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -12,7 +12,7 @@ const StudentsUser = () => {
 
   const location = useLocation()
   const pathname = location.pathname.split('/')[1]
-
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([])
 
