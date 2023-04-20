@@ -37,7 +37,7 @@ const Dashboard = () => {
   
   const no_underscore_affiliation = affiliation.replace(/_/g, " ")
   const getCategory = affiliation.split("_")[1]
-  console.log(getCategory)
+
 
 
   const [getTotal, setGetTotal] = useState()
@@ -66,93 +66,48 @@ const Dashboard = () => {
           setGetTotal(res.data)
 
         }else if(superAdmin === false){
-          if(getCategory === 'faculty' || getCategory === 'students'){
-            const res = await publicRequest.get(`/completed/getTotalAffiliation?affiliate=${affiliation}`)
+          const res = await publicRequest.get(`/completed/getTotalAffiliation?affiliate=${affiliation}`)
 
-            const getAge = await publicRequest.get(`/results/resultChart?question_order=1&affiliate=${affiliation}&part=part1`)
-            setAgeData(getAge.data)
-  
-            const getGender = await publicRequest.get(`/results/resultChart?question_order=2&affiliate=${affiliation}&part=part1`)
-            setGenderData(getGender.data)
-  
-            const getCivil = await publicRequest.get(`/results/resultChart?question_order=4&affiliate=${affiliation}&part=part1`)
-            setCivilData(getCivil.data)
-  
-            const getEthnicity = await publicRequest.get(`/results/resultChart?question_order=5&affiliate=${affiliation}&part=part1`)
-            setEthnicityData(getEthnicity.data)
-  
-            const getNoofchild = await publicRequest.get(`/results/resultChart?question_order=6&affiliate=${affiliation}&part=part1`)
-            setNoofchildData(getNoofchild.data)
-  
-            const getAgeofchild = await publicRequest.get(`/results/resultChart?question_order=7&affiliate=${affiliation}&part=part1`)
-            setAgeofchildData(getAgeofchild.data)
-  
-            const getEducation = await publicRequest.get(`/results/resultChart?question_order=8&affiliate=${affiliation}&part=part1`)
-            setEducationData(getEducation.data)
-  
-            const getSpouse = await publicRequest.get(`/results/resultChart?question_order=10&affiliate=${affiliation}&part=part1`)
-            setSpouseData(getSpouse.data)
-  
-            const getPlace = await publicRequest.get(`/results/resultChart?question_order=12&affiliate=${affiliation}&part=part1`)
-            setPlaceData(getPlace.data)
-  
-            const getPosition = await publicRequest.get(`/results/resultChart?question_order=13&affiliate=${affiliation}&part=part1`)
-            setPositionData(getPosition.data)
-  
-            const getSalary = await publicRequest.get(`/results/resultChart?question_order=15&affiliate=${affiliation}&part=part1`)
-            setSalaryData(getSalary.data)
-  
-            const getYears = await publicRequest.get(`/results/resultChart?question_order=16&affiliate=${affiliation}&part=part1`)
-            setYearsData(getYears.data)
-  
-            const getEthnicityothers = await publicRequest.get(`/results/resultEssay?question_order=5&affiliate=${affiliation}&part=part1`)
-            setEthnicityothersData(getEthnicityothers.data)
-  
-            setGetTotal(res.data)
-          }else if(getCategory === 'employees'){
-            const res = await publicRequest.get(`/completed/getTotalAffiliation?affiliate=${affiliation}`)
+          const getAge = await publicRequest.get(`/results/resultChart?question_order=1&affiliate=${affiliation}&part=part1`)
+          setAgeData(getAge.data)
 
-            const getAge = await publicRequest.get(`/results/resultChart?question_order=1&affiliate=${affiliation}&part=part1`)
-            setAgeData(getAge.data)
-  
-            const getGender = await publicRequest.get(`/results/resultChart?question_order=2&affiliate=${affiliation}&part=part1`)
-            setGenderData(getGender.data)
-  
-            const getCivil = await publicRequest.get(`/results/resultChart?question_order=4&affiliate=${affiliation}&part=part1`)
-            setCivilData(getCivil.data)
-  
-            const getEthnicity = await publicRequest.get(`/results/resultChart?question_order=5&affiliate=${affiliation}&part=part1`)
-            setEthnicityData(getEthnicity.data)
-  
-            const getNoofchild = await publicRequest.get(`/results/resultChart?question_order=6&affiliate=${affiliation}&part=part1`)
-            setNoofchildData(getNoofchild.data)
-  
-            const getAgeofchild = await publicRequest.get(`/results/resultChart?question_order=7&affiliate=${affiliation}&part=part1`)
-            setAgeofchildData(getAgeofchild.data)
-  
-            const getEducation = await publicRequest.get(`/results/resultChart?question_order=8&affiliate=${affiliation}&part=part1`)
-            setEducationData(getEducation.data)
-  
-            const getSpouse = await publicRequest.get(`/results/resultChart?question_order=9&affiliate=${affiliation}&part=part1`)
-            setSpouseData(getSpouse.data)
-  
-            const getPlace = await publicRequest.get(`/results/resultChart?question_order=14&affiliate=${affiliation}&part=part1`)
-            setPlaceData(getPlace.data)
-  
-            const getPosition = await publicRequest.get(`/results/resultChart?question_order=11&affiliate=${affiliation}&part=part1`)
-            setPositionData(getPosition.data)
-  
-            const getSalary = await publicRequest.get(`/results/resultChart?question_order=13&affiliate=${affiliation}&part=part1`)
-            setSalaryData(getSalary.data)
-  
-            const getYears = await publicRequest.get(`/results/resultChart?question_order=15&affiliate=${affiliation}&part=part1`)
-            setYearsData(getYears.data)
-  
-            const getEthnicityothers = await publicRequest.get(`/results/resultEssay?question_order=5&affiliate=${affiliation}&part=part1`)
-            setEthnicityothersData(getEthnicityothers.data)
-  
-            setGetTotal(res.data)
-          }
+          const getGender = await publicRequest.get(`/results/resultChart?question_order=2&affiliate=${affiliation}&part=part1`)
+          setGenderData(getGender.data)
+
+          const getCivil = await publicRequest.get(`/results/resultChart?question_order=4&affiliate=${affiliation}&part=part1`)
+          setCivilData(getCivil.data)
+
+          const getEthnicity = await publicRequest.get(`/results/resultChart?question_order=5&affiliate=${affiliation}&part=part1`)
+          setEthnicityData(getEthnicity.data)
+
+          const getNoofchild = await publicRequest.get(`/results/resultChart?question_order=6&affiliate=${affiliation}&part=part1`)
+          setNoofchildData(getNoofchild.data)
+
+          const getAgeofchild = await publicRequest.get(`/results/resultChart?question_order=7&affiliate=${affiliation}&part=part1`)
+          setAgeofchildData(getAgeofchild.data)
+
+          const getEducation = await publicRequest.get(`/results/resultChart?question_order=8&affiliate=${affiliation}&part=part1`)
+          setEducationData(getEducation.data)
+
+          const getSpouse = await publicRequest.get(`/results/resultChart?question_order=10&affiliate=${affiliation}&part=part1`)
+          setSpouseData(getSpouse.data)
+
+          const getPlace = await publicRequest.get(`/results/resultChart?question_order=12&affiliate=${affiliation}&part=part1`)
+          setPlaceData(getPlace.data)
+
+          const getPosition = await publicRequest.get(`/results/resultChart?question_order=13&affiliate=${affiliation}&part=part1`)
+          setPositionData(getPosition.data)
+
+          const getSalary = await publicRequest.get(`/results/resultChart?question_order=15&affiliate=${affiliation}&part=part1`)
+          setSalaryData(getSalary.data)
+
+          const getYears = await publicRequest.get(`/results/resultChart?question_order=16&affiliate=${affiliation}&part=part1`)
+          setYearsData(getYears.data)
+
+          const getEthnicityothers = await publicRequest.get(`/results/resultEssay?question_order=5&affiliate=${affiliation}&part=part1`)
+          setEthnicityothersData(getEthnicityothers.data)
+
+          setGetTotal(res.data)
         }
         setLoading(false)
       } catch (error) {
@@ -246,7 +201,7 @@ const Dashboard = () => {
           </Box>
 
           <Box sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
-            <Typography variant="h6" fontWeight={700}>Accumulated Number of Years</Typography>
+            <Typography variant="h6" fontWeight={700}>Accumulated Number of Years in Government Service</Typography>
             <PieChartResults data={yearsData} />
           </Box>
 
