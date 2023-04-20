@@ -13,6 +13,7 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
   const [getGridQuestion, setGridQuestion] = useState()
   const [specificQuestion, setSpecificQuestion] = useState()
 
+
   const [loading, setLoading] = useState(true)
   
   useEffect(() =>{
@@ -92,6 +93,13 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
                 <input className="toggle-button__state" type="radio" name="headerChoice" id="openChoices" />
                 <span  className="toggle-button__text">Employed</span>
               </label>
+
+              </>
+            ):(
+              <>
+                <label className="toggle-button" key={choice.id} onClick={() => handleClick(choice)}>
+                  <input className="toggle-button__state" type="checkbox" name="choice" value={choice.choices} onChange={handleChange}/>
+
               <label className='toggle-button' onClick={handleClickOpenChoices}>
                 <input className="toggle-button__state" type="radio" name="headerChoice" value="Unemployed" id="closeChoices" onChange={handleChange} />
                 <span  className="toggle-button__text">Unemployed</span>
@@ -136,6 +144,7 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
                 <>
                  <label className="toggle-button" key={choice.id} onClick={() => handleClick(choice)}>
                   <input className="toggle-button__state" type="radio" name="choice" value={choice.choices} onChange={handleChange} />
+
                   <span className="toggle-button__text">{choice.choices}</span>
                   {/* {openChoiceId === choice.choices && choice.essay === true && <TextField id="outlined-basic" fullWidth name="essay" onChange={handleTextFieldChange}  mt={2} size='small' required label="Specify" variant="standard" />} */}
                 </label>
