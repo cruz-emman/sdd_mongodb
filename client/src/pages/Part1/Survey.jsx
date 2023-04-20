@@ -61,6 +61,7 @@ import { completeCard2 } from '../../redux/cardSlice';
             }
           
             const newAnswer = { ...answer, choice: newChoice };
+
             setIsChange(true)
             setAnswer(newAnswer);
           };
@@ -98,6 +99,8 @@ import { completeCard2 } from '../../redux/cardSlice';
                         question_order: id
 
                       });
+
+                      console.log(answer)
 
                     //   await publicRequest.post(`/results`, {
                     //     ...answer,

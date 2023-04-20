@@ -30,6 +30,8 @@ export const AddComplete = async (req,res) =>{
 export const GetComplete = async (req,res) =>{
     try {
         const completed = await Completed.find()
+                .populate({path: "email", select: "firstName  lastName email"})
+
         res.status(200).json(completed)
     } catch (error) {
         res.status(400).json(error)
@@ -74,6 +76,47 @@ export const GetRecentSurvey = async (req,res) =>{
         res.status(error).json(error)
     }
 }
+
+
+export const GetRecentSurveyByUser = async (req, res) => {
+    const email = req.query.email;
+    try {
+        const completed = await Completed.aggregate([
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "email",
+                    foreignField: "_id",
+                    as: "user"
+                }
+            },
+            {
+                $unwind: "$user"
+            },
+            {
+                $match: {
+                    "user.email": email
+                }
+            },
+            {
+                $project: {
+                    "user.firstName": 1,
+                    "user.lastName": 1,
+                    "user.email": 1,
+                    "category": 1,
+                    "affiliation": 1,
+                    "createdAt": 1,
+
+                }
+            }
+        ]);
+
+        res.status(200).json(completed);
+    } catch (error) {
+        res.status(400).json(error);
+    }
+}
+
 
 
 // export const GetRecentSurvey = async (req, res) => {

@@ -27,7 +27,6 @@ const EditUser = () => {
     type: 'faculty'
   })
 
-  console.log(id)
 
   
 
@@ -42,7 +41,6 @@ const EditUser = () => {
               lastName: res.data.lastName || '',
               password: res.data.password || '',
               affiliation: res.data.affiliation || '',
-
             })
          
             setLoading(false)

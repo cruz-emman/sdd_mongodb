@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { logOut } from '../redux/authSlice'
+import AccountMenu from './AccountMenu'
 
 const Navbar = () => {
 
@@ -36,13 +37,14 @@ const Navbar = () => {
                 </Box>
             </Box>
             <Box sx={{display:'flex', alignItems:'flex-end', justifyContent:'center'}}>
-                  <Box sx={{display:'flex', alignItems:'center', justifyContent:'center', height: '100%', width: '100%', gap:3}}>
-                    
+                  <Box sx={{display:'flex', alignItems:'center', justifyContent:'center', height: '100%', width: '100%', gap:2}}>
+                    w
                     <Box sx={{display:'flex', alignItems:'center', justifyContent:'center', gap: 1}}>
                     <Typography variant='subtitle1' color="text.disabled">Hi,</Typography>
                     <Typography variant='subtitle2' fontWeight={700} color="text.secondary"> {currentUser.firstName} </Typography>
-                    </Box>
+                    <AccountMenu />
 
+                    </Box>
                     <Button onClick={handleLogout} size="small" variant="outlined" color="error" > Logout </Button>
                   </Box>
             </Box>
