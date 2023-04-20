@@ -9,6 +9,7 @@ import Survey3 from './pages/Part1/Survey3'
 import Survey4 from './pages/Part1/Survey4'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import Profile from './pages/Profile'
 
 
 const App = () => {
@@ -41,6 +42,10 @@ const App = () => {
 
           <Route path="part4survey/:id">
             <Route index element={<Survey4 />} />
+          </Route>
+
+          <Route path="/profile/:id">
+            <Route index element={<Profile />} />
           </Route>
 
           <Route path="completed">
