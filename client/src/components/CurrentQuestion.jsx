@@ -13,6 +13,7 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
   const [getGridQuestion, setGridQuestion] = useState()
 
 
+
   const [loading, setLoading] = useState(true)
   
   useEffect(() =>{
@@ -82,8 +83,6 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
                 <span className="toggle-button__text">{choice.choices}</span>
                 {/* {openChoiceId === choice.choices && choice.essay === true && <TextField id="outlined-basic" fullWidth name="essay" onChange={handleTextFieldChange}  mt={2} size='small' required label="Specify" variant="standard" />} */}
               </label>
-                
-
               </>
             ):(
               <>
