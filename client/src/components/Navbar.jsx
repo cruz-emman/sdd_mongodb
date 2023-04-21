@@ -38,7 +38,7 @@ const Navbar = () => {
             </Box>
             <Box sx={{display:'flex', alignItems:'flex-end', justifyContent:'center'}}>
                   <Box sx={{display:'flex', alignItems:'center', justifyContent:'center', height: '100%', width: '100%', gap:2}}>
-                    w
+                    
                     <Box sx={{display:'flex', alignItems:'center', justifyContent:'center', gap: 1}}>
                     <Typography variant='subtitle1' color="text.disabled">Hi,</Typography>
                     <Typography variant='subtitle2' fontWeight={700} color="text.secondary"> {currentUser.firstName} </Typography>

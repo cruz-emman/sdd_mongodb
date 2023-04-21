@@ -100,7 +100,6 @@ import { completeCard2 } from '../../redux/cardSlice';
 
                       });
 
-                      console.log(answer)
 
                     //   await publicRequest.post(`/results`, {
                     //     ...answer,
@@ -166,7 +165,7 @@ import { completeCard2 } from '../../redux/cardSlice';
                             </Box>
                         ) : (
                             <Box sx={{height: '100%', display: 'flex',  flexDirection:'column', }}>
-                                <CurrentQuestion handleChange={handleChange} handleTextFieldChange={handleTextFieldChange} category={type} part={getSurveyPart} id={id} />
+                                <CurrentQuestion setIsChange={setIsChange} handleChange={handleChange} handleTextFieldChange={handleTextFieldChange} category={type} part={getSurveyPart} id={id} />
                             
                             <Box sx={{ display:'flex', gap:2, justifyContent:'center', alignItems: 'flex-end', marginTop: 'auto' }}>
                                 <Button  disabled={!isChange} type="submit" variant="contained">Next</Button>

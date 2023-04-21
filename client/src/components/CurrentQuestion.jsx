@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { GetSingleQuestion } from '../redux/apiCalls'
 import { publicRequest } from '../utils/publicRequest'
 import './index.css'
-const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange}) => {
+const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange, setIsChange}) => {
 
 
   const [currentQuestion, setCurrentQuestion] = useState({})
@@ -70,6 +70,8 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
   const handleClickOpenChoices = (e) =>{
     if(e.target.id === 'openChoices'){
       setOpenListOfChoices(true)
+      setIsChange(false)
+      
     }else if(e.target.id === 'closeChoices'){
       setOpenListOfChoices(false)
     }
