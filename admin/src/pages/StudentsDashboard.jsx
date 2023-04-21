@@ -38,6 +38,8 @@ const StudentsDashboard = () => {
   
   const [selectedBox, setSelectedBox] = useState(null);
   const componentRefs = {
+    rankData: useRef(),
+
     allData: useRef(),
     ageData: useRef(),
     genderData: useRef(),
@@ -284,11 +286,11 @@ const StudentsDashboard = () => {
               <Checkbox checked={selectedBox === 'employmentStatData'} onChange={() => handleBoxSelect('employmentStatData')} />
           </Box>
 
-          <Box ref={componentRefs.positionData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
+          <Box ref={componentRefs.rankData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
             <Typography variant="h6" fontWeight={700}>Rank/ Position Title</Typography>
             <BarChartResults data={positionData} />
             
-              <Checkbox checked={selectedBox === 'positionData'} onChange={() => handleBoxSelect('positionData')} />
+              <Checkbox checked={selectedBox === 'rankData'} onChange={() => handleBoxSelect('rankData')} />
           </Box>
 
           <Box ref={componentRefs.monthlyData} sx={{display:'flex', flexDirection:'column', height: '600px', width: '100%', boxShadow:3, justifyContent:'center', alignItems:'center'}}>
