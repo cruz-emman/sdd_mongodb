@@ -87,7 +87,8 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
   <Grid container spacing={2}  justifyContent="center" alignItems="center" mx={4} p={4} sx={{width: '100%',  height: '100%'}}>
     {specificQuestion === "Employment Status of Spouse/Partner (If employed, please select monthly salary bracket)" ? (
       <>
-        <Box sx={{display:'flex', flexDirection:'column', gap:1,alignItems:'center', justifyContent:'center', width:'100%'}}>
+      
+        <Box sx={{display:'flex', flexDirection:'column', gap:1, alignItems:'center',justifyContent:'center', width:'100%'}}>
           <Box sx={{display:'flex', alignItems:'center', gap:2}}>
             <label className='toggle-button' onClick={handleClickOpenChoices}>
               <input className="toggle-button__state" type="radio" name="headerChoice" id="openChoices" />
@@ -102,9 +103,10 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
               <span  className="toggle-button__text">Not Applicable</span>
             </label>
           </Box>
-          {openListOfChoices && (
+        </Box>
+        {openListOfChoices && (
             currentChoices.map((choice, index) => (
-              <Grid item xs={getGridQuestion} key={index} >
+              <Grid item xs={getGridQuestion} key={index}>
                 {getCurrentQuestionType === false ? (
                   <>
                     <label className="toggle-button" key={choice.id} onClick={() => handleClick(choice)}>
@@ -124,11 +126,10 @@ const CurrentQuestion = ({id, category, part, handleChange,handleTextFieldChange
               </Grid>
             ))
           )}
-        </Box>
       </>
     ):(
           currentChoices.map((choice, index) => (
-            <Grid item xs={getGridQuestion} key={index} >
+            <Grid item xs={getGridQuestion} key={index}>
               {getCurrentQuestionType === false ?                       (
                 <>
                  <label className="toggle-button" key={choice.id} onClick={() => handleClick(choice)}>
