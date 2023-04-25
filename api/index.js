@@ -18,7 +18,8 @@ app.use(express.json())
 
 const connectDB = async () =>{
     try {
-        await mongoose.connect('mongodb+srv://admin:admin@cluster0.hijtikb.mongodb.net/SDD?retryWrites=true&w=majority')
+        // await mongoose.connect('mongodb+srv://admin:admin@cluster0.hijtikb.mongodb.net/SDD?retryWrites=true&w=majority')
+        await mongoose.connect('mongodb+srv://engrlaciste:ChangeMe123@cluster0.1cvt6rr.mongodb.net/SDD?retryWrites=true&w=majority')
         console.log("Database Connection established")
     } catch (error) {
         console.error(error);
