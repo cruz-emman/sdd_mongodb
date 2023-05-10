@@ -91,6 +91,27 @@ const Sidebar = () => {
   
         </List>
 
+        <List 
+          dense
+           sx={{px:2}}
+           subheader={
+            <ListSubheader component="div" id="nested-list-subheader">
+              Admin
+            </ListSubheader>
+          }
+        >
+          <Link to="/adminUsers">
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <BadgeIcon />
+                </ListItemIcon>
+                <ListItemText primary="Admin" />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        </List>
+
        
       
 

@@ -10,6 +10,9 @@ import AddUser from './pages/Users/AddUser';
 import EditUser from './pages/Users/EditUser';
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
+import AdminUser from '../../api/model/AdminUser';
+import AdminFaculty from './pages/Admin/AdminFaculty';
+import EditAdmin from './pages/Admin/EditAdmin';
 
 //Updated this
 
@@ -46,6 +49,12 @@ const App = () => {
                   <Route index element={<EmployeesUser />}/>
                   <Route path="add" element={<AddUser />} />
                   <Route path="edit/:id" element={<EditUser />} />
+               </Route>
+
+               <Route path="adminUsers">
+                  <Route index element={<AdminFaculty />}/>
+                  {/* <Route path="add" element={<AddUser />} /> */}
+                  <Route path="edit/:id" element={<EditAdmin />} />
                </Route>
 
                
