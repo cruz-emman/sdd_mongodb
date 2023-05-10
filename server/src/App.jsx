@@ -51,11 +51,11 @@ const App = () => {
                   <Route path="edit/:id" element={<EditUser />} />
                </Route>
 
-               <Route path="adminUsers">
+               {/* <Route path="adminUsers">
                   <Route index element={<AdminFaculty />}/>
-                  {/* <Route path="add" element={<AddUser />} /> */}
+                  <Route path="add" element={<AddUser />} />
                   <Route path="edit/:id" element={<EditAdmin />} />
-               </Route>
+               </Route> */}
 
                
 
