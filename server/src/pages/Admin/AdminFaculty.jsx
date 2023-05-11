@@ -84,9 +84,9 @@ const AdminFaculty = () => {
             </Link>
               
 
-            <Button onClick={() =>handleDelete(params.row)} color="error" variant="contained" size="small">
+            {/* <Button onClick={() =>handleDelete(params.row)} color="error" variant="contained" size="small">
               Delete User
-            </Button>
+            </Button> */}
           </Box>
         );
       },
