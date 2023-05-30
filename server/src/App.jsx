@@ -12,6 +12,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 import AdminFaculty from './pages/Admin/AdminFaculty';
 import EditAdmin from './pages/Admin/EditAdmin';
+import AddAdmin from './pages/Admin/AddAdmin';
+import NotFound from './pages/NotFound';
 
 //Updated this
 
@@ -54,6 +56,7 @@ const App = () => {
                   <Route index element={<AdminFaculty />}/>
                   {/* <Route path="add" element={<AddUser />} /> */}
                   <Route path="edit/:id" element={<EditAdmin />} />
+                  <Route path="addAdmin" element={<AddAdmin />} />
                </Route>
 
                
@@ -187,6 +190,8 @@ const App = () => {
                   <Route path="facultyDashboard" >
                     <Route index element={<FacultyDashboard /> }/>
                   </Route>
+
+                  <Route path='*' element={<NotFound />}/>
 
 
               </Route>

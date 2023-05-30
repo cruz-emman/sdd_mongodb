@@ -101,7 +101,14 @@ const AdminFaculty = () => {
         <Box sx={{display:'flex', flex:6, p:4}}>
 
         <Box sx={{display:'flex', flexDirection:'column', gap:2, width: '100%'}}>
+   
+        <Box sx={{display:'flex', alignItems:'center', gap:2}}>
+              <Link to={`/${pathname}/addAdmin`}>
+                <Button variant='contained' color="success">Add Admin</Button>
+              </Link>
+      
 
+            </Box>
           {loading ? (
             <BeatLoader 
             color="#36d7b7" 
