@@ -71,21 +71,21 @@ const AddAdmin = () => {
                 value={info.affiliation}
                 onChange={handleChange}
               >
-                  <MenuItem key="ppsc_faculty" value={"ppsc_faculty"}>PPS Faculty</MenuItem>,
+                  <MenuItem key="ppsc_faculty" value={"ppsc_faculty"}>PPSC Faculty</MenuItem>,
                   <MenuItem key="npc_faculty" value={"npc_faculty"}>NPC Faculty</MenuItem>,
                   <MenuItem key="njmpti_faculty" value={"njmpti_faculty"}>NJMPTI Faculty</MenuItem>,
                   <MenuItem key="nfti_faculty" value={"nfti_faculty"}>NFTI Faculty</MenuItem>,
                   <MenuItem key="nfsti_faculty" value={"nfsti_faculty"}>NFSTI Faculty</MenuItem>,
                   <MenuItem key="ppsa_faculty" value={"ppsa_faculty"}>PPSA Faculty</MenuItem>
 
-                  <MenuItem key="ppsc_students" value={"ppsc_students"}>PPS Students</MenuItem>,
+                  <MenuItem key="ppsc_students" value={"ppsc_students"}>PPSC Students</MenuItem>,
                   <MenuItem key="npc_students" value={"npc_students"}>NPC Students</MenuItem>,
                   <MenuItem key="njmpti_students" value={"njmpti_students"}>NJMPTI Students</MenuItem>,
                   <MenuItem key="nfti_students" value={"nfti_students"}>NFTI Students</MenuItem>,
                   <MenuItem key="nfsti_students" value={"nfsti_students"}>NFSTI Students</MenuItem>,
                   <MenuItem key="ppsa_students" value={"ppsa_students"}>PPSA Students</MenuItem>
 
-                  <MenuItem key="ppsc_employees" value={"ppsc_employees"}>PPS employees</MenuItem>,
+                  <MenuItem key="ppsc_employees" value={"ppsc_employees"}>PPSC employees</MenuItem>,
                   <MenuItem key="npc_employees" value={"npc_employees"}>NPC employees</MenuItem>,
                   <MenuItem key="njmpti_employees" value={"njmpti_employees"}>NJMPTI employees</MenuItem>,
                   <MenuItem key="nfti_employees" value={"nfti_employees"}>NFTI employees</MenuItem>,
