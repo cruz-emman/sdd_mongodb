@@ -15,8 +15,8 @@ const Sidebar = () => {
 
 
   const {admin, isFetching, isError, isSuccess, isMessage} = useSelector((state) => state.admin)
-
- 
+  const techAdminType = admin && admin.affiliation;
+  //console.log(techAdminType)
 
   const navigate = useNavigate()
   const handleLogoUt =  (e) =>{
@@ -99,7 +99,7 @@ const Sidebar = () => {
   
         </List>
 
-      {admin?.affiliation === 'tech_admin' && (
+      {techAdminType === 'tech_admin' ? (
           <List 
           dense
            sx={{px:2}}
@@ -121,6 +121,8 @@ const Sidebar = () => {
           </Link>
         </List>
 
+      ):(
+        <></>
       )}
        
       
