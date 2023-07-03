@@ -15,7 +15,8 @@ const Sidebar = () => {
 
 
   const {admin} = useSelector((state) => state.admin)
-  let techSuperAdmin = admin.techAdmin
+  let techSuperAdmin = admin && admin?.techAdmin
+  console.log(techSuperAdmin)
  
   
 
