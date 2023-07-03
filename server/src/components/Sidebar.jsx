@@ -9,14 +9,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../assets/logo.png'
 import { logOut } from '../redux/adminSlice';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import { useSelector } from 'react-redux'
+import {useSelector} from 'react-redux'
 
 const Sidebar = () => {
 
 
-  const {admin, isFetching, isError, isSuccess, isMessage} = useSelector((state) => state.admin)
-  const techAdminType = admin && admin.affiliation;
-  console.log(techAdminType)
+  const {admin} = useSelector((state) => state.admin)
+  const {techAdmin} = admin
+  // const {affiliation} = admin
+  // console.log(affiliation)
+ 
 
   const navigate = useNavigate()
   const handleLogoUt =  (e) =>{
@@ -99,7 +101,7 @@ const Sidebar = () => {
   
         </List>
 
-      {techAdminType === 'tech_admin' ? (
+      {techAdmin === true && (
           <List 
           dense
            sx={{px:2}}
@@ -121,8 +123,6 @@ const Sidebar = () => {
           </Link>
         </List>
 
-      ):(
-        <></>
       )}
        
       

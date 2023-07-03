@@ -36,11 +36,13 @@ export const LoginUser = async (req,res) =>{
 
 
 export const LoginTechAdmin = async (req,res) =>{  
+
   
   try {
+    const affiliation = req.body.affiliation
     if(!req.body.email || !req.body.password) return res.status(401).json({ message: "Please input all fields" })
 
-    const adminEmail = await AdminUser.findOne({email: req.body.email, affiliation: { $in: ["tech_admin", "tech_admin_no"] }})
+    const adminEmail = await AdminUser.findOne({email: req.body.email, affiliation: "tech_admin"})
     if(!adminEmail) 
       return res.status(401).json({ message: "Admin Unauthorized" })
 
