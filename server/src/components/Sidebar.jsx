@@ -15,10 +15,9 @@ const Sidebar = () => {
 
 
   const {admin} = useSelector((state) => state.admin)
-  const {techAdmin} = admin
-  // const {affiliation} = admin
-  // console.log(affiliation)
+  let techSuperAdmin = admin.techAdmin
  
+  
 
   const navigate = useNavigate()
   const handleLogoUt =  (e) =>{
@@ -96,12 +95,12 @@ const Sidebar = () => {
                 </ListItemIcon>
                 <ListItemText primary="Employee" />
               </ListItemButton>
-            </ListItem>
+            </ListItem> 
           </Link>
   
         </List>
 
-      {techAdmin === true && (
+      {techSuperAdmin === true && (
           <List 
           dense
            sx={{px:2}}
