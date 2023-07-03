@@ -113,7 +113,7 @@ const EditAdmin = () => {
                   <MenuItem key="nfti_employees" value={"nfti_employees"}>NFTI employees</MenuItem>,
                   <MenuItem key="nfsti_employees" value={"nfsti_employees"}>NFSTI employees</MenuItem>,
                   <MenuItem key="ppsa_employees" value={"ppsa_employees"}>PPSA employees</MenuItem>
-                  <MenuItem key="tech_admin_no" value={"tech_admin_no"}>Tech Admin</MenuItem>
+                  <MenuItem key="tech_admin" value={"tech_admin"}>Tech Admin</MenuItem>
 
               </Select>
             </FormControl>
