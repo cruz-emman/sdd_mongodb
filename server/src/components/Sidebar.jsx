@@ -99,7 +99,7 @@ const Sidebar = () => {
   
         </List>
 
-      {admin.affiliation === 'tech_admin' && (
+      {admin?.affiliation === 'tech_admin' && (
           <List 
           dense
            sx={{px:2}}
