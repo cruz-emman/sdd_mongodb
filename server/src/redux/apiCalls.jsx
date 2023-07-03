@@ -7,7 +7,8 @@ export const LoginUser = async (user, dispatch) =>{
 
     try {
         const res = await publicRequest.post('/auth/loginTech', user)
-        dispatch(loginSuccess(res.data))
+        console.log(res.data)
+         dispatch(loginSuccess(res.data))
     } catch (error) {
         const errorMessage = error.response.data.message;
         dispatch(loginFailure(errorMessage))

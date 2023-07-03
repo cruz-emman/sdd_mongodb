@@ -31,6 +31,7 @@ const AdminUserSchema = new Schema({
         enum: 
         ['super_admin',
         'tech_admin',
+        'tech_admin_no',
         'ppsc_employees',
         'npc_employees',
         'njmpti_employees',
