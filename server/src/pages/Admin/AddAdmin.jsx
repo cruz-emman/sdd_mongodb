@@ -25,6 +25,7 @@ const AddAdmin = () => {
     password: 'ChangeMe!23',
     email: '',
     affiliation: '',
+    category_affiliation: ''
   })
 
 
@@ -93,8 +94,28 @@ const AddAdmin = () => {
                   <MenuItem key="ppsa_employees" value={"ppsa_employees"}>PPSA employees</MenuItem>
                   <MenuItem key="tech_admin" value={"tech_admin"}>Tech Admin</MenuItem>
 
+
               </Select>
             </FormControl>
+
+           {info.affiliation === "tech_admin" && (
+              <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                name="category_affiliation"
+                value={info.category_affiliation}
+                onChange={handleChange}
+              >
+                  <MenuItem key="tech_faculty" value={"tech_faculty"}>Tech Faculty</MenuItem>,
+                  <MenuItem key="tech_employees" value={"tech_employees"}>Tech Employees</MenuItem>,
+                  <MenuItem key="tech_students" value={"tech_students"}>Tech Students</MenuItem>,
+              </Select>
+              </FormControl>
+           )} 
+
+           
 
             <Button type="submit" fullWidth variant="contained" size="large">Add New Admin</Button>
           </form>

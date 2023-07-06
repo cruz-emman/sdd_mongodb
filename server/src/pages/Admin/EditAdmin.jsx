@@ -24,7 +24,9 @@ const EditAdmin = () => {
     password: '',
     email: '',
     affiliation: '',
-    type: 'faculty'
+    type: 'faculty',
+    category_affiliation: ''
+
   })
 
 
@@ -41,6 +43,7 @@ const EditAdmin = () => {
               lastName: res.data.lastName || '',
               password: res.data.password || '',
               affiliation: res.data.affiliation || '',
+              category_affiliation: res.data.category_affiliation || '',
             })
          
             setLoading(false)
@@ -117,6 +120,24 @@ const EditAdmin = () => {
 
               </Select>
             </FormControl>
+
+            {info.affiliation === "tech_admin" && (
+              <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                name="category_affiliation"
+                value={info.category_affiliation}
+                onChange={handleChange}
+              >
+                  <MenuItem key="tech_faculty" value={"tech_faculty"}>Tech Faculty</MenuItem>,
+                  <MenuItem key="tech_employees" value={"tech_employees"}>Tech Employees</MenuItem>,
+                  <MenuItem key="tech_students" value={"tech_students"}>Tech Students</MenuItem>,
+              </Select>
+              </FormControl>
+           )} 
+
 
             <Button type="submit" fullWidth variant="contained" size="large">Update Admin</Button>
           </form>

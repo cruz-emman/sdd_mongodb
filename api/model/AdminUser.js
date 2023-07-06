@@ -51,6 +51,10 @@ const AdminUserSchema = new Schema({
         'nfsti_students',
         'ppsa_students']
     },
+    category_affiliation: {
+        type: String,
+        enum: ['tech_employees', 'tech_faculty', 'tech_students']
+    },
     superAdmin: {
         type: Boolean,
         default: false

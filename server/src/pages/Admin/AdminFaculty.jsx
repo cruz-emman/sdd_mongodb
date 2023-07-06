@@ -38,8 +38,9 @@ const AdminFaculty = () => {
     const getFacultysUser = async () =>{
         try {
             const res = await publicRequest.get('/admins')
-            //console.log(res.data)
-           setData(res.data)
+            const filterData = res.data.filter((admin) => admin.affiliation !== 'super_admin')
+            //console.log(filterData)
+           setData(filterData)
             
             setLoading(false)
         } catch (error) {

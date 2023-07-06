@@ -16,7 +16,7 @@ const Sidebar = () => {
 
   const { admin } = useSelector((state) => state.admin);
   let techSuperAdmin = admin && admin.techAdmin ? admin.techAdmin : false;
-  
+  let techAdminCategory = admin.category_affiliation
  
   
 
@@ -41,7 +41,7 @@ const Sidebar = () => {
     }}>
         <Box sx={{display:'flex', flexDirection:'column', p:2, alignItems:'center', justifyContent:'center', gap: 4, borderBottom: 1, color: 'gray'}}>
           <Box component="img" src={Logo} sx={{width: 150, height: 150, }}  />
-          <Typography sx={{fontWeight: 700}} color="text-secondary">Tech Admin</Typography>
+          <Typography sx={{fontWeight: 700}} color="text-secondary">{admin.category_affiliation}</Typography>
         </Box>
 
         <List 
@@ -64,6 +64,61 @@ const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           </Link>   
+
+
+          {techAdminCategory === "tech_students" && (
+            <Link to="/studentsUsers">
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <Man3Icon />
+                  </ListItemIcon>
+                  <ListItemText primary="Students" />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          )}
+
+
+
+
+          {techAdminCategory === "tech_faculty" && (
+            <Link to="/facultyUsers">
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary="Faculty" />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+          )}
+
+        {techAdminCategory === "tech_employees" && (
+
+            <Link to="/employeesUsers">
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <BadgeIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Employee" />
+                </ListItemButton>
+              </ListItem> 
+            </Link>
+          )}
+        </List>
+
+      {techSuperAdmin === true && (
+
+          <>
+          
+        <List 
+          dense
+           sx={{px:2}}
+          
+        >
 
 
           <Link to="/studentsUsers">
@@ -101,8 +156,8 @@ const Sidebar = () => {
   
         </List>
 
-      {techSuperAdmin === true && (
-          <List 
+        
+        <List 
           dense
            sx={{px:2}}
            subheader={
@@ -122,6 +177,8 @@ const Sidebar = () => {
             </ListItem>
           </Link>
         </List>
+
+          </>
 
       )}
        
