@@ -9,27 +9,31 @@ import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../assets/logo.png'
 import { logOut } from '../redux/adminSlice';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
+import { toast } from 'react-toastify';
 
 const Sidebar = () => {
 
 
-  const { admin } = useSelector((state) => state.admin);
+  const {admin, isFetching, isError, isSuccess} = useSelector((state) => state.admin)
   let techSuperAdmin = admin && admin.techAdmin ? admin.techAdmin : false;
-  let techAdminCategory = admin && admin.category_affiliation ? admin.category_affiliation : null;
-
-  console.log(techAdminCategory)
+  let techAdminCategory = admin.category_affiliation
  
   
 
   const navigate = useNavigate()
-  const handleLogoUt =  (e) =>{
-    e.preventDefault()
+  const dispatch = useDispatch()
+
+  const handleLogoUt = async (e) =>{
+    e.preventDefault();
     try {
-      localStorage.removeItem('persist:root')
-      navigate('/login')
+      dispatch(logOut())
+      localStorage.removeItem('persist:root'); // remove admin data from local storage
+      toast.info('Logged out successfully!'); // show success toast notification
+      navigate('/login'); // redirect to login page
     } catch (error) {
-      console.log(error)
+      toast.error('Something went wrong. Please try again.'); 
+      console.log(error)// show error toast notification
     }
   }
 

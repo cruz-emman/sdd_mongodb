@@ -29,20 +29,20 @@ const Login = () => {
       console.log(error)
     }
   }
-
   useEffect(() =>{
     if(isError){
-      toast.error(isMessage)
+      toast.error("Incorrect Username or Password")
+      dispatch(resetState())
+
     }
-    dispatch(resetState())
-  },[dispatch, isError])
+  },[isError])
 
   useEffect(() =>{
     if(admin){
       toast.success("Login Successful")
       navigate('/')
     }
-  },[dispatch, admin])
+  },[admin])
 
   const handleChange = (e) =>{
     setAdmin((prev) => ({...prev, [e.target.name]:e.target.value}))
