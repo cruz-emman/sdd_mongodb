@@ -17,6 +17,8 @@ const Sidebar = () => {
   const { admin } = useSelector((state) => state.admin);
   let techSuperAdmin = admin && admin.techAdmin ? admin.techAdmin : false;
   let techAdminCategory = admin && admin.category_affiliation ? admin.category_affiliation : null;
+
+  console.log(techAdminCategory)
  
   
 
